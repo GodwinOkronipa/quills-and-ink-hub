@@ -1,5 +1,5 @@
 // Cloudflare Pages Function: /api/analytics
-// Privacy-first Edge Analytics Engine (D1 SQLite backed with in-memory fallback)
+// Pure Real-Time Edge Analytics Engine (Backed 100% by Cloudflare D1 SQLite)
 
 interface AnalyticsEvent {
   event: string;
@@ -12,109 +12,45 @@ interface AnalyticsEvent {
   source_page?: string;
 }
 
-// In-memory fallback buffer for sessions before D1 provisioning
-const fallbackStore = {
-  pageViews: 14820,
-  uniqueVisitors: 4150,
-  pdfDownloads: 684,
-  searchQueries: 942,
-  consultationInquiries: 42,
-  whatsappChats: 129,
+const COUNTRY_META: Record<string, { flag: string; name: string }> = {
+  GH: { flag: '🇬🇭', name: 'Ghana' },
+  GB: { flag: '🇬🇧', name: 'United Kingdom' },
+  US: { flag: '🇺🇸', name: 'United States' },
+  CA: { flag: '🇨🇦', name: 'Canada' },
+  DE: { flag: '🇩🇪', name: 'Germany' },
+  NG: { flag: '🇳🇬', name: 'Nigeria' },
+  NL: { flag: '🇳🇱', name: 'Netherlands' },
+  FR: { flag: '🇫🇷', name: 'France' },
+  IT: { flag: '🇮🇹', name: 'Italy' },
+  ZA: { flag: '🇿🇦', name: 'South Africa' },
+  AU: { flag: '🇦🇺', name: 'Australia' },
+  IE: { flag: '🇮🇪', name: 'Ireland' },
+  CH: { flag: '🇨🇭', name: 'Switzerland' },
+  BE: { flag: '🇧🇪', name: 'Belgium' },
+};
+
+// Clean in-memory store for local preview or before D1 binds
+const localStore = {
+  pageViews: 0,
+  uniqueVisitors: new Set<string>(),
+  pdfDownloads: 0,
+  searchQueries: 0,
+  consultationInquiries: 0,
+  whatsappChats: 0,
   recentEvents: [] as any[],
-  downloadsMap: {
-    'eulogy-writing-guide.pdf': 312,
-    'memorial-brochure-checklist.pdf': 218,
-    'tribute-reading-excerpt.pdf': 98,
-    'quills-and-ink-family-memorial-guide.pdf': 56,
-  } as Record<string, number>,
-  topSearches: [
-    { query: 'eulogy structure', count: 184 },
-    { query: 'memorial brochure photos', count: 142 },
-    { query: 'diaspora booking', count: 118 },
-    { query: 'akan funeral rites', count: 96 },
-    { query: 'tier 2 pricing', count: 87 },
-    { query: 'eulogy guide pdf', count: 79 },
-  ],
+  searchesMap: {} as Record<string, number>,
 };
 
 export async function onRequestGet(context: any) {
   const db = context.env?.ANALYTICS_DB;
 
-  let overview = {
-    pageViews: fallbackStore.pageViews,
-    uniqueVisitors: fallbackStore.uniqueVisitors,
-    pdfDownloads: fallbackStore.pdfDownloads,
-    searchQueries: fallbackStore.searchQueries,
-    consultationInquiries: fallbackStore.consultationInquiries,
-    whatsappChats: fallbackStore.whatsappChats,
-    period: 'Last 30 Days',
-    trend: {
-      pageViews: '+18.4%',
-      downloads: '+32.1%',
-      inquiries: '+24.0%',
-    },
-  };
-
-  let downloads = [
-    {
-      id: 'eulogy-writing-guide',
-      name: 'Eulogy Reflection & Writing Guide (PDF)',
-      downloads: fallbackStore.downloadsMap['eulogy-writing-guide.pdf'] || 312,
-      percent: 45.6,
-      size: '358 KB',
-      file: '/downloads/eulogy-writing-guide.pdf',
-      attribution: 'Quills & Ink Editorial Archive',
-      category: 'Spoken Tributes',
-    },
-    {
-      id: 'memorial-brochure-checklist',
-      name: 'Memorial Keepsake Brochure Checklist (PDF)',
-      downloads: fallbackStore.downloadsMap['memorial-brochure-checklist.pdf'] || 218,
-      percent: 31.9,
-      size: '224 KB',
-      file: '/downloads/memorial-brochure-checklist.pdf',
-      attribution: 'Quills & Ink Print Division',
-      category: 'Print & Keepsakes',
-    },
-    {
-      id: 'tribute-reading-excerpt',
-      name: 'Selected Memorial Readings & Poems (PDF)',
-      downloads: fallbackStore.downloadsMap['tribute-reading-excerpt.pdf'] || 98,
-      percent: 14.3,
-      size: '145 KB',
-      file: '/downloads/tribute-reading-excerpt.pdf',
-      attribution: 'Quills & Ink Spoken Archives',
-      category: 'Spoken Tributes',
-    },
-    {
-      id: 'quills-and-ink-family-memorial-guide',
-      name: 'Master Family Memorial Planning Guide (PDF)',
-      downloads: fallbackStore.downloadsMap['quills-and-ink-family-memorial-guide.pdf'] || 56,
-      percent: 8.2,
-      size: '358 KB',
-      file: '/downloads/quills-and-ink-family-memorial-guide.pdf',
-      attribution: 'Quills & Ink Central Archive',
-      category: 'Master Guides',
-    },
-  ];
-
-  let diasporaReach = [
-    { region: 'Accra & Greater Accra (Ghana)', flag: '🇬🇭', percent: 38, inquiries: 16 },
-    { region: 'London & Greater London (UK)', flag: '🇬🇧', percent: 27, inquiries: 12 },
-    { region: 'New York & Atlanta (USA)', flag: '🇺🇸', percent: 19, inquiries: 8 },
-    { region: 'Toronto & Montreal (Canada)', flag: '🇨🇦', percent: 11, inquiries: 4 },
-    { region: 'Hamburg & Berlin (Germany)', flag: '🇩🇪', percent: 5, inquiries: 2 },
-  ];
-
-  let topSearchQueries = fallbackStore.topSearches;
-
-  // If Cloudflare D1 Database is available, query real tables!
   if (db) {
     try {
-      // 1. Total counts from D1
+      // 1. Pure Real-Time Counts from D1
       const countsResult = await db.prepare(`
         SELECT 
           COUNT(CASE WHEN event_name = 'page_view' THEN 1 END) as pv,
+          COUNT(DISTINCT COALESCE(ip_hash, id)) as uv,
           COUNT(CASE WHEN event_name = 'file_download' THEN 1 END) as dl,
           COUNT(CASE WHEN event_name = 'site_search_query' THEN 1 END) as sq,
           COUNT(CASE WHEN event_name = 'whatsapp_chat_click' THEN 1 END) as wa,
@@ -122,63 +58,164 @@ export async function onRequestGet(context: any) {
         FROM events
       `).first();
 
-      if (countsResult) {
-        overview.pageViews += countsResult.pv || 0;
-        overview.pdfDownloads += countsResult.dl || 0;
-        overview.searchQueries += countsResult.sq || 0;
-        overview.whatsappChats += countsResult.wa || 0;
-        overview.consultationInquiries += countsResult.book || 0;
-      }
+      const pvCount = Number(countsResult?.pv || 0);
+      const uvCount = Number(countsResult?.uv || 0);
+      const dlCount = Number(countsResult?.dl || 0);
+      const sqCount = Number(countsResult?.sq || 0);
+      const waCount = Number(countsResult?.wa || 0);
+      const bookCount = Number(countsResult?.book || 0);
 
-      // 2. Resource slots from D1
+      const overview = {
+        pageViews: pvCount,
+        uniqueVisitors: uvCount,
+        pdfDownloads: dlCount,
+        searchQueries: sqCount,
+        consultationInquiries: bookCount,
+        whatsappChats: waCount,
+        period: 'Real-Time Edge Stream',
+      };
+
+      // 2. Real Download Slots from D1
       const slotsResult = await db.prepare(`
         SELECT slot_id, title, category, filename, file_size_bytes, download_count 
         FROM resource_slots 
-        ORDER BY download_count DESC
+        ORDER BY download_count DESC, slot_id ASC
       `).all();
 
-      if (slotsResult?.results?.length) {
-        downloads = slotsResult.results.map((row: any) => ({
-          id: row.slot_id,
-          name: row.title,
-          downloads: row.download_count,
-          percent: Math.round((row.download_count / Math.max(overview.pdfDownloads, 1)) * 100),
-          size: `${Math.round(row.file_size_bytes / 1024)} KB`,
-          file: `/downloads/${row.filename}`,
-          attribution: 'Quills & Ink Editorial Archive',
-          category: row.category,
-        }));
-      }
+      const totalDl = Math.max(dlCount, 1);
+      const downloads = (slotsResult?.results || []).map((row: any) => ({
+        id: row.slot_id,
+        name: row.title,
+        downloads: Number(row.download_count || 0),
+        percent: dlCount > 0 ? Math.round((Number(row.download_count || 0) / totalDl) * 100) : 0,
+        size: `${Math.round(Number(row.file_size_bytes || 200000) / 1024)} KB`,
+        file: `/downloads/${row.filename}`,
+        attribution: 'Quills & Ink Editorial Archive',
+        category: row.category,
+      }));
 
-      // 3. Search queries from D1
-      const searchResult = await db.prepare(`
+      // 3. Real Diaspora Reach from D1
+      const totalGeoResult = await db.prepare(`
+        SELECT COUNT(*) as total FROM events WHERE country IS NOT NULL AND country != ''
+      `).first();
+      const totalGeo = Number(totalGeoResult?.total || 0);
+
+      const diasporaQuery = await db.prepare(`
+        SELECT 
+          country,
+          city,
+          COUNT(*) as total_events,
+          COUNT(CASE WHEN event_name IN ('consultation_cta_click', 'whatsapp_chat_click') THEN 1 END) as inquiries
+        FROM events 
+        WHERE country IS NOT NULL AND country != ''
+        GROUP BY country, city
+        ORDER BY total_events DESC
+        LIMIT 6
+      `).all();
+
+      const diasporaReach = (diasporaQuery?.results || []).map((row: any) => {
+        const countryCode = String(row.country || '').toUpperCase();
+        const meta = COUNTRY_META[countryCode] || { flag: '🌐', name: countryCode };
+        const cityStr = row.city && row.city !== 'Unknown' && row.city !== 'null' ? `${row.city}, ` : '';
+        const regionLabel = `${cityStr}${meta.name}`;
+        const pct = totalGeo > 0 ? Math.round((Number(row.total_events || 0) / totalGeo) * 100) : 0;
+        return {
+          region: regionLabel,
+          countryCode: countryCode,
+          flag: meta.flag,
+          percent: pct,
+          totalEvents: Number(row.total_events || 0),
+          inquiries: Number(row.inquiries || 0),
+        };
+      });
+
+      // 4. Real Top Search Queries from D1
+      const searchQuery = await db.prepare(`
         SELECT query, COUNT(*) as count 
         FROM events 
-        WHERE event_name = 'site_search_query' AND query IS NOT NULL 
+        WHERE event_name = 'site_search_query' AND query IS NOT NULL AND TRIM(query) != ''
         GROUP BY query 
         ORDER BY count DESC 
         LIMIT 6
       `).all();
 
-      if (searchResult?.results?.length) {
-        topSearchQueries = searchResult.results.map((r: any) => ({
-          query: r.query,
-          count: r.count,
-        }));
-      }
-    } catch (d1Err) {
-      console.warn('D1 query fallback:', d1Err);
+      const topSearchQueries = (searchQuery?.results || []).map((r: any) => ({
+        query: r.query,
+        count: Number(r.count || 0),
+      }));
+
+      // 5. Real-Time Activity Feed (Latest 25 events)
+      const eventsQuery = await db.prepare(`
+        SELECT 
+          id,
+          event_name as event,
+          path,
+          file_name,
+          file_url,
+          query,
+          country,
+          city,
+          created_at as time
+        FROM events
+        ORDER BY id DESC
+        LIMIT 25
+      `).all();
+
+      const recentEvents = (eventsQuery?.results || []).map((e: any) => ({
+        id: e.id,
+        event: e.event,
+        path: e.path,
+        file_name: e.file_name,
+        file_url: e.file_url,
+        query: e.query,
+        country: e.country,
+        city: e.city,
+        time: e.time,
+      }));
+
+      return new Response(
+        JSON.stringify({
+          overview,
+          downloads,
+          diasporaReach,
+          topSearchQueries,
+          recentEvents,
+          storageMode: 'Cloudflare D1 (Edge SQLite)',
+          isLiveRealData: true,
+          timestamp: new Date().toISOString(),
+        }),
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      );
+    } catch (err: any) {
+      console.error('D1 error in onRequestGet:', err);
     }
   }
 
+  // Fallback for purely local dev without D1
   return new Response(
     JSON.stringify({
-      overview,
-      downloads,
-      diasporaReach,
-      topSearchQueries,
-      recentEvents: fallbackStore.recentEvents.slice(0, 15),
-      storageMode: db ? 'Cloudflare D1 (Edge SQLite)' : 'Edge Dynamic Cache',
+      overview: {
+        pageViews: localStore.pageViews,
+        uniqueVisitors: localStore.uniqueVisitors.size,
+        pdfDownloads: localStore.pdfDownloads,
+        searchQueries: localStore.searchQueries,
+        consultationInquiries: localStore.consultationInquiries,
+        whatsappChats: localStore.whatsappChats,
+        period: 'Local Dev Buffer',
+      },
+      downloads: [],
+      diasporaReach: [],
+      topSearchQueries: [],
+      recentEvents: localStore.recentEvents.slice(0, 20),
+      storageMode: 'Local Memory Fallback',
+      isLiveRealData: true,
       timestamp: new Date().toISOString(),
     }),
     {
@@ -202,54 +239,55 @@ export async function onRequestPost(context: any) {
     const country = cf.country || 'GH';
     const city = cf.city || 'Accra';
 
+    // Privacy-preserving daily session hash for accurate unique visitor counting
+    const clientIp =
+      context.request.headers.get('CF-Connecting-IP') ||
+      context.request.headers.get('x-real-ip') ||
+      '127.0.0.1';
+    const today = new Date().toISOString().slice(0, 10);
+    const encoder = new TextEncoder();
+    const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(`${clientIp}:${today}`));
+    const ipHash = Array.from(new Uint8Array(hashBuffer))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
+      .slice(0, 16);
+
     // Update in-memory fallback
     if (payload.event === 'page_view') {
-      fallbackStore.pageViews += 1;
+      localStore.pageViews += 1;
+      localStore.uniqueVisitors.add(ipHash);
     } else if (payload.event === 'file_download') {
-      fallbackStore.pdfDownloads += 1;
-      const key = (payload.file_url || '').split('/').pop() || '';
-      if (key) {
-        fallbackStore.downloadsMap[key] = (fallbackStore.downloadsMap[key] || 0) + 1;
-      }
+      localStore.pdfDownloads += 1;
     } else if (payload.event === 'site_search_query') {
-      fallbackStore.searchQueries += 1;
+      localStore.searchQueries += 1;
       if (payload.query) {
-        const existing = fallbackStore.topSearches.find(
-          (s) => s.query.toLowerCase() === payload.query?.toLowerCase()
-        );
-        if (existing) {
-          existing.count += 1;
-        } else {
-          fallbackStore.topSearches.unshift({ query: payload.query, count: 1 });
-        }
+        localStore.searchesMap[payload.query] = (localStore.searchesMap[payload.query] || 0) + 1;
       }
     } else if (payload.event === 'whatsapp_chat_click') {
-      fallbackStore.whatsappChats += 1;
+      localStore.whatsappChats += 1;
     } else if (payload.event === 'consultation_cta_click') {
-      fallbackStore.consultationInquiries += 1;
+      localStore.consultationInquiries += 1;
     }
 
-    // Add to recent event stream
-    fallbackStore.recentEvents.unshift({
+    localStore.recentEvents.unshift({
       event: payload.event,
       path: payload.path,
       file_name: payload.file_name,
+      file_url: payload.file_url,
       query: payload.query,
       country: country,
       city: city,
       time: new Date().toISOString(),
     });
-    if (fallbackStore.recentEvents.length > 30) {
-      fallbackStore.recentEvents.pop();
-    }
+    if (localStore.recentEvents.length > 50) localStore.recentEvents.pop();
 
-    // If Cloudflare D1 is configured, record persistently
+    // Persist to Cloudflare D1
     if (db) {
       try {
         await db
           .prepare(
-            `INSERT INTO events (event_name, path, file_name, file_url, query, country, city)
-             VALUES (?, ?, ?, ?, ?, ?, ?)`
+            `INSERT INTO events (event_name, path, file_name, file_url, query, country, city, ip_hash)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
           )
           .bind(
             payload.event,
@@ -258,7 +296,8 @@ export async function onRequestPost(context: any) {
             payload.file_url || null,
             payload.query || null,
             country,
-            city
+            city,
+            ipHash
           )
           .run();
 
@@ -273,7 +312,7 @@ export async function onRequestPost(context: any) {
           }
         }
       } catch (err) {
-        console.warn('D1 write error:', err);
+        console.warn('D1 write error in onRequestPost:', err);
       }
     }
 
@@ -282,11 +321,16 @@ export async function onRequestPost(context: any) {
         success: true,
         recordedEvent: payload.event,
         country: country,
-        persistedTo: db ? 'Cloudflare D1' : 'Edge Memory',
+        city: city,
+        persistedTo: db ? 'Cloudflare D1 (Edge SQLite)' : 'Local Buffer',
+        timestamp: new Date().toISOString(),
       }),
       {
         status: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
       }
     );
   } catch (err: any) {

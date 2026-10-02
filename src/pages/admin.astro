@@ -94,14 +94,23 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <div class="dash-controls">
+          <div class="live-sync-pill" title="Real-time live edge sync directly from Cloudflare D1">
+            <span class="pulse-dot"></span>
+            <span>Real-Time Active</span>
+          </div>
+
           <div class="storage-status-pill" id="storage-status-pill" title="Privacy-first edge analytics without cookies">
             <span class="storage-dot"></span>
-            <span id="dash-storage-badge">Cloudflare Edge Engine</span>
+            <span id="dash-storage-badge">Cloudflare D1 (Edge SQLite)</span>
             <span class="info-dot" tabindex="0" role="tooltip">
               i
               <span class="info-tooltip">Runs directly at the Cloudflare network edge. Collects real stats with zero third-party tracking cookies and zero ad-blocker loss.</span>
             </span>
           </div>
+
+          <button type="button" id="btn-test-live-event" class="btn-quick-test" title="Send a simulated live visitor event to test real-time D1 pipeline">
+            <span>⚡ Test Live Event</span>
+          </button>
 
           <button type="button" id="btn-refresh-data" class="btn-refresh" title="Fetch fresh statistics from Edge database">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -109,7 +118,7 @@ import Footer from '../components/Footer.astro';
               <path d="M1 20v-6h6"></path>
               <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
             </svg>
-            <span>Refresh</span>
+            <span>Sync</span>
           </button>
 
           <button type="button" id="btn-admin-logout" class="btn-logout" title="Sign out of admin session">
@@ -153,14 +162,14 @@ import Footer from '../components/Footer.astro';
                   <span class="info-tooltip">The total number of times your website pages were opened by visitors across Ghana and worldwide.</span>
                 </span>
               </span>
-              <span class="metric-trend trend-up">+18.4%</span>
+              <span class="metric-trend trend-up">● Edge D1</span>
             </div>
-            <div class="metric-value" id="val-page-views">14,820</div>
+            <div class="metric-value" id="val-page-views">0</div>
             <div class="metric-sub">
-              4,150 Unique Visitors (30d)
+              <span id="val-unique-visitors">0</span> Unique Visitors (Hashed)
               <span class="info-dot" tabindex="0" role="tooltip">
                 i
-                <span class="info-tooltip">The number of distinct, separate individuals who viewed your services.</span>
+                <span class="info-tooltip">The number of distinct, separate individuals who viewed your services. Calculated via privacy-first daily session hashing.</span>
               </span>
             </div>
           </div>
@@ -174,9 +183,9 @@ import Footer from '../components/Footer.astro';
                   <span class="info-tooltip">How many times families downloaded your official eulogy guides, brochure blueprints, and planning checklists.</span>
                 </span>
               </span>
-              <span class="metric-trend trend-up">+32.1%</span>
+              <span class="metric-trend trend-up">● Real Clicks</span>
             </div>
-            <div class="metric-value" id="val-pdf-downloads">684</div>
+            <div class="metric-value" id="val-pdf-downloads">0</div>
             <div class="metric-sub">
               100% Attribution Tracked
               <span class="info-dot" tabindex="0" role="tooltip">
@@ -195,9 +204,9 @@ import Footer from '../components/Footer.astro';
                   <span class="info-tooltip">What families type into your search bar. Highlights their most urgent funeral planning questions.</span>
                 </span>
               </span>
-              <span class="metric-trend trend-up">+15.8%</span>
+              <span class="metric-trend trend-up">● Search Log</span>
             </div>
-            <div class="metric-value" id="val-search-queries">942</div>
+            <div class="metric-value" id="val-search-queries">0</div>
             <div class="metric-sub">Live search intentions</div>
           </div>
 
@@ -207,13 +216,13 @@ import Footer from '../components/Footer.astro';
                 Consultation Inquiries
                 <span class="info-dot" tabindex="0" role="tooltip">
                   i
-                  <span class="info-tooltip">Bereaved families who submitted the online booking form to schedule a formal listening session.</span>
+                  <span class="info-tooltip">Bereaved families who clicked the online booking consultation actions to schedule a formal listening session.</span>
                 </span>
               </span>
-              <span class="metric-trend trend-up">+24.0%</span>
+              <span class="metric-trend trend-up">● Booking CTA</span>
             </div>
-            <div class="metric-value" id="val-consultations">42</div>
-            <div class="metric-sub">62% Diaspora (UK, US, Canada)</div>
+            <div class="metric-value" id="val-consultations">0</div>
+            <div class="metric-sub">Listening session requests</div>
           </div>
 
           <div class="metric-card">
@@ -225,9 +234,9 @@ import Footer from '../components/Footer.astro';
                   <span class="info-tooltip">Families who tapped the brown WhatsApp button to message your team directly for instant support.</span>
                 </span>
               </span>
-              <span class="metric-trend trend-up">+12.5%</span>
+              <span class="metric-trend trend-up">● Instant Desk</span>
             </div>
-            <div class="metric-value" id="val-whatsapp">129</div>
+            <div class="metric-value" id="val-whatsapp">0</div>
             <div class="metric-sub">Direct family conversations</div>
           </div>
         </div>
@@ -251,72 +260,10 @@ import Footer from '../components/Footer.astro';
 
             <div class="download-breakdown-list" id="download-breakdown-list">
               <!-- Rendered via JavaScript from live analytics API -->
-              <div class="dl-row">
-                <div class="dl-row__info">
-                  <div class="dl-row__title">
-                    <span class="dl-type-pill">PDF</span>
-                    <strong>Eulogy Reflection &amp; Writing Guide</strong>
-                  </div>
-                  <span class="dl-row__meta">358 KB · Quills &amp; Ink Editorial Archive</span>
-                </div>
-                <div class="dl-row__stats">
-                  <span class="dl-count">312 downloads</span>
-                  <span class="dl-percent">45.6%</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 45.6%;"></div>
-                </div>
-              </div>
-
-              <div class="dl-row">
-                <div class="dl-row__info">
-                  <div class="dl-row__title">
-                    <span class="dl-type-pill">PDF</span>
-                    <strong>Memorial Keepsake Brochure Checklist</strong>
-                  </div>
-                  <span class="dl-row__meta">224 KB · Quills &amp; Ink Print Division</span>
-                </div>
-                <div class="dl-row__stats">
-                  <span class="dl-count">218 downloads</span>
-                  <span class="dl-percent">31.9%</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 31.9%;"></div>
-                </div>
-              </div>
-
-              <div class="dl-row">
-                <div class="dl-row__info">
-                  <div class="dl-row__title">
-                    <span class="dl-type-pill">PDF</span>
-                    <strong>Selected Memorial Readings &amp; Poems</strong>
-                  </div>
-                  <span class="dl-row__meta">145 KB · Quills &amp; Ink Spoken Archives</span>
-                </div>
-                <div class="dl-row__stats">
-                  <span class="dl-count">98 downloads</span>
-                  <span class="dl-percent">14.3%</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 14.3%;"></div>
-                </div>
-              </div>
-
-              <div class="dl-row">
-                <div class="dl-row__info">
-                  <div class="dl-row__title">
-                    <span class="dl-type-pill">PDF</span>
-                    <strong>Master Family Memorial Planning Guide</strong>
-                  </div>
-                  <span class="dl-row__meta">358 KB · Quills &amp; Ink Central Archive</span>
-                </div>
-                <div class="dl-row__stats">
-                  <span class="dl-count">56 downloads</span>
-                  <span class="dl-percent">8.2%</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 8.2%;"></div>
-                </div>
+              <div class="empty-stream-notice">
+                <div class="empty-icon">📥</div>
+                <p><strong>Connecting to D1 Download Logs...</strong></p>
+                <span class="empty-sub">Counting verified PDF downloads from memorial resource slots.</span>
               </div>
             </div>
           </div>
@@ -338,31 +285,11 @@ import Footer from '../components/Footer.astro';
             </div>
 
             <div class="live-events-stream" id="live-events-container">
-              <div class="event-item">
-                <div class="event-badge badge-dl">DOWNLOAD</div>
-                <div class="event-details">
-                  <div class="event-headline">Eulogy Reflection &amp; Writing Guide</div>
-                  <div class="event-meta">URL: /downloads/eulogy-writing-guide.pdf · London, UK</div>
-                </div>
-                <div class="event-time">3m ago</div>
-              </div>
-
-              <div class="event-item">
-                <div class="event-badge badge-wa">WHATSAPP</div>
-                <div class="event-details">
-                  <div class="event-headline">Direct WhatsApp consultation desk click</div>
-                  <div class="event-meta">Origin: Homepage CTA Band · Accra, Ghana</div>
-                </div>
-                <div class="event-time">14m ago</div>
-              </div>
-
-              <div class="event-item">
-                <div class="event-badge badge-search">SEARCH</div>
-                <div class="event-details">
-                  <div class="event-headline">Query: "diaspora booking process"</div>
-                  <div class="event-meta">Site Search Modal · Toronto, Canada</div>
-                </div>
-                <div class="event-time">26m ago</div>
+              <!-- Rendered dynamically via JavaScript from live D1 event table -->
+              <div class="empty-stream-notice">
+                <div class="empty-icon">📡</div>
+                <p><strong>Awaiting Live Visitor Touchpoints</strong></p>
+                <span class="empty-sub">Real-time edge listener is active. As soon as visitors read pages, download guides, or click WhatsApp, events will appear here automatically.</span>
               </div>
             </div>
           </div>
@@ -635,64 +562,11 @@ import Footer from '../components/Footer.astro';
             </div>
 
             <div class="diaspora-list" id="diaspora-list-container">
-              <div class="diaspora-item">
-                <div class="diaspora-item__header">
-                  <span class="diaspora-flag">🇬🇭</span>
-                  <strong>Accra &amp; Greater Accra (Ghana)</strong>
-                  <span class="diaspora-inquiries">16 Consultations</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 38%;"></div>
-                </div>
-                <div class="diaspora-stat">38% of total traffic</div>
-              </div>
-
-              <div class="diaspora-item">
-                <div class="diaspora-item__header">
-                  <span class="diaspora-flag">🇬🇧</span>
-                  <strong>London &amp; Greater London (UK)</strong>
-                  <span class="diaspora-inquiries">12 Consultations</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 27%;"></div>
-                </div>
-                <div class="diaspora-stat">27% of total traffic · High WhatsApp inquiry volume</div>
-              </div>
-
-              <div class="diaspora-item">
-                <div class="diaspora-item__header">
-                  <span class="diaspora-flag">🇺🇸</span>
-                  <strong>New York, Atlanta &amp; Maryland (USA)</strong>
-                  <span class="diaspora-inquiries">8 Consultations</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 19%;"></div>
-                </div>
-                <div class="diaspora-stat">19% of total traffic</div>
-              </div>
-
-              <div class="diaspora-item">
-                <div class="diaspora-item__header">
-                  <span class="diaspora-flag">🇨🇦</span>
-                  <strong>Toronto &amp; Montreal (Canada)</strong>
-                  <span class="diaspora-inquiries">4 Consultations</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 11%;"></div>
-                </div>
-                <div class="diaspora-stat">11% of total traffic</div>
-              </div>
-
-              <div class="diaspora-item">
-                <div class="diaspora-item__header">
-                  <span class="diaspora-flag">🇩🇪</span>
-                  <strong>Hamburg &amp; Berlin (Germany)</strong>
-                  <span class="diaspora-inquiries">2 Consultations</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar-fill" style="width: 5%;"></div>
-                </div>
-                <div class="diaspora-stat">5% of total traffic</div>
+              <!-- Rendered dynamically via JavaScript from live D1 geolocation records -->
+              <div class="empty-stream-notice">
+                <div class="empty-icon">🌍</div>
+                <p><strong>Tracking Visitor Geolocation...</strong></p>
+                <span class="empty-sub">Cloudflare Edge will chart diaspora family visits (Ghana, UK, US, Canada, etc.) as live traffic enters.</span>
               </div>
             </div>
           </div>
@@ -723,35 +597,11 @@ import Footer from '../components/Footer.astro';
                   </tr>
                 </thead>
                 <tbody id="top-search-tbody">
+                  <!-- Rendered dynamically via JavaScript from live D1 search table -->
                   <tr>
-                    <td><strong class="query-text">"eulogy structure"</strong></td>
-                    <td>184 queries</td>
-                    <td><span class="match-tag">Literary Guide (PDF)</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong class="query-text">"memorial brochure photos"</strong></td>
-                    <td>142 queries</td>
-                    <td><span class="match-tag">Brochure Checklist</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong class="query-text">"diaspora booking"</strong></td>
-                    <td>118 queries</td>
-                    <td><span class="match-tag">Packages · Diaspora</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong class="query-text">"akan funeral rites"</strong></td>
-                    <td>96 queries</td>
-                    <td><span class="match-tag">Consultation Services</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong class="query-text">"tier 2 pricing"</strong></td>
-                    <td>87 queries</td>
-                    <td><span class="match-tag">Packages · Tier II</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong class="query-text">"eulogy guide pdf"</strong></td>
-                    <td>79 queries</td>
-                    <td><span class="match-tag">Direct PDF Download</span></td>
+                    <td colspan="3" style="text-align: center; color: var(--color-muted); padding: 1.75rem;">
+                      Connecting to search logs. When visitors search for eulogies or brochures, their queries will rank here.
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -813,15 +663,36 @@ import Footer from '../components/Footer.astro';
       return false;
     }
 
+    let realtimePollInterval = null;
+
+    function startRealtimeSync() {
+      if (realtimePollInterval) clearInterval(realtimePollInterval);
+      // Poll every 4 seconds for immediate real-time response
+      realtimePollInterval = setInterval(() => {
+        if (!document.hidden && sessionStorage.getItem(SESSION_KEY)) {
+          loadLiveAnalytics(false);
+        }
+      }, 4000);
+    }
+
+    function stopRealtimeSync() {
+      if (realtimePollInterval) {
+        clearInterval(realtimePollInterval);
+        realtimePollInterval = null;
+      }
+    }
+
     function showDashboard() {
       if (loginView) loginView.style.display = 'none';
       if (dashboardView) {
         dashboardView.style.display = 'block';
         dashboardView.scrollIntoView({ behavior: 'smooth' });
       }
+      startRealtimeSync();
     }
 
     function showLogin() {
+      stopRealtimeSync();
       if (loginView) loginView.style.display = 'flex';
       if (dashboardView) dashboardView.style.display = 'none';
     }
@@ -894,13 +765,62 @@ import Footer from '../components/Footer.astro';
       showLogin();
     });
 
-    // Refresh live analytics
+    // Refresh / Sync button
     refreshBtn?.addEventListener('click', () => {
       loadLiveAnalytics(true);
     });
 
+    // Country flags dictionary
+    const COUNTRY_FLAG_MAP = {
+      GH: { flag: '🇬🇭', name: 'Ghana' },
+      GB: { flag: '🇬🇧', name: 'United Kingdom' },
+      US: { flag: '🇺🇸', name: 'United States' },
+      CA: { flag: '🇨🇦', name: 'Canada' },
+      DE: { flag: '🇩🇪', name: 'Germany' },
+      NG: { flag: '🇳🇬', name: 'Nigeria' },
+      NL: { flag: '🇳🇱', name: 'Netherlands' },
+      FR: { flag: '🇫🇷', name: 'France' },
+      IT: { flag: '🇮🇹', name: 'Italy' },
+      ZA: { flag: '🇿🇦', name: 'South Africa' },
+      AU: { flag: '🇦🇺', name: 'Australia' },
+      IE: { flag: '🇮🇪', name: 'Ireland' },
+    };
+
+    function formatTimeAgo(isoString) {
+      if (!isoString) return 'just now';
+      const diffSec = Math.floor((Date.now() - new Date(isoString).getTime()) / 1000);
+      if (diffSec < 5) return 'just now';
+      if (diffSec < 60) return `${diffSec}s ago`;
+      const diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return `${diffMin}m ago`;
+      const diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return `${diffHr}h ago`;
+      return `${Math.floor(diffHr / 24)}d ago`;
+    }
+
+    function getEventBadge(eventName) {
+      switch (eventName) {
+        case 'file_download': return { class: 'badge-dl', label: 'DOWNLOAD' };
+        case 'site_search_query': return { class: 'badge-search', label: 'SEARCH' };
+        case 'whatsapp_chat_click': return { class: 'badge-wa', label: 'WHATSAPP' };
+        case 'consultation_cta_click': return { class: 'badge-book', label: 'CONSULTATION' };
+        case 'page_view': return { class: 'badge-pv', label: 'PAGE VIEW' };
+        default: return { class: 'badge-dl', label: 'TOUCHPOINT' };
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     // -------------------------------------------------------------------------
-    // Live Edge Analytics Data Loader
+    // Live Edge Analytics Data Loader (Querying Cloudflare D1 Real Tables)
     // -------------------------------------------------------------------------
     async function loadLiveAnalytics(isManual = false) {
       if (refreshBtn && isManual) {
@@ -908,23 +828,25 @@ import Footer from '../components/Footer.astro';
       }
 
       try {
-        const res = await fetch('/api/analytics');
+        const res = await fetch('/api/analytics', { cache: 'no-store' });
         if (!res.ok) return;
         const data = await res.json();
 
         // 1. Update Overview metrics
         if (data.overview) {
           const pv = document.getElementById('val-page-views');
+          const uv = document.getElementById('val-unique-visitors');
           const dl = document.getElementById('val-pdf-downloads');
           const sq = document.getElementById('val-search-queries');
           const ci = document.getElementById('val-consultations');
           const wa = document.getElementById('val-whatsapp');
 
-          if (pv) pv.textContent = data.overview.pageViews.toLocaleString();
-          if (dl) dl.textContent = data.overview.pdfDownloads.toLocaleString();
-          if (sq) sq.textContent = data.overview.searchQueries.toLocaleString();
-          if (ci) ci.textContent = data.overview.consultationInquiries.toLocaleString();
-          if (wa) wa.textContent = data.overview.whatsappChats.toLocaleString();
+          if (pv) pv.textContent = Number(data.overview.pageViews || 0).toLocaleString();
+          if (uv) uv.textContent = Number(data.overview.uniqueVisitors || 0).toLocaleString();
+          if (dl) dl.textContent = Number(data.overview.pdfDownloads || 0).toLocaleString();
+          if (sq) sq.textContent = Number(data.overview.searchQueries || 0).toLocaleString();
+          if (ci) ci.textContent = Number(data.overview.consultationInquiries || 0).toLocaleString();
+          if (wa) wa.textContent = Number(data.overview.whatsappChats || 0).toLocaleString();
         }
 
         // 2. Storage Mode indicator
@@ -934,9 +856,9 @@ import Footer from '../components/Footer.astro';
         }
 
         // 3. Update Download Breakdown List
-        if (data.downloads && data.downloads.length) {
-          const dlContainer = document.getElementById('download-breakdown-list');
-          if (dlContainer) {
+        const dlContainer = document.getElementById('download-breakdown-list');
+        if (dlContainer) {
+          if (data.downloads && data.downloads.length > 0) {
             dlContainer.innerHTML = data.downloads
               .map(
                 (item) => `
@@ -944,9 +866,9 @@ import Footer from '../components/Footer.astro';
                   <div class="dl-row__info">
                     <div class="dl-row__title">
                       <span class="dl-type-pill">PDF</span>
-                      <strong>${item.name}</strong>
+                      <strong>${escapeHtml(item.name)}</strong>
                     </div>
-                    <span class="dl-row__meta">${item.size} · ${item.attribution}</span>
+                    <span class="dl-row__meta">${item.size} · ${escapeHtml(item.attribution)}</span>
                   </div>
                   <div class="dl-row__stats">
                     <span class="dl-count">${item.downloads} downloads</span>
@@ -959,6 +881,166 @@ import Footer from '../components/Footer.astro';
               `
               )
               .join('');
+          } else {
+            dlContainer.innerHTML = `
+              <div class="empty-stream-notice">
+                <div class="empty-icon">📥</div>
+                <p><strong>No PDF Downloads Recorded Yet</strong></p>
+                <span class="empty-sub">When families download keepsake guides or brochures, counts and breakdown bars will automatically reflect here.</span>
+              </div>
+            `;
+          }
+        }
+
+        // 4. Tab 2 Resources Table Update
+        const resourceTbody = document.getElementById('resource-slots-tbody');
+        if (resourceTbody && data.downloads && data.downloads.length) {
+          resourceTbody.innerHTML = data.downloads
+            .map(
+              (item) => `
+              <tr>
+                <td>
+                  <strong>${escapeHtml(item.name)}</strong>
+                  <div class="tbl-sub">${escapeHtml(item.attribution || 'Curated memorial resource')}</div>
+                </td>
+                <td><span class="category-badge">${escapeHtml(item.category)}</span></td>
+                <td><code class="inline-code">${escapeHtml(item.file.split('/').pop())}</code></td>
+                <td>${item.size}</td>
+                <td><strong>${item.downloads}</strong></td>
+                <td>
+                  <div class="table-actions">
+                    <a href="${item.file}" download class="btn-table-action" title="Download current file">Download</a>
+                    <button type="button" class="btn-table-action btn-replace-trigger" data-slot="${item.id}">Update</button>
+                  </div>
+                </td>
+              </tr>
+            `
+            )
+            .join('');
+
+          // Re-bind replace buttons
+          resourceTbody.querySelectorAll('.btn-replace-trigger').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+              const slot = e.currentTarget.getAttribute('data-slot');
+              if (slot && uploadSlotSelect) {
+                uploadSlotSelect.value = slot;
+                document.querySelector('.upload-workflow-card')?.scrollIntoView({ behavior: 'smooth' });
+                uploadFileInput?.focus();
+              }
+            });
+          });
+        }
+
+        // 5. Real-Time Activity Feed Update
+        const eventsContainer = document.getElementById('live-events-container');
+        if (eventsContainer) {
+          if (data.recentEvents && data.recentEvents.length > 0) {
+            eventsContainer.innerHTML = data.recentEvents
+              .map((ev) => {
+                const badge = getEventBadge(ev.event);
+                const flagMeta = ev.country ? COUNTRY_FLAG_MAP[ev.country.toUpperCase()] : null;
+                const flag = flagMeta ? flagMeta.flag : '🌐';
+                const countryName = flagMeta ? flagMeta.name : (ev.country || 'Global');
+                const location = ev.city && ev.city !== 'Unknown' && ev.city !== 'null' ? `${ev.city}, ${countryName}` : countryName;
+
+                let headline = 'Visitor activity';
+                let meta = `Location: ${flag} ${location}`;
+
+                if (ev.event === 'file_download') {
+                  headline = `Downloaded: ${ev.file_name || 'Memorial Resource Guide'}`;
+                  meta = `File: ${ev.file_url || ev.path || ''} · ${flag} ${location}`;
+                } else if (ev.event === 'site_search_query') {
+                  headline = `Search Query: "${ev.query || ''}"`;
+                  meta = `Site Search Modal · ${flag} ${location}`;
+                } else if (ev.event === 'whatsapp_chat_click') {
+                  headline = `Direct WhatsApp Consultation Desk`;
+                  meta = `Direct message initiated · ${flag} ${location}`;
+                } else if (ev.event === 'consultation_cta_click') {
+                  headline = `Formal Listening Consultation Click`;
+                  meta = `Origin: ${ev.path || '/'} · ${flag} ${location}`;
+                } else if (ev.event === 'page_view') {
+                  headline = `Viewed page: ${ev.path || '/'}`;
+                  meta = `Live website visit · ${flag} ${location}`;
+                }
+
+                return `
+                  <div class="event-item event-item--fresh">
+                    <div class="event-badge ${badge.class}">${badge.label}</div>
+                    <div class="event-details">
+                      <div class="event-headline">${escapeHtml(headline)}</div>
+                      <div class="event-meta">${escapeHtml(meta)}</div>
+                    </div>
+                    <div class="event-time">${formatTimeAgo(ev.time)}</div>
+                  </div>
+                `;
+              })
+              .join('');
+          } else {
+            eventsContainer.innerHTML = `
+              <div class="empty-stream-notice">
+                <div class="empty-icon">📡</div>
+                <p><strong>Awaiting Live Visitor Touchpoints</strong></p>
+                <span class="empty-sub">Real-time edge listener is active. As soon as visitors read pages, download guides, or click WhatsApp, events will appear here automatically.</span>
+              </div>
+            `;
+          }
+        }
+
+        // 6. Real Diaspora Geography Update
+        const diasporaContainer = document.getElementById('diaspora-list-container');
+        if (diasporaContainer) {
+          if (data.diasporaReach && data.diasporaReach.length > 0) {
+            diasporaContainer.innerHTML = data.diasporaReach
+              .map(
+                (d) => `
+                <div class="diaspora-item">
+                  <div class="diaspora-item__header">
+                    <span class="diaspora-flag">${d.flag || '🌐'}</span>
+                    <strong>${escapeHtml(d.region)}</strong>
+                    ${d.inquiries > 0 ? `<span class="diaspora-inquiries">${d.inquiries} Inquiries</span>` : ''}
+                  </div>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width: ${d.percent}%;"></div>
+                  </div>
+                  <div class="diaspora-stat">${d.percent}% of total traffic (${d.totalEvents || 0} visits)</div>
+                </div>
+              `
+              )
+              .join('');
+          } else {
+            diasporaContainer.innerHTML = `
+              <div class="empty-stream-notice">
+                <div class="empty-icon">🌍</div>
+                <p><strong>Tracking Visitor Geolocation...</strong></p>
+                <span class="empty-sub">Cloudflare Edge will chart diaspora family visits (Ghana, UK, US, Canada, etc.) as live traffic enters.</span>
+              </div>
+            `;
+          }
+        }
+
+        // 7. Real Top Search Queries Update
+        const searchTbody = document.getElementById('top-search-tbody');
+        if (searchTbody) {
+          if (data.topSearchQueries && data.topSearchQueries.length > 0) {
+            searchTbody.innerHTML = data.topSearchQueries
+              .map(
+                (q) => `
+                <tr>
+                  <td><strong class="query-text">"${escapeHtml(q.query)}"</strong></td>
+                  <td>${q.count} queries</td>
+                  <td><span class="match-tag">Live Search Log</span></td>
+                </tr>
+              `
+              )
+              .join('');
+          } else {
+            searchTbody.innerHTML = `
+              <tr>
+                <td colspan="3" style="text-align: center; color: var(--color-muted); padding: 1.75rem;">
+                  No searches logged yet. When visitors search for eulogies or brochures, their queries will rank here.
+                </td>
+              </tr>
+            `;
           }
         }
       } catch (err) {
@@ -969,6 +1051,40 @@ import Footer from '../components/Footer.astro';
         }
       }
     }
+
+    // -------------------------------------------------------------------------
+    // Real-Time Simulator Button Listener
+    // -------------------------------------------------------------------------
+    const testEventBtn = document.getElementById('btn-test-live-event');
+    const simulationPool = [
+      { event: 'file_download', file_name: 'Eulogy Reflection & Writing Guide', file_url: '/downloads/eulogy-writing-guide.pdf', path: '/literary', country: 'GB', city: 'London' },
+      { event: 'site_search_query', query: 'order of service hymns', path: '/', country: 'GH', city: 'Accra' },
+      { event: 'whatsapp_chat_click', path: '/contact', country: 'US', city: 'New York' },
+      { event: 'file_download', file_name: 'Memorial Keepsake Brochure Checklist', file_url: '/downloads/memorial-brochure-checklist.pdf', path: '/literary', country: 'CA', city: 'Toronto' },
+      { event: 'consultation_cta_click', path: '/packages', country: 'GH', city: 'Kumasi' },
+      { event: 'page_view', path: '/about', country: 'DE', city: 'Hamburg' },
+    ];
+
+    testEventBtn?.addEventListener('click', async () => {
+      const sample = simulationPool[Math.floor(Math.random() * simulationPool.length)];
+      testEventBtn.disabled = true;
+      testEventBtn.innerHTML = '<span>⚡ Syncing...</span>';
+      try {
+        await fetch('/api/analytics', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sample),
+        });
+        await loadLiveAnalytics(true);
+      } catch (e) {
+        console.error('Test event error:', e);
+      } finally {
+        setTimeout(() => {
+          testEventBtn.disabled = false;
+          testEventBtn.innerHTML = '<span>⚡ Test Live Event</span>';
+        }, 600);
+      }
+    });
 
     // -------------------------------------------------------------------------
     // Document Upload Handler (Cloudflare R2 with 10MB limit & Slot checking)
@@ -1088,73 +1204,8 @@ import Footer from '../components/Footer.astro';
       });
     });
 
-    // -------------------------------------------------------------------------
-    // Live Event Stream Integration
-    // -------------------------------------------------------------------------
-    const eventsContainer = document.getElementById('live-events-container');
-
-    function appendLiveEvent(type, headline, meta, badgeClass) {
-      if (!eventsContainer) return;
-      const item = document.createElement('div');
-      item.className = 'event-item event-item--fresh';
-      item.innerHTML = `
-        <div class="event-badge ${badgeClass}">${type}</div>
-        <div class="event-details">
-          <div class="event-headline">${headline}</div>
-          <div class="event-meta">${meta}</div>
-        </div>
-        <div class="event-time">Just now</div>
-      `;
-      eventsContainer.insertBefore(item, eventsContainer.firstChild);
-
-      while (eventsContainer.children.length > 15) {
-        eventsContainer.removeChild(eventsContainer.lastChild);
-      }
-    }
-
-    // Listen to real application analytics events
-    window.addEventListener('quills:analytics', (e) => {
-      const detail = e.detail || {};
-      if (detail.event === 'file_download') {
-        appendLiveEvent(
-          'DOWNLOAD',
-          detail.file_name || 'Memorial Resource Download',
-          `URL: ${detail.file_url} · Attribution: ${detail.attribution || 'Quills & Ink'}`,
-          'badge-dl'
-        );
-      } else if (detail.event === 'site_search_query') {
-        appendLiveEvent(
-          'SEARCH',
-          `Query: "${detail.query}"`,
-          `Live user search input from site modal`,
-          'badge-search'
-        );
-      } else if (detail.event === 'whatsapp_chat_click') {
-        appendLiveEvent(
-          'WHATSAPP',
-          'Direct WhatsApp chat initiation',
-          `Origin: ${detail.page || 'Website'}`,
-          'badge-wa'
-        );
-      } else {
-        appendLiveEvent(
-          'EVENT',
-          detail.event,
-          `Path: ${detail.path || window.location.pathname}`,
-          'badge-book'
-        );
-      }
-    });
-
     // Check session on page load
     checkSession();
-
-    // Auto-refresh analytics every 45s while page is open
-    setInterval(() => {
-      if (dashboardView && dashboardView.style.display !== 'none') {
-        loadLiveAnalytics();
-      }
-    }, 45000);
   })();
 </script>
 
@@ -1502,6 +1553,53 @@ import Footer from '../components/Footer.astro';
     to { transform: rotate(360deg); }
   }
 
+  .live-sync-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #065f46;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+  }
+
+  .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: livePulse 1.8s infinite;
+  }
+
+  @keyframes livePulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  }
+
+  .btn-quick-test {
+    background: #fff8f1;
+    border: 1px solid var(--color-peach);
+    color: var(--color-peach-deep);
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-quick-test:hover {
+    background: var(--color-peach);
+    color: white;
+  }
+
   .btn-logout {
     display: inline-flex;
     align-items: center;
@@ -1787,6 +1885,37 @@ import Footer from '../components/Footer.astro';
   .badge-wa { background: #dcfce7; color: #166534; }
   .badge-search { background: #fef3c7; color: #92400e; }
   .badge-book { background: #f3e8ff; color: #6b21a8; }
+  .badge-pv { background: #e0f2fe; color: #0369a1; }
+
+  .empty-stream-notice {
+    padding: 2.25rem 1.5rem;
+    text-align: center;
+    background: var(--color-white);
+    border: 1px dashed var(--color-line);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .empty-stream-notice .empty-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .empty-stream-notice strong {
+    color: var(--color-charcoal);
+    font-size: 0.88rem;
+  }
+
+  .empty-stream-notice .empty-sub {
+    font-size: 0.76rem;
+    color: var(--color-muted);
+    max-width: 320px;
+    line-height: 1.45;
+  }
 
   .event-details {
     flex-grow: 1;
