@@ -203,6 +203,18 @@ ul {
   color: var(--color-white);
 }
 
+.btn--brown {
+  background: var(--color-wood, #3d3226);
+  color: var(--color-white, #ffffff);
+  border: 1px solid rgba(201, 168, 146, 0.4);
+}
+
+.btn--brown:hover {
+  background: var(--color-charcoal, #2c2416);
+  color: var(--color-white, #ffffff);
+  border-color: var(--color-peach, #c9a892);
+}
+
 .btn--ink:hover {
   background: var(--color-ink);
 }

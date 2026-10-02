@@ -85,14 +85,34 @@ const {
           window.posthog.capture(eventName, params);
         }
 
-        // Custom window event for reactive UI integrations
-        window.dispatchEvent(new CustomEvent('quills:analytics', { detail: payload }));
+        // Edge Cloudflare D1 Ingestion (Non-blocking, privacy-safe, zero cookies)
+        try {
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon('/api/analytics', JSON.stringify(payload));
+          } else {
+            fetch('/api/analytics', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              keepalive: true,
+            }).catch(() => {});
+          }
+        } catch (e) {}
 
         if (enableDebugLogging) {
           console.log(`%c[Quills Analytics] %c${eventName}`, 'color: #c9a892; font-weight: bold;', 'color: #1a1612;', payload);
         }
       },
     };
+
+    // Auto-record page view on load
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      window.quillsAnalytics.track('page_view', { title: document.title });
+    } else {
+      window.addEventListener('DOMContentLoaded', () => {
+        window.quillsAnalytics.track('page_view', { title: document.title });
+      });
+    }
 
     // 2. Download Attribution Toast Notification Helper
     function showDownloadToast(fileName, attribution = 'Quills & Ink Editorial Archive') {

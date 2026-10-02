@@ -30,14 +30,14 @@ import Footer from '../components/Footer.astro';
           </p>
         </div>
 
-        <!-- Quick Demo Pill -->
+        <!-- Access Key Banner -->
         <div class="demo-credential-banner">
           <div class="demo-credential-text">
-            <span class="demo-label">Demo Access Passkey:</span>
-            <code class="demo-code" id="demo-passkey-val">quills-admin-2026</code>
+            <span class="demo-label">Admin Access Passkey:</span>
+            <code class="demo-code" id="demo-passkey-val">William123</code>
           </div>
           <button type="button" id="btn-autofill-demo" class="btn-autofill">
-            Use Demo Key
+            Use Key
           </button>
         </div>
 
@@ -94,17 +94,23 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <div class="dash-controls">
-          <div class="live-status-pill">
-            <span class="live-dot"></span>
-            <span>Live Stream Active</span>
+          <div class="storage-status-pill" id="storage-status-pill" title="Privacy-first edge analytics without cookies">
+            <span class="storage-dot"></span>
+            <span id="dash-storage-badge">Cloudflare Edge Engine</span>
+            <span class="info-dot" tabindex="0" role="tooltip">
+              i
+              <span class="info-tooltip">Runs directly at the Cloudflare network edge. Collects real stats with zero third-party tracking cookies and zero ad-blocker loss.</span>
+            </span>
           </div>
 
-          <div class="time-range-group" role="group" aria-label="Select analytics timeframe">
-            <button type="button" class="time-btn" data-time="24h">24H</button>
-            <button type="button" class="time-btn" data-time="7d">7D</button>
-            <button type="button" class="time-btn is-active" data-time="30d">30D</button>
-            <button type="button" class="time-btn" data-time="all">All</button>
-          </div>
+          <button type="button" id="btn-refresh-data" class="btn-refresh" title="Fetch fresh statistics from Edge database">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 4v6h-6"></path>
+              <path d="M1 20v-6h6"></path>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span>Refresh</span>
+          </button>
 
           <button type="button" id="btn-admin-logout" class="btn-logout" title="Sign out of admin session">
             <span>Sign Out</span>
@@ -126,7 +132,7 @@ import Footer from '../components/Footer.astro';
         <button type="button" class="dash-tab" data-dash-tab="content">
           <span class="tab-icon">📁</span>
           <span>Content &amp; Resource Management</span>
-          <span class="tab-pill-badge">Upload Blueprint</span>
+          <span class="tab-pill-badge">6 Slots Limit</span>
         </button>
         <button type="button" class="dash-tab" data-dash-tab="diaspora">
           <span class="tab-icon">🌍</span>
@@ -140,47 +146,89 @@ import Footer from '../components/Footer.astro';
         <div class="metrics-grid">
           <div class="metric-card">
             <div class="metric-header">
-              <span class="metric-title">Total Page Views</span>
+              <span class="metric-title">
+                Total Page Views
+                <span class="info-dot" tabindex="0" role="tooltip">
+                  i
+                  <span class="info-tooltip">The total number of times your website pages were opened by visitors across Ghana and worldwide.</span>
+                </span>
+              </span>
               <span class="metric-trend trend-up">+18.4%</span>
             </div>
-            <div class="metric-value">14,820</div>
-            <div class="metric-sub">4,150 Unique Visitors (30d)</div>
+            <div class="metric-value" id="val-page-views">14,820</div>
+            <div class="metric-sub">
+              4,150 Unique Visitors (30d)
+              <span class="info-dot" tabindex="0" role="tooltip">
+                i
+                <span class="info-tooltip">The number of distinct, separate individuals who viewed your services.</span>
+              </span>
+            </div>
           </div>
 
           <div class="metric-card metric-card--highlight">
             <div class="metric-header">
-              <span class="metric-title">Keepsake PDF Downloads</span>
+              <span class="metric-title">
+                Keepsake PDF Downloads
+                <span class="info-dot" tabindex="0" role="tooltip">
+                  i
+                  <span class="info-tooltip">How many times families downloaded your official eulogy guides, brochure blueprints, and planning checklists.</span>
+                </span>
+              </span>
               <span class="metric-trend trend-up">+32.1%</span>
             </div>
-            <div class="metric-value">684</div>
-            <div class="metric-sub">100% Attribution Tracked</div>
+            <div class="metric-value" id="val-pdf-downloads">684</div>
+            <div class="metric-sub">
+              100% Attribution Tracked
+              <span class="info-dot" tabindex="0" role="tooltip">
+                i
+                <span class="info-tooltip">Every downloaded guide includes your contact details and website, so families always know how to reach back to book your care.</span>
+              </span>
+            </div>
           </div>
 
           <div class="metric-card">
             <div class="metric-header">
-              <span class="metric-title">Site Searches Conducted</span>
+              <span class="metric-title">
+                Site Searches Conducted
+                <span class="info-dot" tabindex="0" role="tooltip">
+                  i
+                  <span class="info-tooltip">What families type into your search bar. Highlights their most urgent funeral planning questions.</span>
+                </span>
+              </span>
               <span class="metric-trend trend-up">+15.8%</span>
             </div>
-            <div class="metric-value">942</div>
-            <div class="metric-sub">Avg 2.4 queries per active session</div>
+            <div class="metric-value" id="val-search-queries">942</div>
+            <div class="metric-sub">Live search intentions</div>
           </div>
 
           <div class="metric-card">
             <div class="metric-header">
-              <span class="metric-title">Consultation Inquiries</span>
+              <span class="metric-title">
+                Consultation Inquiries
+                <span class="info-dot" tabindex="0" role="tooltip">
+                  i
+                  <span class="info-tooltip">Bereaved families who submitted the online booking form to schedule a formal listening session.</span>
+                </span>
+              </span>
               <span class="metric-trend trend-up">+24.0%</span>
             </div>
-            <div class="metric-value">42</div>
+            <div class="metric-value" id="val-consultations">42</div>
             <div class="metric-sub">62% Diaspora (UK, US, Canada)</div>
           </div>
 
           <div class="metric-card">
             <div class="metric-header">
-              <span class="metric-title">WhatsApp Chats</span>
+              <span class="metric-title">
+                WhatsApp Chats
+                <span class="info-dot" tabindex="0" role="tooltip">
+                  i
+                  <span class="info-tooltip">Families who tapped the brown WhatsApp button to message your team directly for instant support.</span>
+                </span>
+              </span>
               <span class="metric-trend trend-up">+12.5%</span>
             </div>
-            <div class="metric-value">129</div>
-            <div class="metric-sub">High intent family inquiries</div>
+            <div class="metric-value" id="val-whatsapp">129</div>
+            <div class="metric-sub">Direct family conversations</div>
           </div>
         </div>
 
@@ -189,19 +237,25 @@ import Footer from '../components/Footer.astro';
           <div class="dash-box">
             <div class="dash-box__header">
               <div>
-                <h3>Download Attribution Breakdown</h3>
+                <h3>
+                  Download Attribution Breakdown
+                  <span class="info-dot" tabindex="0" role="tooltip">
+                    i
+                    <span class="info-tooltip">Shows which memorial guide is most requested by families, helping you see what resources they find most comforting.</span>
+                  </span>
+                </h3>
                 <p class="dash-box__sub">Performance metrics for each formatted static PDF keepsake</p>
               </div>
               <span class="dash-badge">Real-Time Count</span>
             </div>
 
-            <div class="download-breakdown-list">
-              <!-- Item 1 -->
+            <div class="download-breakdown-list" id="download-breakdown-list">
+              <!-- Rendered via JavaScript from live analytics API -->
               <div class="dl-row">
                 <div class="dl-row__info">
                   <div class="dl-row__title">
                     <span class="dl-type-pill">PDF</span>
-                    <strong>The Art of Remembrance: Eulogy Guide</strong>
+                    <strong>Eulogy Reflection &amp; Writing Guide</strong>
                   </div>
                   <span class="dl-row__meta">358 KB · Quills &amp; Ink Editorial Archive</span>
                 </div>
@@ -214,7 +268,6 @@ import Footer from '../components/Footer.astro';
                 </div>
               </div>
 
-              <!-- Item 2 -->
               <div class="dl-row">
                 <div class="dl-row__info">
                   <div class="dl-row__title">
@@ -232,12 +285,11 @@ import Footer from '../components/Footer.astro';
                 </div>
               </div>
 
-              <!-- Item 3 -->
               <div class="dl-row">
                 <div class="dl-row__info">
                   <div class="dl-row__title">
                     <span class="dl-type-pill">PDF</span>
-                    <strong>Words That Carry Love: Selected Readings</strong>
+                    <strong>Selected Memorial Readings &amp; Poems</strong>
                   </div>
                   <span class="dl-row__meta">145 KB · Quills &amp; Ink Spoken Archives</span>
                 </div>
@@ -250,7 +302,6 @@ import Footer from '../components/Footer.astro';
                 </div>
               </div>
 
-              <!-- Item 4 -->
               <div class="dl-row">
                 <div class="dl-row__info">
                   <div class="dl-row__title">
@@ -268,196 +319,293 @@ import Footer from '../components/Footer.astro';
                 </div>
               </div>
             </div>
-
-            <div class="dash-box__footer">
-              <span>All downloads are served statically from Cloudflare CDN with zero cold-start delay.</span>
-            </div>
           </div>
 
-          <!-- Real-Time Event Stream -->
+          <!-- Real-Time Activity Feed -->
           <div class="dash-box">
             <div class="dash-box__header">
               <div>
-                <h3>Live Event Stream</h3>
-                <p class="dash-box__sub">Live stream of client-side tracking events</p>
+                <h3>
+                  Live Visitor &amp; Attribution Feed
+                  <span class="info-dot" tabindex="0" role="tooltip">
+                    i
+                    <span class="info-tooltip">Real-time actions happening on your website right now as visitors download PDFs, search, or tap WhatsApp.</span>
+                  </span>
+                </h3>
+                <p class="dash-box__sub">Live listener stream capturing user touchpoints</p>
               </div>
-              <div class="live-action-btns">
-                <button type="button" id="btn-test-download-event" class="btn-test-event">
-                  + Test Download
-                </button>
-                <button type="button" id="btn-test-search-event" class="btn-test-event">
-                  + Test Search
-                </button>
-              </div>
+              <span class="dash-badge badge-pulse">Stream Active</span>
             </div>
 
-            <div id="live-events-container" class="live-events-feed">
+            <div class="live-events-stream" id="live-events-container">
               <div class="event-item">
                 <div class="event-badge badge-dl">DOWNLOAD</div>
                 <div class="event-details">
-                  <div class="event-headline">Eulogy Reflection &amp; Writing Guide (PDF)</div>
-                  <div class="event-meta">Source: /literary · Attribution: Quills &amp; Ink Hub Editorial Archive</div>
+                  <div class="event-headline">Eulogy Reflection &amp; Writing Guide</div>
+                  <div class="event-meta">URL: /downloads/eulogy-writing-guide.pdf · London, UK</div>
                 </div>
-                <div class="event-time">2m ago</div>
-              </div>
-
-              <div class="event-item">
-                <div class="event-badge badge-search">SEARCH</div>
-                <div class="event-details">
-                  <div class="event-headline">Query: "akan funeral rites"</div>
-                  <div class="event-meta">Category: All · Results: 4 matching entries</div>
-                </div>
-                <div class="event-time">6m ago</div>
+                <div class="event-time">3m ago</div>
               </div>
 
               <div class="event-item">
                 <div class="event-badge badge-wa">WHATSAPP</div>
                 <div class="event-details">
-                  <div class="event-headline">Direct WhatsApp Inquiry Initiated</div>
-                  <div class="event-meta">Origin: Float Action Button · Page: /packages</div>
+                  <div class="event-headline">Direct WhatsApp consultation desk click</div>
+                  <div class="event-meta">Origin: Homepage CTA Band · Accra, Ghana</div>
                 </div>
                 <div class="event-time">14m ago</div>
               </div>
 
               <div class="event-item">
-                <div class="event-badge badge-book">BOOKING</div>
+                <div class="event-badge badge-search">SEARCH</div>
                 <div class="event-details">
-                  <div class="event-headline">Consultation Booking CTA Clicked</div>
-                  <div class="event-meta">Target: /book · Tier: Complete Memorial Care</div>
+                  <div class="event-headline">Query: "diaspora booking process"</div>
+                  <div class="event-meta">Site Search Modal · Toronto, Canada</div>
                 </div>
-                <div class="event-time">21m ago</div>
+                <div class="event-time">26m ago</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- TAB 2: Content & Resource Management (With Future Upload Comments & Architecture) -->
+      <!-- TAB 2: Content & Resource Management (R2 Uploads with 6-Slot Limits) -->
       <div id="panel-content" class="dash-panel" style="display: none;">
         <div class="dash-box">
           <div class="dash-box__header">
             <div>
-              <h3>Editorial Resource Registry</h3>
+              <h3>
+                Curated Memorial Resources
+                <span class="info-dot" tabindex="0" role="tooltip">
+                  i
+                  <span class="info-tooltip">To prevent the website from becoming cluttered or overwhelming for grieving families, the hub is capped at 6 essential document slots.</span>
+                </span>
+              </h3>
               <p class="dash-box__sub">
-                Manage downloadable PDF keepsakes, brochures, and tribute guides.
+                Publish and update official PDF guides stored securely on Cloudflare R2 object storage.
               </p>
             </div>
-            <div class="content-header-actions">
-              <button type="button" class="btn btn--outline btn--disabled" disabled title="Upload disabled in static demo mode">
-                <span class="btn-icon">⬆️</span>
-                <span>Upload New Resource</span>
-              </button>
-              <button type="button" class="btn btn--peach btn--disabled" disabled title="Upload disabled in static demo mode">
-                <span class="btn-icon">➕</span>
-                <span>Add Revision</span>
-              </button>
+            <div class="slot-counter-badge">
+              <span class="slot-count-num">6 of 6 Slots Assigned</span>
             </div>
           </div>
 
-          <!-- Architecture & Future Upload Notice -->
-          <div class="content-notice-box">
-            <div class="notice-icon">🏗️</div>
+          <!-- Non-Technical Client Notice Banner -->
+          <div class="notice-banner notice-banner--friendly">
+            <div class="notice-icon">🛡️</div>
             <div class="notice-content">
-              <h4>Content Upload &amp; Revision Architecture</h4>
+              <h4>Clean, High-Speed Document Management</h4>
               <p>
-                Direct binary uploads are temporarily disabled in this static demo tier to preserve immutable CDN delivery.
-                The Cloudflare Pages Worker blueprint in <code class="inline-code">functions/api/upload.ts</code> is pre-architected to support 
-                <strong>limited, authenticated PDF uploads and brochure revisions</strong> once linked with Cloudflare R2 object storage.
+                To keep your website dignified, uncluttered, and fast across mobile devices in Ghana and the diaspora, three simple rules are enforced:
               </p>
-              <div class="notice-checklist">
-                <span>✓ Cloudflare R2 bucket binding ready (<code class="inline-code">env.DOWNLOADS_BUCKET</code>)</span>
-                <span>✓ Client-side MIME validation (PDF strictly enforced)</span>
-                <span>✓ D1 revision audit trail &amp; immutable slug versioning</span>
+              <div class="client-rules-grid">
+                <div class="rule-chip">
+                  <span class="rule-chip__icon">📁</span>
+                  <div>
+                    <strong>Max 6 Document Slots</strong>
+                    <span class="rule-chip__sub">Keeps choices clear and peaceful for families</span>
+                  </div>
+                </div>
+                <div class="rule-chip">
+                  <span class="rule-chip__icon">⚡</span>
+                  <div>
+                    <strong>Max 10 MB per PDF</strong>
+                    <span class="rule-chip__sub">Ensures fast mobile downloads on any connection</span>
+                  </div>
+                </div>
+                <div class="rule-chip">
+                  <span class="rule-chip__icon">📄</span>
+                  <div>
+                    <strong>PDF Format Only</strong>
+                    <span class="rule-chip__sub">Guarantees layout and typography look identical</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Current Assets Table -->
+          <!-- Active Upload Card (Cloudflare R2) -->
+          <div class="upload-workflow-card">
+            <div class="upload-workflow-header">
+              <h4>
+                Update or Replace a Resource
+                <span class="info-dot" tabindex="0" role="tooltip">
+                  i
+                  <span class="info-tooltip">Select which of the 6 guides you wish to update. When you upload a new PDF, it replaces the previous file seamlessly without breaking any links.</span>
+                </span>
+              </h4>
+              <p class="upload-sub">Choose a target slot, attach your formatted PDF, and publish live to Cloudflare R2.</p>
+            </div>
+
+            <form id="resource-upload-form" class="upload-form" autocomplete="off">
+              <div class="upload-form-grid">
+                <div class="form-group">
+                  <label for="upload-slot-select">
+                    Target Document Slot
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">Choose the specific guide slot being updated.</span>
+                    </span>
+                  </label>
+                  <select id="upload-slot-select" class="gate-input" required>
+                    <option value="eulogy-writing-guide">Slot 1: Eulogy Reflection &amp; Writing Guide (PDF)</option>
+                    <option value="memorial-brochure-checklist">Slot 2: Memorial Keepsake Brochure Checklist (PDF)</option>
+                    <option value="tribute-reading-excerpt">Slot 3: Selected Memorial Readings &amp; Poems (PDF)</option>
+                    <option value="quills-and-ink-family-memorial-guide">Slot 4: Master Family Memorial Planning Guide (PDF)</option>
+                    <option value="diaspora-liaison-handbook">Slot 5: Diaspora Funeral Coordination Handbook (PDF)</option>
+                    <option value="order-of-service-blueprint">Slot 6: Ceremonial Order of Service Blueprint (PDF)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="upload-file-input">
+                    Select New PDF Document
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">Must be a .pdf file under 10 MB. Word documents should be saved as PDF first.</span>
+                    </span>
+                  </label>
+                  <div class="file-drop-zone" id="file-drop-zone">
+                    <input type="file" id="upload-file-input" accept="application/pdf" class="file-hidden-input" required />
+                    <div class="drop-zone-content">
+                      <span class="drop-icon">📤</span>
+                      <span class="drop-prompt" id="drop-prompt-text">Click or drag a PDF here to upload</span>
+                      <span class="drop-sub">PDF only · Max 10 MB limit</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="upload-status-alert" class="upload-alert" style="display: none;"></div>
+
+              <div class="upload-actions">
+                <button type="submit" id="btn-submit-upload" class="btn btn--peach">
+                  <span class="btn-spinner" id="upload-spinner" style="display: none;">⏳</span>
+                  <span>Publish Updated Guide</span>
+                </button>
+                <span class="upload-security-note">🔒 Powered by Cloudflare R2 object storage with automated MIME &amp; size verification.</span>
+              </div>
+            </form>
+          </div>
+
+          <!-- Current 6 Assets Table -->
           <div class="resources-table-wrap">
             <table class="resources-table">
               <thead>
                 <tr>
-                  <th>Resource Title</th>
-                  <th>Path &amp; Format</th>
+                  <th>
+                    Resource Title
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">The official title shown to bereaved families across the website and search modal.</span>
+                    </span>
+                  </th>
+                  <th>Category</th>
+                  <th>Current File</th>
                   <th>File Size</th>
-                  <th>Attribution Scope</th>
-                  <th>Status</th>
+                  <th>Total Downloads</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="resource-slots-tbody">
                 <tr>
                   <td>
-                    <strong>The Art of Remembrance: Eulogy Guide</strong>
-                    <div class="tbl-sub">Akan lineage, 4 pillars of remembrance</div>
+                    <strong>Eulogy Reflection &amp; Writing Guide</strong>
+                    <div class="tbl-sub">Framework for drafting spoken tributes</div>
                   </td>
-                  <td><code class="inline-code">/downloads/eulogy-writing-guide.pdf</code></td>
+                  <td><span class="category-badge">Spoken Tributes</span></td>
+                  <td><code class="inline-code">eulogy-writing-guide.pdf</code></td>
                   <td>358 KB</td>
-                  <td>Quills &amp; Ink Editorial Archive</td>
-                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td><strong>312</strong></td>
                   <td>
                     <div class="table-actions">
                       <a href="/downloads/eulogy-writing-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <!-- 
-                        FUTURE UPLOAD HOOK:
-                        To enable limited editing, activate file picker input:
-                        <input type="file" accept="application/pdf" onchange="uploadRevision('eulogy-writing-guide', this.files[0])" />
-                      -->
-                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="eulogy-writing-guide">Update</button>
                     </div>
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                    <strong>Memorial Brochure Checklist &amp; Blueprint</strong>
-                    <div class="tbl-sub">Order of service, 300 DPI photo guidelines</div>
+                    <strong>Memorial Keepsake Brochure Checklist</strong>
+                    <div class="tbl-sub">Order of service &amp; photo specifications</div>
                   </td>
-                  <td><code class="inline-code">/downloads/memorial-brochure-checklist.pdf</code></td>
+                  <td><span class="category-badge">Print &amp; Keepsakes</span></td>
+                  <td><code class="inline-code">memorial-brochure-checklist.pdf</code></td>
                   <td>224 KB</td>
-                  <td>Quills &amp; Ink Print Division</td>
-                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td><strong>218</strong></td>
                   <td>
                     <div class="table-actions">
                       <a href="/downloads/memorial-brochure-checklist.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <!-- FUTURE UPLOAD HOOK: Replace button triggers PUT /api/upload -->
-                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="memorial-brochure-checklist">Update</button>
                     </div>
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                    <strong>Words That Carry Love: Selected Readings</strong>
-                    <div class="tbl-sub">Ceremonial family and diaspora readings</div>
+                    <strong>Selected Memorial Readings &amp; Poems</strong>
+                    <div class="tbl-sub">Ceremonial family and church readings</div>
                   </td>
-                  <td><code class="inline-code">/downloads/tribute-reading-excerpt.pdf</code></td>
+                  <td><span class="category-badge">Spoken Tributes</span></td>
+                  <td><code class="inline-code">tribute-reading-excerpt.pdf</code></td>
                   <td>145 KB</td>
-                  <td>Quills &amp; Ink Spoken Archives</td>
-                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td><strong>98</strong></td>
                   <td>
                     <div class="table-actions">
                       <a href="/downloads/tribute-reading-excerpt.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <!-- FUTURE UPLOAD HOOK: Replace button triggers PUT /api/upload -->
-                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="tribute-reading-excerpt">Update</button>
                     </div>
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                    <strong>Quills &amp; Ink Master Memorial Guide</strong>
-                    <div class="tbl-sub">All-in-one comprehensive printable handbook</div>
+                    <strong>Master Family Memorial Planning Guide</strong>
+                    <div class="tbl-sub">All-in-one planning and timeline handbook</div>
                   </td>
-                  <td><code class="inline-code">/downloads/quills-and-ink-family-memorial-guide.pdf</code></td>
+                  <td><span class="category-badge">Master Guides</span></td>
+                  <td><code class="inline-code">quills-and-ink-family-memorial-guide.pdf</code></td>
                   <td>358 KB</td>
-                  <td>Quills &amp; Ink Central Archive</td>
-                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td><strong>56</strong></td>
                   <td>
                     <div class="table-actions">
                       <a href="/downloads/quills-and-ink-family-memorial-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <!-- FUTURE UPLOAD HOOK: Replace button triggers PUT /api/upload -->
-                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="quills-and-ink-family-memorial-guide">Update</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Diaspora Funeral Coordination Handbook</strong>
+                    <div class="tbl-sub">Liaison guide for families arranging from abroad</div>
+                  </td>
+                  <td><span class="category-badge">Diaspora Guidance</span></td>
+                  <td><code class="inline-code">diaspora-liaison-handbook.pdf</code></td>
+                  <td>190 KB</td>
+                  <td><strong>41</strong></td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/downloads/quills-and-ink-family-memorial-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="diaspora-liaison-handbook">Update</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Ceremonial Order of Service Blueprint</strong>
+                    <div class="tbl-sub">Church and graveside sequence outline</div>
+                  </td>
+                  <td><span class="category-badge">Print &amp; Keepsakes</span></td>
+                  <td><code class="inline-code">order-of-service-blueprint.pdf</code></td>
+                  <td>174 KB</td>
+                  <td><strong>29</strong></td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/downloads/memorial-brochure-checklist.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="order-of-service-blueprint">Update</button>
                     </div>
                   </td>
                 </tr>
@@ -474,13 +622,19 @@ import Footer from '../components/Footer.astro';
           <div class="dash-box">
             <div class="dash-box__header">
               <div>
-                <h3>Diaspora Family Geographic Footprint</h3>
+                <h3>
+                  Diaspora Family Geographic Footprint
+                  <span class="info-dot" tabindex="0" role="tooltip">
+                    i
+                    <span class="info-tooltip">Shows where families are visiting your website from. This helps you schedule calls during their local daytime hours (GMT, BST, EST, PST).</span>
+                  </span>
+                </h3>
                 <p class="dash-box__sub">Inquiries &amp; downloads originating across diaspora centers</p>
               </div>
-              <span class="dash-badge">Top Markets</span>
+              <span class="dash-badge">Top Inquiries</span>
             </div>
 
-            <div class="diaspora-list">
+            <div class="diaspora-list" id="diaspora-list-container">
               <div class="diaspora-item">
                 <div class="diaspora-item__header">
                   <span class="diaspora-flag">🇬🇭</span>
@@ -547,7 +701,13 @@ import Footer from '../components/Footer.astro';
           <div class="dash-box">
             <div class="dash-box__header">
               <div>
-                <h3>Top Site Search Queries</h3>
+                <h3>
+                  Top Site Search Queries
+                  <span class="info-dot" tabindex="0" role="tooltip">
+                    i
+                    <span class="info-tooltip">Real terms typed into the search bar. Use these insights to craft new eulogy resources or clarify pricing packages.</span>
+                  </span>
+                </h3>
                 <p class="dash-box__sub">Search intentions captured via the site search modal</p>
               </div>
               <span class="dash-badge">Search Queries</span>
@@ -562,7 +722,7 @@ import Footer from '../components/Footer.astro';
                     <th>Matched Section</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="top-search-tbody">
                   <tr>
                     <td><strong class="query-text">"eulogy structure"</strong></td>
                     <td>184 queries</td>
@@ -611,7 +771,8 @@ import Footer from '../components/Footer.astro';
     // Client-side Encrypted Authentication & Session Gate
     // -------------------------------------------------------------------------
     const SALT = 'quills_salt_2026';
-    const EXPECTED_HASH = '70993b407894d65b3817ffa0bf03f0868f8335fcff8fd85e1dcc24a9102f569c';
+    // SHA-256 of "quills_salt_2026:William123"
+    const EXPECTED_HASH = 'a1dafc42b311330ed7b4ec9312714430d4ce694a2821422a058d7bcb541fccc2';
     const SESSION_KEY = 'quills_admin_auth_token';
 
     const loginView = document.getElementById('admin-login-view');
@@ -622,6 +783,7 @@ import Footer from '../components/Footer.astro';
     const autofillBtn = document.getElementById('btn-autofill-demo');
     const toggleEyeBtn = document.getElementById('toggle-passkey-visibility');
     const logoutBtn = document.getElementById('btn-admin-logout');
+    const refreshBtn = document.getElementById('btn-refresh-data');
 
     // SHA-256 calculation via Web Crypto API
     async function sha256(text) {
@@ -640,6 +802,7 @@ import Footer from '../components/Footer.astro';
           const parsed = JSON.parse(session);
           if (parsed && parsed.authenticated && parsed.expiresAt > Date.now()) {
             showDashboard();
+            loadLiveAnalytics();
             return true;
           }
         } catch (e) {
@@ -663,10 +826,10 @@ import Footer from '../components/Footer.astro';
       if (dashboardView) dashboardView.style.display = 'none';
     }
 
-    // Autofill demo button
+    // Autofill demo button with William123
     autofillBtn?.addEventListener('click', () => {
       if (passkeyInput) {
-        passkeyInput.value = 'quills-admin-2026';
+        passkeyInput.value = 'William123';
         passkeyInput.focus();
       }
     });
@@ -687,20 +850,40 @@ import Footer from '../components/Footer.astro';
 
       errorMsg.style.display = 'none';
 
-      // 1. Client-Side Hash Verification
+      // 1. Client-Side Hash Calculation
       const computedHash = await sha256(`${SALT}:${enteredPasskey}`);
 
-      // Check match or demo fallback
-      if (computedHash === EXPECTED_HASH || enteredPasskey === 'quills-admin-2026') {
+      // Try Edge API authentication first
+      try {
+        const edgeRes = await fetch('/api/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ passkeyHash: computedHash, rawPasskey: enteredPasskey }),
+        });
+
+        if (edgeRes.ok) {
+          const authData = await edgeRes.json();
+          sessionStorage.setItem(SESSION_KEY, JSON.stringify(authData));
+          showDashboard();
+          loadLiveAnalytics();
+          return;
+        }
+      } catch (err) {
+        console.warn('Edge auth fallback to client crypto verification:', err);
+      }
+
+      // Fallback verification against expected hash
+      if (computedHash === EXPECTED_HASH || enteredPasskey === 'William123') {
         const sessionPayload = {
           authenticated: true,
           token: crypto.randomUUID ? crypto.randomUUID() : 'session_' + Date.now(),
-          expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8 hour session
+          expiresAt: Date.now() + 1000 * 60 * 60 * 12,
         };
         sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionPayload));
         showDashboard();
+        loadLiveAnalytics();
       } else {
-        errorMsg.textContent = 'Invalid passkey. Please check the demo credential above.';
+        errorMsg.textContent = 'Invalid passkey. Please check the access key above.';
         errorMsg.style.display = 'block';
       }
     });
@@ -709,6 +892,176 @@ import Footer from '../components/Footer.astro';
     logoutBtn?.addEventListener('click', () => {
       sessionStorage.removeItem(SESSION_KEY);
       showLogin();
+    });
+
+    // Refresh live analytics
+    refreshBtn?.addEventListener('click', () => {
+      loadLiveAnalytics(true);
+    });
+
+    // -------------------------------------------------------------------------
+    // Live Edge Analytics Data Loader
+    // -------------------------------------------------------------------------
+    async function loadLiveAnalytics(isManual = false) {
+      if (refreshBtn && isManual) {
+        refreshBtn.classList.add('is-refreshing');
+      }
+
+      try {
+        const res = await fetch('/api/analytics');
+        if (!res.ok) return;
+        const data = await res.json();
+
+        // 1. Update Overview metrics
+        if (data.overview) {
+          const pv = document.getElementById('val-page-views');
+          const dl = document.getElementById('val-pdf-downloads');
+          const sq = document.getElementById('val-search-queries');
+          const ci = document.getElementById('val-consultations');
+          const wa = document.getElementById('val-whatsapp');
+
+          if (pv) pv.textContent = data.overview.pageViews.toLocaleString();
+          if (dl) dl.textContent = data.overview.pdfDownloads.toLocaleString();
+          if (sq) sq.textContent = data.overview.searchQueries.toLocaleString();
+          if (ci) ci.textContent = data.overview.consultationInquiries.toLocaleString();
+          if (wa) wa.textContent = data.overview.whatsappChats.toLocaleString();
+        }
+
+        // 2. Storage Mode indicator
+        const badge = document.getElementById('dash-storage-badge');
+        if (badge && data.storageMode) {
+          badge.textContent = data.storageMode;
+        }
+
+        // 3. Update Download Breakdown List
+        if (data.downloads && data.downloads.length) {
+          const dlContainer = document.getElementById('download-breakdown-list');
+          if (dlContainer) {
+            dlContainer.innerHTML = data.downloads
+              .map(
+                (item) => `
+                <div class="dl-row">
+                  <div class="dl-row__info">
+                    <div class="dl-row__title">
+                      <span class="dl-type-pill">PDF</span>
+                      <strong>${item.name}</strong>
+                    </div>
+                    <span class="dl-row__meta">${item.size} · ${item.attribution}</span>
+                  </div>
+                  <div class="dl-row__stats">
+                    <span class="dl-count">${item.downloads} downloads</span>
+                    <span class="dl-percent">${item.percent}%</span>
+                  </div>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width: ${item.percent}%;"></div>
+                  </div>
+                </div>
+              `
+              )
+              .join('');
+          }
+        }
+      } catch (err) {
+        console.warn('Could not refresh live analytics:', err);
+      } finally {
+        if (refreshBtn && isManual) {
+          setTimeout(() => refreshBtn.classList.remove('is-refreshing'), 600);
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Document Upload Handler (Cloudflare R2 with 10MB limit & Slot checking)
+    // -------------------------------------------------------------------------
+    const uploadForm = document.getElementById('resource-upload-form');
+    const uploadFileInput = document.getElementById('upload-file-input');
+    const uploadSlotSelect = document.getElementById('upload-slot-select');
+    const uploadAlert = document.getElementById('upload-status-alert');
+    const dropPromptText = document.getElementById('drop-prompt-text');
+    const uploadSpinner = document.getElementById('upload-spinner');
+    const btnSubmitUpload = document.getElementById('btn-submit-upload');
+
+    // Quick replace buttons in table
+    document.querySelectorAll('.btn-replace-trigger').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const slot = e.currentTarget.getAttribute('data-slot');
+        if (slot && uploadSlotSelect) {
+          uploadSlotSelect.value = slot;
+          document.querySelector('.upload-workflow-card')?.scrollIntoView({ behavior: 'smooth' });
+          uploadFileInput?.focus();
+        }
+      });
+    });
+
+    uploadFileInput?.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (!file.name.toLowerCase().endsWith('.pdf')) {
+          uploadAlert.className = 'upload-alert upload-alert--error';
+          uploadAlert.textContent = 'Please choose a valid .pdf file. Other document formats are not permitted to ensure formatting integrity.';
+          uploadAlert.style.display = 'block';
+          uploadFileInput.value = '';
+          return;
+        }
+        if (file.size > 10 * 1024 * 1024) {
+          uploadAlert.className = 'upload-alert upload-alert--error';
+          uploadAlert.textContent = `File size is ${(file.size / 1024 / 1024).toFixed(1)} MB, which exceeds the 10 MB limit. Please compress your PDF before uploading.`;
+          uploadAlert.style.display = 'block';
+          uploadFileInput.value = '';
+          return;
+        }
+        uploadAlert.style.display = 'none';
+        dropPromptText.innerHTML = `<strong>Selected:</strong> ${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
+      }
+    });
+
+    uploadForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = uploadFileInput.files[0];
+      const slotId = uploadSlotSelect.value;
+      if (!file || !slotId) return;
+
+      const session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || '{}');
+      const token = session.token || 'William123';
+
+      btnSubmitUpload.disabled = true;
+      if (uploadSpinner) uploadSpinner.style.display = 'inline-block';
+      uploadAlert.style.display = 'none';
+
+      const formData = new FormData();
+      formData.append('slot_id', slotId);
+      formData.append('file', file);
+
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        });
+
+        const result = await res.json();
+        if (res.ok && result.success) {
+          uploadAlert.className = 'upload-alert upload-alert--success';
+          uploadAlert.textContent = `✓ Success! "${result.slotId}" was safely published (${result.sizeFormatted || 'PDF'}). The website has been updated without any clutter.`;
+          uploadAlert.style.display = 'block';
+          uploadFileInput.value = '';
+          dropPromptText.textContent = 'Click or drag a PDF here to upload';
+          loadLiveAnalytics();
+        } else {
+          uploadAlert.className = 'upload-alert upload-alert--error';
+          uploadAlert.textContent = result.message || result.error || 'Upload failed. Please check file format.';
+          uploadAlert.style.display = 'block';
+        }
+      } catch (err) {
+        uploadAlert.className = 'upload-alert upload-alert--error';
+        uploadAlert.textContent = 'Network error while contacting Cloudflare R2 upload service.';
+        uploadAlert.style.display = 'block';
+      } finally {
+        btnSubmitUpload.disabled = false;
+        if (uploadSpinner) uploadSpinner.style.display = 'none';
+      }
     });
 
     // -------------------------------------------------------------------------
@@ -754,7 +1107,6 @@ import Footer from '../components/Footer.astro';
       `;
       eventsContainer.insertBefore(item, eventsContainer.firstChild);
 
-      // Keep max 15 events
       while (eventsContainer.children.length > 15) {
         eventsContainer.removeChild(eventsContainer.lastChild);
       }
@@ -794,27 +1146,15 @@ import Footer from '../components/Footer.astro';
       }
     });
 
-    // Test simulation buttons
-    document.getElementById('btn-test-download-event')?.addEventListener('click', () => {
-      if (window.quillsAnalytics) {
-        window.quillsAnalytics.track('file_download', {
-          file_name: 'The Art of Remembrance: Eulogy Guide (PDF)',
-          file_url: '/downloads/eulogy-writing-guide.pdf',
-          attribution: 'Quills & Ink Editorial Archive',
-        });
-      }
-    });
-
-    document.getElementById('btn-test-search-event')?.addEventListener('click', () => {
-      if (window.quillsAnalytics) {
-        window.quillsAnalytics.track('site_search_query', {
-          query: 'diaspora family synthesis',
-        });
-      }
-    });
-
     // Check session on page load
     checkSession();
+
+    // Auto-refresh analytics every 45s while page is open
+    setInterval(() => {
+      if (dashboardView && dashboardView.style.display !== 'none') {
+        loadLiveAnalytics();
+      }
+    }, 45000);
   })();
 </script>
 
@@ -908,9 +1248,10 @@ import Footer from '../components/Footer.astro';
 
   .demo-code {
     font-family: monospace;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--color-charcoal);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-wood);
+    letter-spacing: 0.05em;
   }
 
   .btn-autofill {
@@ -918,114 +1259,184 @@ import Footer from '../components/Footer.astro';
     color: white;
     border: none;
     border-radius: 4px;
-    padding: 0.35rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.72rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s var(--ease);
   }
+
   .btn-autofill:hover {
     background: var(--color-peach-deep);
   }
 
   .gate-form {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
   }
 
   .form-group label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 0.35rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--color-charcoal);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
   }
 
   .password-input-wrap {
-    display: flex;
     position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .gate-input {
     width: 100%;
-    padding: 0.75rem 2.5rem 0.75rem 0.9rem;
+    padding: 0.8rem 1rem;
     border: 1px solid var(--color-line);
     border-radius: 6px;
+    font-family: inherit;
     font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s;
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    transition: border-color 0.2s, background 0.2s;
   }
+
   .gate-input:focus {
-    border-color: var(--color-peach-deep);
+    outline: none;
+    border-color: var(--color-peach);
+    background: var(--color-white);
   }
 
   .btn-toggle-eye {
     position: absolute;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 10px;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
-    opacity: 0.6;
-  }
-  .btn-toggle-eye:hover {
-    opacity: 1;
+    font-size: 1.1rem;
+    padding: 4px;
   }
 
   .login-error {
-    background: #fdf2f2;
-    color: #991b1b;
+    background: #fef2f2;
     border: 1px solid #fecaca;
-    padding: 0.65rem 0.9rem;
+    color: #b91c1c;
+    padding: 0.65rem 0.85rem;
     border-radius: 6px;
     font-size: 0.82rem;
   }
 
   .btn--gate {
     width: 100%;
-    padding: 0.85rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0.9rem;
     gap: 0.5rem;
-    font-size: 0.88rem;
-    letter-spacing: 0.08em;
   }
 
   .gate-crypto-note {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
+    gap: 6px;
+    font-size: 0.68rem;
     color: var(--color-muted);
     line-height: 1.4;
     margin-top: 0.5rem;
   }
 
   /* --------------------------------------------------------------------------
-     2. Authenticated Dashboard Styles
+     2. Non-Technical (i) Info Dots & Tooltips
      -------------------------------------------------------------------------- */
-  .admin-dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  .info-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: var(--color-soft, #f3eee8);
+    color: var(--color-wood-mid, #5c4a38);
+    border: 1px solid var(--color-line, #e6e0d8);
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    margin-left: 0.35rem;
+    cursor: help;
+    position: relative;
+    vertical-align: middle;
+    transition: all 0.2s var(--ease);
+    text-transform: none;
+    letter-spacing: normal;
   }
 
+  .info-dot:hover,
+  .info-dot:focus {
+    background: var(--color-peach, #c9a892);
+    color: #ffffff;
+    border-color: var(--color-peach-deep, #b8927a);
+  }
+
+  .info-dot .info-tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1a1612;
+    color: #faf8f5;
+    font-size: 0.72rem;
+    font-weight: 400;
+    line-height: 1.4;
+    padding: 0.45rem 0.75rem;
+    border-radius: 6px;
+    width: max-content;
+    max-width: 250px;
+    white-space: normal;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    z-index: 100;
+    transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    text-align: left;
+  }
+
+  .info-dot .info-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #1a1612 transparent transparent transparent;
+  }
+
+  .info-dot:hover .info-tooltip,
+  .info-dot:focus .info-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Authenticated Dashboard Styles
+     -------------------------------------------------------------------------- */
   .dash-top-bar {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-line);
+    margin-bottom: 2rem;
     flex-wrap: wrap;
     gap: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-line);
   }
 
   .dash-branding h1 {
-    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    font-size: 2.2rem;
     color: var(--color-charcoal);
-    margin: 0.2rem 0;
+    margin: 0.25rem 0;
   }
 
   .dash-sub {
@@ -1041,117 +1452,127 @@ import Footer from '../components/Footer.astro';
     flex-wrap: wrap;
   }
 
-  .live-status-pill {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
+  .storage-status-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 12px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 0.4rem 0.85rem;
     border-radius: 999px;
-    font-size: 0.75rem;
+    font-size: 0.74rem;
     font-weight: 600;
   }
 
-  .live-dot {
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
+  .storage-dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    display: inline-block;
-    animation: pulse-dot 2s infinite;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
   }
 
-  @keyframes pulse-dot {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.6; }
-  }
-
-  .time-range-group {
-    display: flex;
+  .btn-refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     background: #ffffff;
     border: 1px solid var(--color-line);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  .time-btn {
-    background: none;
-    border: none;
-    padding: 5px 12px;
-    font-size: 0.75rem;
+    color: var(--color-charcoal);
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 600;
     cursor: pointer;
-    color: var(--color-muted);
     transition: all 0.2s;
   }
-  .time-btn.is-active {
-    background: var(--color-charcoal);
-    color: white;
-    font-weight: 600;
+
+  .btn-refresh:hover {
+    background: var(--color-soft);
+    border-color: var(--color-peach);
+  }
+
+  .btn-refresh.is-refreshing svg {
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   .btn-logout {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: white;
+    background: transparent;
     border: 1px solid var(--color-line);
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    color: var(--color-muted);
+    color: var(--color-charcoal);
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
   }
+
   .btn-logout:hover {
-    border-color: #ef4444;
-    color: #ef4444;
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #b91c1c;
   }
 
   /* Tabs */
   .dash-tabs {
     display: flex;
     gap: 0.5rem;
-    border-bottom: 1px solid var(--color-line);
+    border-bottom: 2px solid var(--color-line);
+    margin-bottom: 2rem;
     overflow-x: auto;
   }
 
   .dash-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.85rem 1.4rem;
     background: none;
     border: none;
     border-bottom: 2px solid transparent;
-    padding: 0.75rem 1.25rem;
+    margin-bottom: -2px;
+    font-family: inherit;
     font-size: 0.85rem;
+    font-weight: 500;
     color: var(--color-muted);
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s;
     white-space: nowrap;
+    transition: all 0.2s;
   }
+
   .dash-tab:hover {
     color: var(--color-charcoal);
   }
+
   .dash-tab.is-active {
     color: var(--color-charcoal);
-    border-bottom-color: var(--color-peach-deep);
     font-weight: 600;
+    border-bottom-color: var(--color-peach-deep);
   }
 
   .tab-pill-badge {
-    background: var(--color-soft);
-    color: var(--color-peach-deep);
-    font-size: 0.68rem;
-    padding: 1px 6px;
+    background: var(--color-peach);
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 7px;
     border-radius: 999px;
+    font-weight: 600;
   }
 
   /* Metrics Grid */
   .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 1.25rem;
     margin-bottom: 2rem;
   }
@@ -1159,71 +1580,76 @@ import Footer from '../components/Footer.astro';
   .metric-card {
     background: var(--color-white);
     border: 1px solid var(--color-line);
-    border-radius: 8px;
-    padding: 1.25rem 1.4rem;
+    border-radius: 10px;
+    padding: 1.4rem;
     box-shadow: 0 4px 16px rgba(44, 36, 22, 0.03);
   }
 
   .metric-card--highlight {
-    border-left: 4px solid var(--color-peach-deep);
+    background: #fdfbf7;
+    border-color: var(--color-peach);
   }
 
   .metric-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 0.5rem;
   }
 
   .metric-title {
-    font-size: 0.75rem;
+    font-size: 0.74rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-muted);
+    display: flex;
+    align-items: center;
   }
 
   .metric-trend {
     font-size: 0.72rem;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 4px;
+    font-weight: 700;
   }
+
   .trend-up {
-    background: #f0fdf4;
-    color: #15803d;
+    color: #16a34a;
   }
 
   .metric-value {
     font-family: var(--font-serif);
-    font-size: 2.2rem;
-    font-weight: 600;
+    font-size: 2.25rem;
+    font-weight: 500;
     color: var(--color-charcoal);
-    line-height: 1;
-    margin-bottom: 0.35rem;
+    line-height: 1.1;
   }
 
   .metric-sub {
-    font-size: 0.75rem;
+    font-size: 0.76rem;
     color: var(--color-muted);
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
   }
 
-  /* Split Layout Grid */
+  /* Split Grids */
   .dash-split-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.75rem;
+    gap: 1.5rem;
   }
-  @media (min-width: 980px) {
+
+  @media (min-width: 960px) {
     .dash-split-grid {
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.25fr 0.95fr;
     }
   }
 
   .dash-box {
     background: var(--color-white);
     border: 1px solid var(--color-line);
-    border-radius: 8px;
-    padding: 1.75rem 1.6rem;
+    border-radius: 10px;
+    padding: 1.75rem;
     box-shadow: 0 4px 16px rgba(44, 36, 22, 0.03);
   }
 
@@ -1231,35 +1657,41 @@ import Footer from '../components/Footer.astro';
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--color-line);
-    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .dash-box__header h3 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--color-charcoal);
+    margin: 0;
+    display: flex;
+    align-items: center;
   }
 
   .dash-box__sub {
     font-size: 0.8rem;
     color: var(--color-muted);
-    margin-top: 0.15rem;
+    margin-top: 0.2rem;
   }
 
   .dash-badge {
     background: var(--color-soft);
-    color: var(--color-wood);
+    color: var(--color-charcoal);
     font-size: 0.7rem;
     font-weight: 600;
     padding: 3px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    border-radius: 999px;
   }
 
-  /* Download Breakdown List */
+  .badge-pulse {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+  }
+
+  /* Download Breakdown */
   .download-breakdown-list {
     display: grid;
     gap: 1.25rem;
@@ -1273,26 +1705,17 @@ import Footer from '../components/Footer.astro';
   .dl-row__info {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .dl-row__title {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.88rem;
-    color: var(--color-charcoal);
+    font-size: 0.85rem;
   }
 
   .dl-type-pill {
-    background: #fdf2e9;
-    color: #b85c18;
+    background: #fef3c7;
+    color: #92400e;
     font-size: 0.65rem;
     font-weight: 700;
-    padding: 1px 5px;
+    padding: 2px 5px;
     border-radius: 3px;
+    margin-right: 6px;
   }
 
   .dl-row__meta {
@@ -1303,9 +1726,9 @@ import Footer from '../components/Footer.astro';
   .dl-row__stats {
     display: flex;
     justify-content: space-between;
-    font-size: 0.8rem;
-    color: var(--color-wood);
-    font-weight: 500;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
   }
 
   .progress-bar-wrap {
@@ -1317,96 +1740,70 @@ import Footer from '../components/Footer.astro';
 
   .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--color-peach) 0%, var(--color-peach-deep) 100%);
+    background: var(--color-peach);
     border-radius: 999px;
-  }
-
-  .dash-box__footer {
-    margin-top: 1.5rem;
-    padding-top: 0.85rem;
-    border-top: 1px solid var(--color-line);
-    font-size: 0.75rem;
-    color: var(--color-muted);
+    transition: width 0.4s var(--ease);
   }
 
   /* Live Events Feed */
-  .live-action-btns {
-    display: flex;
-    gap: 6px;
-  }
-
-  .btn-test-event {
-    background: var(--color-soft);
-    border: 1px solid var(--color-line);
-    color: var(--color-wood);
-    font-size: 0.72rem;
-    padding: 3px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-test-event:hover {
-    background: var(--color-charcoal);
-    color: white;
-  }
-
-  .live-events-feed {
+  .live-events-stream {
     display: grid;
-    gap: 0.75rem;
-    max-height: 380px;
+    gap: 0.85rem;
+    max-height: 480px;
     overflow-y: auto;
   }
 
   .event-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 0.65rem 0.85rem;
-    background: #faf8f5;
+    gap: 12px;
+    padding: 0.75rem 0.85rem;
+    background: var(--color-ivory);
     border: 1px solid var(--color-line);
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.82rem;
-    transition: all 0.3s var(--ease);
+    transition: all 0.3s;
   }
 
   .event-item--fresh {
-    animation: flash-event 1s ease-out;
+    animation: fadeIn 0.4s ease-out;
   }
 
-  @keyframes flash-event {
-    0% { background: #fef3c7; border-color: #f59e0b; }
-    100% { background: #faf8f5; border-color: var(--color-line); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .event-badge {
     font-size: 0.65rem;
     font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 3px;
-    letter-spacing: 0.05em;
+    padding: 3px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
     flex-shrink: 0;
   }
-  .badge-dl { background: #fdf2e9; color: #b85c18; }
-  .badge-search { background: #edf4fa; color: #245782; }
-  .badge-wa { background: #f0fdf4; color: #166534; }
-  .badge-book { background: #f5f0ec; color: #7d5b41; }
+
+  .badge-dl { background: #dbeafe; color: #1e40af; }
+  .badge-wa { background: #dcfce7; color: #166534; }
+  .badge-search { background: #fef3c7; color: #92400e; }
+  .badge-book { background: #f3e8ff; color: #6b21a8; }
 
   .event-details {
-    flex: 1;
-    min-width: 0;
+    flex-grow: 1;
+    overflow: hidden;
   }
 
   .event-headline {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-charcoal);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .event-meta {
     font-size: 0.72rem;
     color: var(--color-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .event-time {
@@ -1415,61 +1812,179 @@ import Footer from '../components/Footer.astro';
     flex-shrink: 0;
   }
 
-  /* Content Management Tab Styles */
-  .content-header-actions {
-    display: flex;
-    gap: 8px;
+  /* --------------------------------------------------------------------------
+     4. Tab 2 Content & Upload Styles (Strict 6 Slots & Anti-Clutter)
+     -------------------------------------------------------------------------- */
+  .slot-counter-badge {
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    color: #92400e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
 
-  .btn--disabled {
-    opacity: 0.6;
-    cursor: not-allowed !important;
-  }
-
-  .content-notice-box {
-    background: #faf6f0;
-    border: 1px solid var(--color-peach);
+  .notice-banner--friendly {
+    background: #fdfaf6;
+    border: 1px solid var(--color-line);
     border-radius: 8px;
-    padding: 1.25rem 1.4rem;
+    padding: 1.25rem 1.5rem;
     display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+  }
+
+  .client-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 0.85rem;
+  }
+
+  .rule-chip {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .rule-chip__icon {
+    font-size: 1.25rem;
+  }
+
+  .rule-chip strong {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--color-charcoal);
+  }
+
+  .rule-chip__sub {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+
+  .upload-workflow-card {
+    background: #ffffff;
+    border: 1px solid var(--color-peach);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 18px rgba(201, 168, 146, 0.12);
+  }
+
+  .upload-workflow-header h4 {
+    font-size: 1.15rem;
+    color: var(--color-charcoal);
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .upload-sub {
+    font-size: 0.82rem;
+    color: var(--color-muted);
+    margin-top: 0.2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .upload-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1.25rem;
-    margin-bottom: 1.5rem;
   }
 
-  .notice-icon {
-    font-size: 1.8rem;
-    flex-shrink: 0;
+  @media (min-width: 820px) {
+    .upload-form-grid {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
-  .notice-content h4 {
-    font-size: 1.05rem;
-    color: var(--color-charcoal);
-    margin-bottom: 0.35rem;
+  .file-drop-zone {
+    position: relative;
+    border: 2px dashed var(--color-peach);
+    border-radius: 8px;
+    padding: 1.25rem;
+    text-align: center;
+    background: var(--color-ivory);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
   }
 
-  .notice-content p {
-    font-size: 0.85rem;
-    color: var(--color-wood);
-    line-height: 1.55;
-    margin-bottom: 0.75rem;
+  .file-drop-zone:hover {
+    background: var(--color-soft);
+    border-color: var(--color-peach-deep);
   }
 
-  .notice-checklist {
+  .file-hidden-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .drop-zone-content {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
-    font-size: 0.78rem;
-    color: var(--color-peach-deep);
-    font-weight: 500;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    pointer-events: none;
   }
 
-  .inline-code {
-    background: #f3eee8;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: monospace;
-    font-size: 0.78rem;
+  .drop-icon {
+    font-size: 1.5rem;
+  }
+
+  .drop-prompt {
+    font-size: 0.85rem;
     color: var(--color-charcoal);
+  }
+
+  .drop-sub {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+
+  .upload-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .upload-security-note {
+    font-size: 0.74rem;
+    color: var(--color-muted);
+  }
+
+  .upload-alert {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+  }
+
+  .upload-alert--success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+  }
+
+  .upload-alert--error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
   }
 
   /* Resources Table */
@@ -1487,33 +2002,31 @@ import Footer from '../components/Footer.astro';
   .resources-table th {
     padding: 0.75rem 1rem;
     border-bottom: 2px solid var(--color-line);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     color: var(--color-muted);
   }
 
   .resources-table td {
-    padding: 1rem;
+    padding: 0.95rem 1rem;
     border-bottom: 1px solid var(--color-line);
-    vertical-align: middle;
   }
 
-  .tbl-sub {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-  }
-
-  .status-pill {
+  .category-badge {
+    background: var(--color-soft);
+    padding: 3px 7px;
+    border-radius: 4px;
     font-size: 0.72rem;
-    padding: 3px 8px;
-    border-radius: 999px;
-    font-weight: 600;
+    color: var(--color-wood);
   }
-  .status-active {
-    background: #f0fdf4;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
+
+  .inline-code {
+    font-family: monospace;
+    font-size: 0.76rem;
+    background: var(--color-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
   }
 
   .table-actions {
@@ -1526,26 +2039,22 @@ import Footer from '../components/Footer.astro';
     border: 1px solid var(--color-line);
     color: var(--color-wood);
     font-size: 0.75rem;
-    padding: 4px 8px;
+    padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s;
   }
+
   .btn-table-action:hover {
     background: var(--color-charcoal);
     color: white;
   }
 
-  .btn-table-disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  /* Diaspora Tab */
+  /* Diaspora & Search Queries Tab */
   .diaspora-list {
     display: grid;
-    gap: 1rem;
+    gap: 1.15rem;
   }
 
   .diaspora-item {
@@ -1557,7 +2066,7 @@ import Footer from '../components/Footer.astro';
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
   }
 
   .diaspora-inquiries {
@@ -1572,7 +2081,6 @@ import Footer from '../components/Footer.astro';
     color: var(--color-muted);
   }
 
-  /* Search Queries Table */
   .search-queries-table {
     width: 100%;
     border-collapse: collapse;

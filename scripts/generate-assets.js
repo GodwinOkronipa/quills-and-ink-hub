@@ -523,7 +523,7 @@ const eulogyPdfHtml = `<!DOCTYPE html>
         </p>
       </div>
       <div class="intro-image-frame">
-        <img src="https://images.unsplash.com/photo-1456513080080-7e87bb4f3d4d?auto=format&fit=crop&w=700&q=80" alt="Pen and memorial study journal" />
+        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=700&q=80" alt="Pen and memorial study journal" />
         <div class="image-caption">Literary Archival Reflection · Curated Web Asset</div>
       </div>
     </div>
