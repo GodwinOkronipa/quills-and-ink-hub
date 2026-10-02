@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap');
+  
+  @page {
+    size: A4 portrait;
+    margin: 16mm 14mm 16mm 14mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: #1a1612;
+    background: #faf8f5;
+    line-height: 1.6;
+    font-size: 10.5pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .border-box {
+    border: 1px solid #d9cebf;
+    padding: 28px 32px;
+    background: #ffffff;
+  }
+
+  .header-band {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #c9a892;
+    padding-bottom: 14px;
+    margin-bottom: 24px;
+  }
+
+  .logo-group h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 34pt;
+    color: #2c2416;
+    line-height: 1;
+    font-weight: normal;
+  }
+  .logo-group .sub {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #8a7e72;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .doc-title-block {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+  .doc-title-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24pt;
+    color: #2c2416;
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .doc-title-block p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13pt;
+    color: #705f4e;
+  }
+
+  .reading-excerpt {
+    background: #faf8f5;
+    border: 1px solid #e6ded4;
+    border-left: 4px solid #b8927a;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border-radius: 4px;
+  }
+
+  .reading-excerpt p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13.5pt;
+    line-height: 1.65;
+    color: #2c2416;
+    margin-bottom: 14px;
+  }
+  .reading-excerpt p:last-child { margin-bottom: 0; }
+
+  .two-col-quotes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+
+  .mini-reading {
+    background: #ffffff;
+    border: 1px solid #e0d5c7;
+    padding: 16px;
+    border-radius: 4px;
+  }
+  .mini-reading h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13pt;
+    color: #8f654b;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .mini-reading p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11.5pt;
+    color: #44372c;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .attribution-footer {
+    margin-top: 30px;
+    padding-top: 14px;
+    border-top: 1px solid #e0d6cb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7.5pt;
+    color: #8a7e72;
+  }
+</style>
+</head>
+<body>
+  <div class="border-box">
+    <div class="header-band">
+      <div class="logo-group">
+        <h1>Quills &amp; Ink</h1>
+        <div class="sub">Spoken Word &amp; Ceremony Archive</div>
+      </div>
+      <div style="text-align: right; font-size: 8pt; color: #5c4a38;">
+        <span style="background: #f3eee8; padding: 4px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Sample Excerpt</span>
+        <div style="margin-top: 4px;">Ref: QI-SPK-TRB-03</div>
+      </div>
+    </div>
+
+    <div class="doc-title-block">
+      <h2>Memorial Tribute Reading Excerpt</h2>
+      <p>Curated ceremonial readings for church celebrations and family gatherings</p>
+    </div>
+
+    <div class="reading-excerpt">
+      <p>
+        “In quiet rooms and crowded courtyards alike, we remember a life that made space for others. Not by grand speeches alone, but by the ordinary kindnesses that became our family’s compass — the open door at dusk, the unhurried counsel, the steady reassurance when storms gathered.”
+      </p>
+      <p>
+        “Today we gather not to finish this story, but to place it reverently in our collective keeping — so that love may continue to speak in the warm language of home.”
+      </p>
+    </div>
+
+    <div class="two-col-quotes">
+      <div class="mini-reading">
+        <h4>Reading A · On Gratitude for an Elder</h4>
+        <p>
+          “To stand in your presence was to feel the warmth of ancestral shelter. You taught us that true dignity does not raise its voice; it steadies the ground beneath our feet.”
+        </p>
+      </div>
+      <div class="mini-reading">
+        <h4>Reading B · Diaspora Family Synthesis</h4>
+        <p>
+          “Though miles separated our homes across London, Accra, and New York, your prayers crossed oceans before dawn. Today, the diaspora gathers as one branch of your living vine.”
+        </p>
+      </div>
+    </div>
+
+    <div class="attribution-footer">
+      <div>
+        <strong>Quills and Ink Hub</strong> · Literary Archives · Accra, Ghana<br>
+        Web: quillsandinkhub.com · Commission bespoke tributes: hello@quillsandinkhub.com
+      </div>
+      <div style="text-align: right;">
+        Attribution: Public Ceremonial Excerpt © Quills &amp; Ink Hub.<br>
+        Free to read and adapt for private memorial services.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

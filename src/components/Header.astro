@@ -61,12 +61,39 @@ const rightLinks = [
           <a href={link.href}>{link.label}</a>
         ))
       }
+      <button
+        type="button"
+        class="site-header__search-trigger"
+        data-open-search
+        aria-label="Search site"
+        title="Search site (Ctrl+K or /)"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span class="search-label">Search</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </button>
     </nav>
 
-    <!-- Mobile Quick CTA -->
-    <a class="site-header__mobile-cta btn btn--peach" href="/book">
-      Book
-    </a>
+    <!-- Mobile Quick CTA & Search -->
+    <div class="site-header__mobile-actions">
+      <button
+        type="button"
+        class="site-header__mobile-search-btn"
+        data-open-search
+        aria-label="Open search dialog"
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+      <a class="site-header__mobile-cta btn btn--peach" href="/book">
+        Book
+      </a>
+    </div>
   </div>
 </header>
 
@@ -96,6 +123,17 @@ const rightLinks = [
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
+    </button>
+  </div>
+
+  <div class="site-drawer__search-box">
+    <button type="button" class="site-drawer__search-btn" data-open-search aria-label="Open search dialog">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span>Search resources &amp; packages...</span>
+      <kbd class="drawer-search-kbd">⌘K</kbd>
     </button>
   </div>
 
@@ -247,7 +285,48 @@ const rightLinks = [
     transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
   }
 
-  /* Mobile Quick CTA */
+  /* Mobile Quick CTA & Search Actions */
+  .site-header__mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  .site-header__mobile-search-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: inherit;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    padding: 0;
+  }
+
+  .site-header--solid .site-header__mobile-search-btn {
+    border-color: var(--color-line);
+    color: var(--color-charcoal);
+  }
+
+  .site-header.is-scrolled .site-header__mobile-search-btn {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--color-white);
+  }
+
+  .site-header--solid.is-scrolled .site-header__mobile-search-btn {
+    border-color: var(--color-line);
+    color: var(--color-charcoal);
+  }
+
+  .site-header__mobile-search-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+  }
+
   .site-header__mobile-cta {
     padding: 0.4rem 0.85rem;
     min-height: 2rem;
@@ -259,7 +338,7 @@ const rightLinks = [
   /* Desktop Nav Links (Hidden on Mobile) */
   .site-header__nav {
     display: none;
-    gap: 1.35rem;
+    gap: 1.25rem;
     align-items: center;
     flex: 1;
   }
@@ -286,6 +365,62 @@ const rightLinks = [
     justify-content: flex-end;
   }
 
+  /* Desktop Search Trigger */
+  .site-header__search-trigger {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: inherit;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.2s var(--ease);
+    margin-left: 0.4rem;
+  }
+
+  .site-header--solid .site-header__search-trigger {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: var(--color-line);
+    color: var(--color-charcoal);
+  }
+
+  .site-header.is-scrolled .site-header__search-trigger {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--color-white);
+  }
+
+  .site-header--solid.is-scrolled .site-header__search-trigger {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: var(--color-line);
+    color: var(--color-charcoal);
+  }
+
+  .site-header__search-trigger:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: var(--color-peach);
+  }
+
+  .search-kbd {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.2);
+    color: inherit;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    padding: 1px 4px;
+    border-radius: 3px;
+    letter-spacing: 0;
+  }
+
+  .site-header--solid .search-kbd {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
   /* Desktop Breakpoint */
   @media (min-width: 980px) {
     .site-header {
@@ -301,7 +436,8 @@ const rightLinks = [
     }
 
     .site-header__toggle,
-    .site-header__mobile-cta {
+    .site-header__mobile-cta,
+    .site-header__mobile-actions {
       display: none !important;
     }
 
@@ -421,6 +557,50 @@ const rightLinks = [
   .site-drawer__close:hover {
     opacity: 1;
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Mobile Drawer Search Box */
+  .site-drawer__search-box {
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+
+  .site-drawer__search-btn {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0.65rem 0.9rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    font-size: 0.82rem;
+    text-align: left;
+    transition: all 0.2s var(--ease);
+  }
+
+  .site-drawer__search-btn span {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .site-drawer__search-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: var(--color-peach);
+    color: var(--color-white);
+  }
+
+  .drawer-search-kbd {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--color-peach);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .site-drawer__nav {

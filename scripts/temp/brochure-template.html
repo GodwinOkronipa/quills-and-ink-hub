@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap');
+  
+  @page {
+    size: A4 portrait;
+    margin: 16mm 14mm 16mm 14mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: #1a1612;
+    background: #faf8f5;
+    line-height: 1.55;
+    font-size: 10.5pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .border-box {
+    border: 1px solid #d9cebf;
+    padding: 24px 28px;
+    background: #ffffff;
+  }
+
+  .header-band {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #c9a892;
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+  }
+
+  .logo-group h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 34pt;
+    color: #2c2416;
+    line-height: 1;
+    font-weight: normal;
+  }
+  .logo-group .sub {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #8a7e72;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .doc-title-block {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .doc-title-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23pt;
+    color: #2c2416;
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .doc-title-block p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12.5pt;
+    color: #705f4e;
+  }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .check-card {
+    background: #faf8f5;
+    border: 1px solid #e4dacd;
+    padding: 14px 16px;
+    border-radius: 4px;
+  }
+  .check-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13pt;
+    font-weight: 600;
+    color: #2c2416;
+    border-bottom: 1px solid #ebd8c8;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 8.5pt;
+    color: #3d3226;
+  }
+  .checkbox {
+    width: 13px;
+    height: 13px;
+    border: 1.5px solid #b8927a;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: white;
+  }
+
+  .specs-box {
+    background: #fdfaf6;
+    border: 1px dashed #c9a892;
+    padding: 12px 18px;
+    margin: 16px 0;
+    border-radius: 4px;
+  }
+  .specs-box h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5pt;
+    color: #2c2416;
+    margin-bottom: 6px;
+  }
+  .specs-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    font-size: 8pt;
+    color: #5c4a38;
+  }
+
+  .attribution-footer {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid #e0d6cb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7.5pt;
+    color: #8a7e72;
+  }
+</style>
+</head>
+<body>
+  <div class="border-box">
+    <div class="header-band">
+      <div class="logo-group">
+        <h1>Quills &amp; Ink</h1>
+        <div class="sub">Print Editorial &amp; Production Division</div>
+      </div>
+      <div style="text-align: right; font-size: 8pt; color: #5c4a38;">
+        <span style="background: #f3eee8; padding: 4px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Planning Blueprint</span>
+        <div style="margin-top: 4px;">Ref: QI-PRT-BCH-02</div>
+      </div>
+    </div>
+
+    <div class="doc-title-block">
+      <h2>Memorial Keepsake Brochure Checklist</h2>
+      <p>A master blueprint for content compilation, photo curations, and printing</p>
+    </div>
+
+    <div class="checklist-grid">
+      <div class="check-card">
+        <h3>Section 1: Essential Biographic Text</h3>
+        <div class="check-item"><div class="checkbox"></div><span>Full formal names, family aliases, clan and chieftaincy titles</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Comprehensive dates: Sunrise (birth) and Sunset (passing)</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Early life, schooling (elementary, secondary, tertiary &amp; abroad)</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Career milestones, military/state service, and achievements</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Marriage, children, grandchildren, and great-grandchildren tally</span></div>
+      </div>
+
+      <div class="check-card">
+        <h3>Section 2: Tributes &amp; Diaspora Inputs</h3>
+        <div class="check-item"><div class="checkbox"></div><span>Widow / Widower Tribute (written with care and intimacy)</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Children's collective or individual readings</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Grandchildren’s memory tribute &amp; family tree chart</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Church / Parish / Fellowship tribute &amp; favorite scriptures</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Alma Mater &amp; professional association tributes</span></div>
+      </div>
+
+      <div class="check-card">
+        <h3>Section 3: Photo Curation &amp; Resolution</h3>
+        <div class="check-item"><div class="checkbox"></div><span>Front Cover: High-resolution portrait (300 DPI, uncropped)</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Vintage archive scans: Early childhood &amp; wedding photography</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Family collage: 15–25 candid memories across decades</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Diaspora submissions: collected via dedicated cloud folder</span></div>
+      </div>
+
+      <div class="check-card">
+        <h3>Section 4: Order of Service &amp; Protocol</h3>
+        <div class="check-item"><div class="checkbox"></div><span>Complete hymn lyrics (checked for verse accuracy)</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Officiating clergy names, designations, and church banners</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Filing past, scripture readings, and sermon title</span></div>
+        <div class="check-item"><div class="checkbox"></div><span>Pallbearers, chief mourners &amp; acknowledgments page</span></div>
+      </div>
+    </div>
+
+    <div class="specs-box">
+      <h4>Recommended Print &amp; Finishing Specifications</h4>
+      <div class="specs-list">
+        <div><strong>Paper Stock:</strong> 250gsm Silk Cover with Soft-Touch Matte Velvet Laminate; 130gsm Silk Inner Text.</div>
+        <div><strong>Binding:</strong> A5 Saddle Stitched (or Square Back Book binding for 28+ pages).</div>
+        <div><strong>Editorial Turnaround:</strong> 7 days for text proofing; 4 days for press run in Accra or London.</div>
+      </div>
+    </div>
+
+    <div class="attribution-footer">
+      <div>
+        <strong>Quills and Ink Hub</strong> · Comprehensive Memorial Coordination &amp; Design · Accra, Ghana<br>
+        Web: quillsandinkhub.com · Email: hello@quillsandinkhub.com
+      </div>
+      <div style="text-align: right;">
+        Attribution: Free Planning Guide © Quills &amp; Ink Hub.<br>
+        Printed &amp; digital brochure design services available on request.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -17,8 +17,11 @@ const year = new Date().getFullYear();
       <ul>
         <li><a href="/packages">Funeral Packages</a></li>
         <li><a href="/literary">Literary Services</a></li>
+        <li><a href="/downloads/eulogy-writing-guide.pdf" download data-track-download="true" data-download-name="Eulogy Writing Guide (PDF)" data-attribution="Quills &amp; Ink Hub">Eulogy Guide (PDF)</a></li>
+        <li><a href="/downloads/memorial-brochure-checklist.pdf" download data-track-download="true" data-download-name="Memorial Brochure Checklist (PDF)" data-attribution="Quills &amp; Ink Hub">Brochure Checklist (PDF)</a></li>
         <li><a href="/portfolio">Portfolio</a></li>
         <li><a href="/book">Book Consultation</a></li>
+        <li><button type="button" class="footer-search-btn" data-open-search>Search Site (⌘K)</button></li>
       </ul>
     </div>
 
@@ -83,11 +86,23 @@ const year = new Date().getFullYear();
     gap: 0.75rem;
   }
 
-  a {
+  a,
+  .footer-search-btn {
     transition: color 0.25s var(--ease);
   }
 
-  a:hover {
+  .footer-search-btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  a:hover,
+  .footer-search-btn:hover {
     color: var(--color-white);
   }
 

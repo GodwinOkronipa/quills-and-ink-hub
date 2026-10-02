@@ -1,0 +1,703 @@
+---
+// Instant Site Search Modal for Quills and Ink Hub
+---
+
+<dialog id="site-search-modal" class="search-modal" aria-labelledby="search-modal-title">
+  <div class="search-modal__inner">
+    <div class="search-modal__header">
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="search"
+          id="site-search-input"
+          class="search-input"
+          placeholder="Search packages, eulogy guides, brochures, diaspora advice..."
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search Quills and Ink Hub services and downloads"
+        />
+        <button type="button" class="search-clear-btn" id="search-clear" aria-label="Clear search text" style="display: none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <button type="button" class="search-close-btn" id="search-close" aria-label="Close search">
+        <kbd class="kbd-shortcut">ESC</kbd>
+      </button>
+    </div>
+
+    <!-- Quick filter chips -->
+    <div class="search-filter-chips" role="tablist" aria-label="Filter search categories">
+      <button type="button" class="filter-chip is-active" data-category="all">All</button>
+      <button type="button" class="filter-chip" data-category="download">PDF Downloads</button>
+      <button type="button" class="filter-chip" data-category="package">Packages</button>
+      <button type="button" class="filter-chip" data-category="literary">Literary</button>
+      <button type="button" class="filter-chip" data-category="diaspora">Diaspora</button>
+    </div>
+
+    <!-- Results list -->
+    <div class="search-modal__body">
+      <div id="search-results-list" class="search-results-list" role="listbox">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div id="search-empty-state" class="search-empty-state" style="display: none;">
+        <p class="search-empty-title">No matching results found</p>
+        <p class="search-empty-desc">Try searching for "eulogy", "packages", "brochure", "diaspora", or "consultation".</p>
+        <a href="/book" class="btn btn--peach" style="margin-top: 1rem; display: inline-block;">Speak with our team</a>
+      </div>
+    </div>
+
+    <div class="search-modal__footer">
+      <div class="search-shortcuts">
+        <span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span>
+        <span><kbd>↵</kbd> to open</span>
+        <span><kbd>ESC</kbd> to close</span>
+      </div>
+      <div class="search-brand-tag">Quills &amp; Ink Hub Knowledge Index</div>
+    </div>
+  </div>
+</dialog>
+
+<script is:inline>
+  (() => {
+    const searchModal = document.getElementById('site-search-modal');
+    const searchInput = document.getElementById('site-search-input');
+    const clearBtn = document.getElementById('search-clear');
+    const closeBtn = document.getElementById('search-close');
+    const resultsContainer = document.getElementById('search-results-list');
+    const emptyState = document.getElementById('search-empty-state');
+    const filterChips = document.querySelectorAll('.filter-chip');
+
+    let activeCategory = 'all';
+    let selectedIndex = 0;
+
+    // Search Database
+    const items = [
+      // PDF Downloads & Guides
+      {
+        title: 'Eulogy Reflection & Writing Guide (PDF)',
+        description: 'Comprehensive 2-page family keepsake framework for drafting personal spoken tributes with Ghanaian ancestral dignity.',
+        url: '/downloads/eulogy-writing-guide.pdf',
+        category: 'download',
+        tag: 'PDF Download · 358 KB',
+        isDownload: true,
+        keywords: ['eulogy', 'guide', 'writing', 'speech', 'tribute', 'pdf', 'download', 'reflection', 'akan', 'ghanaian'],
+      },
+      {
+        title: 'Memorial Keepsake Brochure Checklist (PDF)',
+        description: 'Editorial blueprint, printing specifications, 300 DPI photo submission, and order of service layout checklist.',
+        url: '/downloads/memorial-brochure-checklist.pdf',
+        category: 'download',
+        tag: 'PDF Download · 224 KB',
+        isDownload: true,
+        keywords: ['brochure', 'checklist', 'programme', 'program', 'printing', 'photos', 'pdf', 'download', 'order of service'],
+      },
+      {
+        title: 'Words That Carry Love: Selected Memorial Readings (PDF)',
+        description: 'Curated poetic tributes and ceremonial readings suitable for church celebrations, children, and diaspora family kin.',
+        url: '/downloads/tribute-reading-excerpt.pdf',
+        category: 'download',
+        tag: 'PDF Download · 145 KB',
+        isDownload: true,
+        keywords: ['readings', 'poems', 'tribute', 'family reading', 'diaspora kin', 'pdf', 'download'],
+      },
+      {
+        title: 'Quills & Ink Master Family Memorial Planning Guide (PDF)',
+        description: 'Complete integrated edition compiling eulogy structures, brochure blueprints, and timeline checklists.',
+        url: '/downloads/quills-and-ink-family-memorial-guide.pdf',
+        category: 'download',
+        tag: 'PDF Download · Complete Edition',
+        isDownload: true,
+        keywords: ['master guide', 'full guide', 'handbook', 'planning', 'diaspora', 'pdf', 'download'],
+      },
+
+      // Packages
+      {
+        title: 'Essential Coordination Package (Tier I)',
+        description: 'Logistics oversight, order of service curation, venue liaison checklist, and day-of remote coordination.',
+        url: '/packages',
+        category: 'package',
+        tag: 'Planning Tier I',
+        keywords: ['essential', 'package', 'tier 1', 'logistics', 'timeline', 'coordination', 'pricing'],
+      },
+      {
+        title: 'Complete Memorial Care Package (Tier II · Most Chosen)',
+        description: 'Full-spectrum planning, lead coordinator on-site, direct vendor oversight, brochure direction, and diaspora briefing.',
+        url: '/packages',
+        category: 'package',
+        tag: 'Planning Tier II',
+        keywords: ['complete memorial', 'tier 2', 'lead coordinator', 'full planning', 'catering', 'diaspora briefing', 'recommended'],
+      },
+      {
+        title: 'Legacy Gathering Suite (Tier III)',
+        description: 'Multi-day scheduling (Wake keeping, Burial, Thanksgiving), complete literary suite, and international family concierge.',
+        url: '/packages',
+        category: 'package',
+        tag: 'Planning Tier III',
+        keywords: ['legacy', 'gathering', 'tier 3', 'multi-day', 'wake keeping', 'thanksgiving', 'concierge', 'state funeral'],
+      },
+
+      // Literary
+      {
+        title: 'Spoken Eulogies & Remembrance Writing',
+        description: 'Narrative shaped from intimate family conversations — respectful, heartfelt, and true to the deceased’s life and faith.',
+        url: '/literary',
+        category: 'literary',
+        tag: 'Literary Service',
+        keywords: ['eulogy writing', 'spoken remembrance', 'ghostwriting', 'biography', 'story'],
+      },
+      {
+        title: 'Family & Group Tributes',
+        description: 'Individual or collective readings crafted for children, siblings, fellowships, and associations.',
+        url: '/literary',
+        category: 'literary',
+        tag: 'Literary Service',
+        keywords: ['group tribute', 'children reading', 'siblings', 'fellowship', 'church tribute'],
+      },
+      {
+        title: 'Memorial Brochure Design & Editorial Direction',
+        description: 'Complete order of service text, biography composition, photo captions, and fine printing guidance.',
+        url: '/literary',
+        category: 'literary',
+        tag: 'Keepsake Print',
+        keywords: ['brochure design', 'biography writing', 'keepsake booklet', 'printing accra'],
+      },
+      {
+        title: 'Diaspora Family Synthesis',
+        description: 'Gathering written reflections and voice notes across the UK, US, Canada, and Europe into a unified keepsake.',
+        url: '/literary',
+        category: 'diaspora',
+        tag: 'Remote Coordination',
+        keywords: ['diaspora synthesis', 'voice notes', 'remote family', 'london', 'uk', 'usa', 'canada'],
+      },
+
+      // Diaspora & Booking
+      {
+        title: 'Diaspora Funeral Planning Concierge',
+        description: 'Arranging from abroad? We are your trusted eyes and hands in Ghana with timezone-friendly video calls and WhatsApp updates.',
+        url: '/packages',
+        category: 'diaspora',
+        tag: 'Diaspora Care',
+        keywords: ['diaspora', 'abroad', 'overseas', 'uk', 'us', 'whatsapp updates', 'timezone'],
+      },
+      {
+        title: 'Book a Listening Consultation',
+        description: 'Schedule a calm, listening-first conversation in person in Accra or via Zoom/WhatsApp worldwide.',
+        url: '/book',
+        category: 'package',
+        tag: 'Consultation',
+        keywords: ['book', 'schedule', 'consultation', 'meeting', 'zoom', 'quote'],
+      },
+      {
+        title: 'Direct Contact & WhatsApp Desk',
+        description: 'Connect directly with our planning and literary desk for urgent arrangements or initial inquiries.',
+        url: '/contact',
+        category: 'literary',
+        tag: 'Contact Support',
+        keywords: ['contact', 'whatsapp', 'phone', 'email', 'inquiry', 'accra office'],
+      },
+    ];
+
+    function openModal() {
+      if (!searchModal) return;
+      if (typeof searchModal.showModal === 'function') {
+        searchModal.showModal();
+      } else {
+        searchModal.setAttribute('open', '');
+      }
+      document.body.classList.add('search-open');
+      searchInput?.focus();
+      renderResults(searchInput?.value || '');
+      
+      if (window.quillsAnalytics) {
+        window.quillsAnalytics.track('search_modal_opened');
+      }
+    }
+
+    function closeModal() {
+      if (!searchModal) return;
+      if (typeof searchModal.close === 'function') {
+        searchModal.close();
+      } else {
+        searchModal.removeAttribute('open');
+      }
+      document.body.classList.remove('search-open');
+    }
+
+    // Keyboard global shortcut: Cmd+K or Ctrl+K or '/'
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchModal.open ? closeModal() : openModal();
+      } else if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        openModal();
+      } else if (e.key === 'Escape' && searchModal.open) {
+        closeModal();
+      }
+    });
+
+    // Close button & backdrop click
+    closeBtn?.addEventListener('click', closeModal);
+    searchModal?.addEventListener('click', (e) => {
+      const rect = searchModal.getBoundingClientRect();
+      const isInDialog = (
+        rect.top <= e.clientY &&
+        e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX &&
+        e.clientX <= rect.left + rect.width
+      );
+      if (!isInDialog) {
+        closeModal();
+      }
+    });
+
+    // Wire trigger buttons
+    document.querySelectorAll('[data-open-search]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    // Category filter chips
+    filterChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach((c) => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        activeCategory = chip.getAttribute('data-category') || 'all';
+        renderResults(searchInput.value || '');
+      });
+    });
+
+    // Input search typing
+    let searchDebounce;
+    searchInput?.addEventListener('input', () => {
+      const query = searchInput.value.trim();
+      clearBtn.style.display = query ? 'flex' : 'none';
+
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        renderResults(query);
+        if (query.length > 2 && window.quillsAnalytics) {
+          window.quillsAnalytics.track('site_search_query', { query });
+        }
+      }, 120);
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      searchInput.value = '';
+      clearBtn.style.display = 'none';
+      searchInput.focus();
+      renderResults('');
+    });
+
+    // Render logic
+    function renderResults(rawQuery) {
+      const query = rawQuery.toLowerCase().trim();
+      selectedIndex = 0;
+
+      let filtered = items.filter((item) => {
+        if (activeCategory !== 'all' && item.category !== activeCategory) {
+          return false;
+        }
+        if (!query) return true;
+
+        const inTitle = item.title.toLowerCase().includes(query);
+        const inDesc = item.description.toLowerCase().includes(query);
+        const inKeywords = item.keywords.some((kw) => kw.includes(query));
+        return inTitle || inDesc || inKeywords;
+      });
+
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      resultsContainer.innerHTML = filtered
+        .map((item, idx) => {
+          const isDl = item.isDownload;
+          const downloadAttr = isDl ? 'download data-track-download="true" data-download-name="' + item.title + '"' : '';
+          const icon = isDl
+            ? '<span class="result-icon-badge dl-badge">PDF</span>'
+            : item.category === 'package'
+            ? '<span class="result-icon-badge pkg-badge">Tier</span>'
+            : item.category === 'diaspora'
+            ? '<span class="result-icon-badge dia-badge">🌍</span>'
+            : '<span class="result-icon-badge lit-badge">✒️</span>';
+
+          return `
+            <a
+              href="${item.url}"
+              ${downloadAttr}
+              class="search-result-item ${idx === 0 ? 'is-selected' : ''}"
+              data-index="${idx}"
+              role="option"
+              aria-selected="${idx === 0 ? 'true' : 'false'}"
+            >
+              <div class="result-icon-wrap">${icon}</div>
+              <div class="result-content">
+                <div class="result-header">
+                  <span class="result-title">${highlight(item.title, query)}</span>
+                  <span class="result-tag">${item.tag}</span>
+                </div>
+                <p class="result-desc">${highlight(item.description, query)}</p>
+              </div>
+              <div class="result-arrow" aria-hidden="true">→</div>
+            </a>
+          `;
+        })
+        .join('');
+
+      // Attach click events on search results to close modal
+      resultsContainer.querySelectorAll('.search-result-item').forEach((el) => {
+        el.addEventListener('click', () => {
+          closeModal();
+        });
+      });
+    }
+
+    function highlight(text, query) {
+      if (!query) return text;
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<mark class="search-highlight">$1</mark>');
+    }
+
+    // Keyboard navigation within list
+    searchInput?.addEventListener('keydown', (e) => {
+      const resultItems = resultsContainer.querySelectorAll('.search-result-item');
+      if (!resultItems.length) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex + 1) % resultItems.length;
+        updateSelection(resultItems);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex - 1 + resultItems.length) % resultItems.length;
+        updateSelection(resultItems);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const activeItem = resultItems[selectedIndex];
+        if (activeItem) {
+          activeItem.click();
+        }
+      }
+    });
+
+    function updateSelection(resultItems) {
+      resultItems.forEach((el, idx) => {
+        const isSel = idx === selectedIndex;
+        el.classList.toggle('is-selected', isSel);
+        el.setAttribute('aria-selected', isSel ? 'true' : 'false');
+        if (isSel) {
+          el.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .search-modal {
+    border: none;
+    background: transparent;
+    padding: 0;
+    max-width: 680px;
+    width: min(680px, calc(100vw - 2rem));
+    margin: 4.5rem auto auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 32px 70px rgba(26, 22, 18, 0.35);
+  }
+
+  .search-modal::backdrop {
+    background: rgba(26, 22, 18, 0.65);
+    backdrop-filter: blur(6px);
+  }
+
+  .search-modal__inner {
+    background: var(--color-ivory, #faf8f5);
+    border: 1px solid var(--color-line, #e6e0d8);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    max-height: min(80vh, 620px);
+  }
+
+  .search-modal__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1.1rem 1.4rem;
+    border-bottom: 1px solid var(--color-line, #e6e0d8);
+    background: #ffffff;
+  }
+
+  .search-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    position: relative;
+  }
+
+  .search-icon {
+    color: var(--color-muted, #8a7e72);
+    flex-shrink: 0;
+  }
+
+  .search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    font-family: var(--font-sans, system-ui);
+    color: var(--color-ink, #1a1612);
+    background: transparent;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-muted, #8a7e72);
+    font-weight: 300;
+  }
+
+  .search-clear-btn {
+    border: none;
+    background: #f3eee8;
+    color: var(--color-muted, #8a7e72);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+  }
+  .search-clear-btn:hover {
+    background: #e6ded4;
+    color: var(--color-ink, #1a1612);
+  }
+
+  .search-close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .kbd-shortcut {
+    display: inline-block;
+    font-family: var(--font-sans, system-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-muted, #8a7e72);
+    background: #f3eee8;
+    border: 1px solid #dfd5c7;
+    padding: 3px 7px;
+    border-radius: 4px;
+  }
+
+  .search-filter-chips {
+    display: flex;
+    gap: 8px;
+    padding: 0.75rem 1.4rem;
+    background: #fdfaf6;
+    border-bottom: 1px solid var(--color-line, #e6e0d8);
+    overflow-x: auto;
+  }
+
+  .filter-chip {
+    background: transparent;
+    border: 1px solid #dfd5c7;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-family: var(--font-sans, system-ui);
+    color: var(--color-wood, #3d3226);
+    cursor: pointer;
+    transition: all 0.2s var(--ease, ease);
+    white-space: nowrap;
+  }
+  .filter-chip:hover {
+    border-color: var(--color-peach, #c9a892);
+    background: #ffffff;
+  }
+  .filter-chip.is-active {
+    background: var(--color-charcoal, #2c2416);
+    color: #ffffff;
+    border-color: var(--color-charcoal, #2c2416);
+  }
+
+  .search-modal__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem 1rem;
+  }
+
+  .search-results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.18s var(--ease, ease);
+    border: 1px solid transparent;
+  }
+
+  .search-result-item:hover,
+  .search-result-item.is-selected {
+    background: #ffffff;
+    border-color: var(--color-peach, #c9a892);
+    box-shadow: 0 4px 16px rgba(44, 36, 22, 0.05);
+  }
+
+  .result-icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .dl-badge {
+    background: #fdf2e9;
+    color: #b85c18;
+    border: 1px solid #f6d8be;
+  }
+  .pkg-badge {
+    background: #f0f7f4;
+    color: #2e6648;
+    border: 1px solid #d0e7dc;
+  }
+  .lit-badge {
+    background: #f5f0ec;
+    color: #7d5b41;
+    border: 1px solid #e5d8cd;
+  }
+  .dia-badge {
+    background: #edf4fa;
+    color: #245782;
+    border: 1px solid #cfdfec;
+  }
+
+  .result-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .result-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+
+  .result-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-ink, #1a1612);
+  }
+
+  .result-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted, #8a7e72);
+  }
+
+  .result-desc {
+    font-size: 0.82rem;
+    color: var(--color-muted, #8a7e72);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .result-arrow {
+    color: var(--color-peach, #c9a892);
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .search-result-item:hover .result-arrow,
+  .search-result-item.is-selected .result-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  mark.search-highlight {
+    background: #faeedb;
+    color: #925828;
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  .search-empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  .search-empty-title {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--color-charcoal, #2c2416);
+    margin-bottom: 0.5rem;
+  }
+  .search-empty-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted, #8a7e72);
+  }
+
+  .search-modal__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.4rem;
+    border-top: 1px solid var(--color-line, #e6e0d8);
+    background: #ffffff;
+    font-size: 0.78rem;
+    color: var(--color-muted, #8a7e72);
+  }
+
+  .search-shortcuts {
+    display: flex;
+    gap: 12px;
+  }
+  .search-shortcuts kbd {
+    background: #f3eee8;
+    border: 1px solid #dfd5c7;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 0.72rem;
+    margin-right: 3px;
+  }
+
+  .search-brand-tag {
+    font-family: var(--font-script, cursive);
+    font-size: 1.15rem;
+    color: var(--color-peach-deep, #b8927a);
+  }
+</style>

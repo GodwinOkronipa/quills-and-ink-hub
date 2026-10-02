@@ -1,0 +1,167 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  keywords?: string[];
+  noindex?: boolean;
+}
+
+const {
+  title = 'Quills and Ink Hub',
+  description = 'Dignified funeral event planning, cultural consultation, and literary services for Ghanaian families at home and in the diaspora.',
+  image = '/images/og-preview.png',
+  imageAlt = 'Quills and Ink Hub — Dignified Ghanaian Funeral Planning and Literary Services',
+  type = 'website',
+  keywords = [
+    'Ghanaian funeral planning',
+    'funeral planning Accra',
+    'Ghana diaspora funeral coordination',
+    'eulogy writing services',
+    'memorial brochure design Ghana',
+    'Ghanaian celebration of life',
+    'Akan funeral customs',
+    'tribute writing Accra',
+    'funeral concierge Ghana',
+    'memorial keepsakes Accra',
+  ],
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://quills-and-ink-hub.pages.dev';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+
+const imageUrl = image.startsWith('http')
+  ? image
+  : new URL(image, siteUrl).toString();
+
+const fullTitle =
+  title === 'Quills and Ink Hub'
+    ? 'Quills & Ink Hub · Dignified Ghanaian Funeral Planning & Literary Services'
+    : `${title} · Quills and Ink Hub`;
+
+const robotsContent = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+
+// JSON-LD Structured Data
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${siteUrl}/#organization`,
+  name: 'Quills and Ink Hub',
+  alternateName: 'Quills & Ink Hub',
+  url: siteUrl,
+  logo: `${siteUrl}/images/og-preview.png`,
+  image: `${siteUrl}/images/og-preview.png`,
+  description: description,
+  telephone: '+233000000000',
+  email: 'hello@quillsandinkhub.com',
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Accra',
+    addressRegion: 'Greater Accra',
+    addressCountry: 'GH',
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'Ghana' },
+    { '@type': 'Country', name: 'United Kingdom' },
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'Country', name: 'Canada' },
+    { '@type': 'Country', name: 'Germany' },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Funeral & Literary Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Funeral Planning & Day-of Coordination',
+          description: 'Full logistics oversight, venue liaison, order of service flow, and dignity for family rites.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Literary Memorial Writing & Eulogies',
+          description: 'Custom composed eulogies, personal family tributes, and diaspora reflection synthesis.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Memorial Keepsake Brochures',
+          description: 'Design, editorial proofing, photo curation, and premium print direction for service programs.',
+        },
+      },
+    ],
+  },
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  url: siteUrl,
+  name: 'Quills and Ink Hub',
+  description: 'Funeral event planning, consultation, and literary services for Ghanaian families.',
+  publisher: {
+    '@id': `${siteUrl}/#organization`,
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${siteUrl}/?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords.join(', ')} />
+<meta name="author" content="Quills and Ink Hub" />
+<meta name="robots" content={robotsContent} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- OpenSearch discovery -->
+<link rel="search" type="application/opensearchdescription+xml" title="Quills and Ink Hub" href="/opensearch.xml" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="Quills and Ink Hub" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:secure_url" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:locale" content="en_GH" />
+<meta property="og:locale:alternate" content="en_GB" />
+<meta property="og:locale:alternate" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />

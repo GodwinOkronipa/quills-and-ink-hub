@@ -1,0 +1,208 @@
+---
+interface Props {
+  gaMeasurementId?: string;
+  plausibleDomain?: string;
+  cloudflareBeacon?: string;
+  enableDebugLogging?: boolean;
+}
+
+const {
+  gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || '',
+  plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || '',
+  cloudflareBeacon = import.meta.env.PUBLIC_CF_BEACON_TOKEN || '',
+  enableDebugLogging = import.meta.env.DEV || false,
+} = Astro.props;
+---
+
+<!-- Analytics Configuration & Global Tracking Layer -->
+{gaMeasurementId && (
+  <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
+)}
+
+{gaMeasurementId && (
+  <script is:inline define:vars={{ gaMeasurementId }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', gaMeasurementId, {
+      anonymize_ip: true,
+      send_page_view: true,
+    });
+  </script>
+)}
+
+{plausibleDomain && (
+  <script
+    is:inline
+    defer
+    data-domain={plausibleDomain}
+    src="https://plausible.io/js/script.tagged-events.js"
+  ></script>
+)}
+
+{cloudflareBeacon && (
+  <script
+    is:inline
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={`{"token": "${cloudflareBeacon}"}`}
+  ></script>
+)}
+
+<!-- Download Attribution & Event Dispatcher Script -->
+<script is:inline define:vars={{ enableDebugLogging }}>
+  (() => {
+    // 1. Unified Analytics Dispatcher
+    window.dataLayer = window.dataLayer || [];
+    
+    window.quillsAnalytics = {
+      track: (eventName, params = {}) => {
+        const payload = {
+          event: eventName,
+          timestamp: new Date().toISOString(),
+          path: window.location.pathname,
+          ...params,
+        };
+
+        // Push to standard dataLayer (GTM / GA4 compatible)
+        window.dataLayer.push(payload);
+
+        // Native GA4 gtag call if present
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', eventName, params);
+        }
+
+        // Native Plausible call if present
+        if (typeof window.plausible === 'function') {
+          window.plausible(eventName, { props: params });
+        }
+
+        // PostHog call if present
+        if (window.posthog && typeof window.posthog.capture === 'function') {
+          window.posthog.capture(eventName, params);
+        }
+
+        // Custom window event for reactive UI integrations
+        window.dispatchEvent(new CustomEvent('quills:analytics', { detail: payload }));
+
+        if (enableDebugLogging) {
+          console.log(`%c[Quills Analytics] %c${eventName}`, 'color: #c9a892; font-weight: bold;', 'color: #1a1612;', payload);
+        }
+      },
+    };
+
+    // 2. Download Attribution Toast Notification Helper
+    function showDownloadToast(fileName, attribution = 'Quills & Ink Editorial Archive') {
+      let toastContainer = document.getElementById('quills-toast-container');
+      if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'quills-toast-container';
+        toastContainer.setAttribute('aria-live', 'polite');
+        toastContainer.style.cssText = `
+          position: fixed;
+          bottom: 24px;
+          left: 24px;
+          z-index: 9999;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          pointer-events: none;
+          max-width: 380px;
+        `;
+        document.body.appendChild(toastContainer);
+      }
+
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        background: #2c2416;
+        color: #faf8f5;
+        border: 1px solid #c9a892;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 16px 36px rgba(26, 22, 18, 0.28);
+        font-family: 'Montserrat', system-ui, sans-serif;
+        font-size: 13px;
+        line-height: 1.45;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        pointer-events: auto;
+      `;
+
+      toast.innerHTML = `
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
+          <span style="font-size: 18px; line-height: 1;">📥</span>
+          <div>
+            <div style="font-weight: 600; color: #e8d5c4;">Downloading Resource</div>
+            <div style="font-size: 12px; margin-top: 2px; color: #faf8f5;">${fileName}</div>
+            <div style="font-size: 10.5px; margin-top: 4px; color: #c9a892; letter-spacing: 0.02em;">Attribution: ${attribution}</div>
+          </div>
+        </div>
+      `;
+
+      toastContainer.appendChild(toast);
+      requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+      });
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(12px)';
+        setTimeout(() => toast.remove(), 350);
+      }, 4500);
+    }
+
+    // 3. Automated Document Download Listener with Attribution
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link) return;
+
+      const href = link.getAttribute('href') || '';
+      const isDownloadAttr = link.hasAttribute('download');
+      const isPdfOrTxt = /\.(pdf|txt|docx?|zip)(\?.*)?$/i.test(href);
+      const isTrackedDownload = link.hasAttribute('data-track-download');
+
+      if (isDownloadAttr || isPdfOrTxt || isTrackedDownload) {
+        const downloadName =
+          link.getAttribute('data-download-name') ||
+          link.getAttribute('aria-label') ||
+          link.textContent.trim() ||
+          href.split('/').pop();
+
+        const format = href.endsWith('.pdf') ? 'PDF' : href.endsWith('.txt') ? 'TXT' : 'Resource';
+        const attribution = link.getAttribute('data-attribution') || 'Quills & Ink Hub Editorial Archive';
+
+        window.quillsAnalytics.track('file_download', {
+          file_name: downloadName,
+          file_url: href,
+          file_format: format,
+          attribution: attribution,
+          source_page: window.location.pathname,
+        });
+
+        showDownloadToast(downloadName, attribution);
+      }
+
+      // WhatsApp tracking
+      if (href.includes('wa.me') || href.includes('whatsapp.com')) {
+        window.quillsAnalytics.track('whatsapp_chat_click', {
+          source_element: link.className || 'whatsapp-link',
+          href: href,
+          page: window.location.pathname,
+        });
+      }
+
+      // Consultation CTA tracking
+      if (href === '/book' || href.includes('/book')) {
+        window.quillsAnalytics.track('consultation_cta_click', {
+          cta_label: link.textContent.trim(),
+          source_page: window.location.pathname,
+        });
+      }
+    });
+  })();
+</script>
