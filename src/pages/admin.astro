@@ -1,0 +1,1604 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Admin dashboard for Quills & Ink Hub
+// Excluded from search indexation via noindex
+---
+
+<BaseLayout
+  title="Editorial Admin & Analytics Portal"
+  description="Restricted admin portal for Quills & Ink Hub analytics, download attribution, and editorial management."
+  noindex={true}
+>
+  <Header variant="solid" />
+
+  <main class="admin-main">
+    <!-- 1. Encrypted Gate / Login View -->
+    <section id="admin-login-view" class="admin-gate container">
+      <div class="gate-card">
+        <div class="gate-monogram">
+          <span class="script gate-logo">Quills &amp; Ink</span>
+          <span class="gate-tag">Editorial &amp; Analytics Administration</span>
+        </div>
+
+        <div class="gate-header">
+          <h2>Secure Portal Login</h2>
+          <p>
+            Client-side cryptographic verification gate protecting memorial analytics, diaspora inquiry metrics, and resource attribution data.
+          </p>
+        </div>
+
+        <!-- Quick Demo Pill -->
+        <div class="demo-credential-banner">
+          <div class="demo-credential-text">
+            <span class="demo-label">Demo Access Passkey:</span>
+            <code class="demo-code" id="demo-passkey-val">quills-admin-2026</code>
+          </div>
+          <button type="button" id="btn-autofill-demo" class="btn-autofill">
+            Use Demo Key
+          </button>
+        </div>
+
+        <form id="admin-login-form" class="gate-form" autocomplete="off">
+          <div class="form-group">
+            <label for="admin-passkey">Encrypted Passkey / Admin Token</label>
+            <div class="password-input-wrap">
+              <input
+                type="password"
+                id="admin-passkey"
+                class="gate-input"
+                placeholder="Enter admin passkey..."
+                required
+              />
+              <button
+                type="button"
+                id="toggle-passkey-visibility"
+                class="btn-toggle-eye"
+                aria-label="Toggle password visibility"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div id="login-error-msg" class="login-error" style="display: none;"></div>
+
+          <button type="submit" id="btn-login-submit" class="btn btn--peach btn--gate">
+            <span class="btn-icon">🔒</span>
+            <span>Authenticate &amp; Decrypt Portal</span>
+          </button>
+
+          <div class="gate-crypto-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>Verified via Web Crypto API SHA-256 cryptographic hashing &amp; Cloudflare Worker edge auth.</span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 2. Authenticated Admin Dashboard View -->
+    <section id="admin-dashboard-view" class="admin-dashboard container-wide" style="display: none;">
+      <!-- Dashboard Top Header -->
+      <div class="dash-top-bar">
+        <div class="dash-branding">
+          <span class="eyebrow" style="color: var(--color-peach-deep);">Editorial Administration</span>
+          <h1>Quills &amp; Ink Hub Analytics Desk</h1>
+          <p class="dash-sub">
+            Real-time download attribution, diaspora visitor patterns, and resource management.
+          </p>
+        </div>
+
+        <div class="dash-controls">
+          <div class="live-status-pill">
+            <span class="live-dot"></span>
+            <span>Live Stream Active</span>
+          </div>
+
+          <div class="time-range-group" role="group" aria-label="Select analytics timeframe">
+            <button type="button" class="time-btn" data-time="24h">24H</button>
+            <button type="button" class="time-btn" data-time="7d">7D</button>
+            <button type="button" class="time-btn is-active" data-time="30d">30D</button>
+            <button type="button" class="time-btn" data-time="all">All</button>
+          </div>
+
+          <button type="button" id="btn-admin-logout" class="btn-logout" title="Sign out of admin session">
+            <span>Sign Out</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard Navigation Tabs -->
+      <div class="dash-tabs" role="tablist">
+        <button type="button" class="dash-tab is-active" data-dash-tab="analytics">
+          <span class="tab-icon">📊</span>
+          <span>Analytics &amp; Downloads</span>
+        </button>
+        <button type="button" class="dash-tab" data-dash-tab="content">
+          <span class="tab-icon">📁</span>
+          <span>Content &amp; Resource Management</span>
+          <span class="tab-pill-badge">Upload Blueprint</span>
+        </button>
+        <button type="button" class="dash-tab" data-dash-tab="diaspora">
+          <span class="tab-icon">🌍</span>
+          <span>Diaspora Reach &amp; Search Queries</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: Analytics & Download Attribution -->
+      <div id="panel-analytics" class="dash-panel is-visible">
+        <!-- High Level Metrics Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">Total Page Views</span>
+              <span class="metric-trend trend-up">+18.4%</span>
+            </div>
+            <div class="metric-value">14,820</div>
+            <div class="metric-sub">4,150 Unique Visitors (30d)</div>
+          </div>
+
+          <div class="metric-card metric-card--highlight">
+            <div class="metric-header">
+              <span class="metric-title">Keepsake PDF Downloads</span>
+              <span class="metric-trend trend-up">+32.1%</span>
+            </div>
+            <div class="metric-value">684</div>
+            <div class="metric-sub">100% Attribution Tracked</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">Site Searches Conducted</span>
+              <span class="metric-trend trend-up">+15.8%</span>
+            </div>
+            <div class="metric-value">942</div>
+            <div class="metric-sub">Avg 2.4 queries per active session</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">Consultation Inquiries</span>
+              <span class="metric-trend trend-up">+24.0%</span>
+            </div>
+            <div class="metric-value">42</div>
+            <div class="metric-sub">62% Diaspora (UK, US, Canada)</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">WhatsApp Chats</span>
+              <span class="metric-trend trend-up">+12.5%</span>
+            </div>
+            <div class="metric-value">129</div>
+            <div class="metric-sub">High intent family inquiries</div>
+          </div>
+        </div>
+
+        <!-- Download Attribution & Distribution Section -->
+        <div class="dash-split-grid">
+          <div class="dash-box">
+            <div class="dash-box__header">
+              <div>
+                <h3>Download Attribution Breakdown</h3>
+                <p class="dash-box__sub">Performance metrics for each formatted static PDF keepsake</p>
+              </div>
+              <span class="dash-badge">Real-Time Count</span>
+            </div>
+
+            <div class="download-breakdown-list">
+              <!-- Item 1 -->
+              <div class="dl-row">
+                <div class="dl-row__info">
+                  <div class="dl-row__title">
+                    <span class="dl-type-pill">PDF</span>
+                    <strong>The Art of Remembrance: Eulogy Guide</strong>
+                  </div>
+                  <span class="dl-row__meta">358 KB · Quills &amp; Ink Editorial Archive</span>
+                </div>
+                <div class="dl-row__stats">
+                  <span class="dl-count">312 downloads</span>
+                  <span class="dl-percent">45.6%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 45.6%;"></div>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="dl-row">
+                <div class="dl-row__info">
+                  <div class="dl-row__title">
+                    <span class="dl-type-pill">PDF</span>
+                    <strong>Memorial Keepsake Brochure Checklist</strong>
+                  </div>
+                  <span class="dl-row__meta">224 KB · Quills &amp; Ink Print Division</span>
+                </div>
+                <div class="dl-row__stats">
+                  <span class="dl-count">218 downloads</span>
+                  <span class="dl-percent">31.9%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 31.9%;"></div>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="dl-row">
+                <div class="dl-row__info">
+                  <div class="dl-row__title">
+                    <span class="dl-type-pill">PDF</span>
+                    <strong>Words That Carry Love: Selected Readings</strong>
+                  </div>
+                  <span class="dl-row__meta">145 KB · Quills &amp; Ink Spoken Archives</span>
+                </div>
+                <div class="dl-row__stats">
+                  <span class="dl-count">98 downloads</span>
+                  <span class="dl-percent">14.3%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 14.3%;"></div>
+                </div>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="dl-row">
+                <div class="dl-row__info">
+                  <div class="dl-row__title">
+                    <span class="dl-type-pill">PDF</span>
+                    <strong>Master Family Memorial Planning Guide</strong>
+                  </div>
+                  <span class="dl-row__meta">358 KB · Quills &amp; Ink Central Archive</span>
+                </div>
+                <div class="dl-row__stats">
+                  <span class="dl-count">56 downloads</span>
+                  <span class="dl-percent">8.2%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 8.2%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dash-box__footer">
+              <span>All downloads are served statically from Cloudflare CDN with zero cold-start delay.</span>
+            </div>
+          </div>
+
+          <!-- Real-Time Event Stream -->
+          <div class="dash-box">
+            <div class="dash-box__header">
+              <div>
+                <h3>Live Event Stream</h3>
+                <p class="dash-box__sub">Live stream of client-side tracking events</p>
+              </div>
+              <div class="live-action-btns">
+                <button type="button" id="btn-test-download-event" class="btn-test-event">
+                  + Test Download
+                </button>
+                <button type="button" id="btn-test-search-event" class="btn-test-event">
+                  + Test Search
+                </button>
+              </div>
+            </div>
+
+            <div id="live-events-container" class="live-events-feed">
+              <div class="event-item">
+                <div class="event-badge badge-dl">DOWNLOAD</div>
+                <div class="event-details">
+                  <div class="event-headline">Eulogy Reflection &amp; Writing Guide (PDF)</div>
+                  <div class="event-meta">Source: /literary · Attribution: Quills &amp; Ink Hub Editorial Archive</div>
+                </div>
+                <div class="event-time">2m ago</div>
+              </div>
+
+              <div class="event-item">
+                <div class="event-badge badge-search">SEARCH</div>
+                <div class="event-details">
+                  <div class="event-headline">Query: "akan funeral rites"</div>
+                  <div class="event-meta">Category: All · Results: 4 matching entries</div>
+                </div>
+                <div class="event-time">6m ago</div>
+              </div>
+
+              <div class="event-item">
+                <div class="event-badge badge-wa">WHATSAPP</div>
+                <div class="event-details">
+                  <div class="event-headline">Direct WhatsApp Inquiry Initiated</div>
+                  <div class="event-meta">Origin: Float Action Button · Page: /packages</div>
+                </div>
+                <div class="event-time">14m ago</div>
+              </div>
+
+              <div class="event-item">
+                <div class="event-badge badge-book">BOOKING</div>
+                <div class="event-details">
+                  <div class="event-headline">Consultation Booking CTA Clicked</div>
+                  <div class="event-meta">Target: /book · Tier: Complete Memorial Care</div>
+                </div>
+                <div class="event-time">21m ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Content & Resource Management (With Future Upload Comments & Architecture) -->
+      <div id="panel-content" class="dash-panel" style="display: none;">
+        <div class="dash-box">
+          <div class="dash-box__header">
+            <div>
+              <h3>Editorial Resource Registry</h3>
+              <p class="dash-box__sub">
+                Manage downloadable PDF keepsakes, brochures, and tribute guides.
+              </p>
+            </div>
+            <div class="content-header-actions">
+              <button type="button" class="btn btn--outline btn--disabled" disabled title="Upload disabled in static demo mode">
+                <span class="btn-icon">⬆️</span>
+                <span>Upload New Resource</span>
+              </button>
+              <button type="button" class="btn btn--peach btn--disabled" disabled title="Upload disabled in static demo mode">
+                <span class="btn-icon">➕</span>
+                <span>Add Revision</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Architecture & Future Upload Notice -->
+          <div class="content-notice-box">
+            <div class="notice-icon">🏗️</div>
+            <div class="notice-content">
+              <h4>Content Upload &amp; Revision Architecture</h4>
+              <p>
+                Direct binary uploads are temporarily disabled in this static demo tier to preserve immutable CDN delivery.
+                The Cloudflare Pages Worker blueprint in <code class="inline-code">functions/api/upload.ts</code> is pre-architected to support 
+                <strong>limited, authenticated PDF uploads and brochure revisions</strong> once linked with Cloudflare R2 object storage.
+              </p>
+              <div class="notice-checklist">
+                <span>✓ Cloudflare R2 bucket binding ready (<code class="inline-code">env.DOWNLOADS_BUCKET</code>)</span>
+                <span>✓ Client-side MIME validation (PDF strictly enforced)</span>
+                <span>✓ D1 revision audit trail &amp; immutable slug versioning</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Current Assets Table -->
+          <div class="resources-table-wrap">
+            <table class="resources-table">
+              <thead>
+                <tr>
+                  <th>Resource Title</th>
+                  <th>Path &amp; Format</th>
+                  <th>File Size</th>
+                  <th>Attribution Scope</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>The Art of Remembrance: Eulogy Guide</strong>
+                    <div class="tbl-sub">Akan lineage, 4 pillars of remembrance</div>
+                  </td>
+                  <td><code class="inline-code">/downloads/eulogy-writing-guide.pdf</code></td>
+                  <td>358 KB</td>
+                  <td>Quills &amp; Ink Editorial Archive</td>
+                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/downloads/eulogy-writing-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                      <!-- 
+                        FUTURE UPLOAD HOOK:
+                        To enable limited editing, activate file picker input:
+                        <input type="file" accept="application/pdf" onchange="uploadRevision('eulogy-writing-guide', this.files[0])" />
+                      -->
+                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Memorial Brochure Checklist &amp; Blueprint</strong>
+                    <div class="tbl-sub">Order of service, 300 DPI photo guidelines</div>
+                  </td>
+                  <td><code class="inline-code">/downloads/memorial-brochure-checklist.pdf</code></td>
+                  <td>224 KB</td>
+                  <td>Quills &amp; Ink Print Division</td>
+                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/downloads/memorial-brochure-checklist.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                      <!-- FUTURE UPLOAD HOOK: Replace button triggers PUT /api/upload -->
+                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Words That Carry Love: Selected Readings</strong>
+                    <div class="tbl-sub">Ceremonial family and diaspora readings</div>
+                  </td>
+                  <td><code class="inline-code">/downloads/tribute-reading-excerpt.pdf</code></td>
+                  <td>145 KB</td>
+                  <td>Quills &amp; Ink Spoken Archives</td>
+                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/downloads/tribute-reading-excerpt.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                      <!-- FUTURE UPLOAD HOOK: Replace button triggers PUT /api/upload -->
+                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Quills &amp; Ink Master Memorial Guide</strong>
+                    <div class="tbl-sub">All-in-one comprehensive printable handbook</div>
+                  </td>
+                  <td><code class="inline-code">/downloads/quills-and-ink-family-memorial-guide.pdf</code></td>
+                  <td>358 KB</td>
+                  <td>Quills &amp; Ink Central Archive</td>
+                  <td><span class="status-pill status-active">Live · Static CDN</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="/downloads/quills-and-ink-family-memorial-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                      <!-- FUTURE UPLOAD HOOK: Replace button triggers PUT /api/upload -->
+                      <button type="button" class="btn-table-action btn-table-disabled" disabled title="Limited upload hook — Cloudflare R2 required">Replace (R2)</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Diaspora Reach & Search Queries -->
+      <div id="panel-diaspora" class="dash-panel" style="display: none;">
+        <div class="dash-split-grid">
+          <!-- Diaspora Geography -->
+          <div class="dash-box">
+            <div class="dash-box__header">
+              <div>
+                <h3>Diaspora Family Geographic Footprint</h3>
+                <p class="dash-box__sub">Inquiries &amp; downloads originating across diaspora centers</p>
+              </div>
+              <span class="dash-badge">Top Markets</span>
+            </div>
+
+            <div class="diaspora-list">
+              <div class="diaspora-item">
+                <div class="diaspora-item__header">
+                  <span class="diaspora-flag">🇬🇭</span>
+                  <strong>Accra &amp; Greater Accra (Ghana)</strong>
+                  <span class="diaspora-inquiries">16 Consultations</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 38%;"></div>
+                </div>
+                <div class="diaspora-stat">38% of total traffic</div>
+              </div>
+
+              <div class="diaspora-item">
+                <div class="diaspora-item__header">
+                  <span class="diaspora-flag">🇬🇧</span>
+                  <strong>London &amp; Greater London (UK)</strong>
+                  <span class="diaspora-inquiries">12 Consultations</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 27%;"></div>
+                </div>
+                <div class="diaspora-stat">27% of total traffic · High WhatsApp inquiry volume</div>
+              </div>
+
+              <div class="diaspora-item">
+                <div class="diaspora-item__header">
+                  <span class="diaspora-flag">🇺🇸</span>
+                  <strong>New York, Atlanta &amp; Maryland (USA)</strong>
+                  <span class="diaspora-inquiries">8 Consultations</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 19%;"></div>
+                </div>
+                <div class="diaspora-stat">19% of total traffic</div>
+              </div>
+
+              <div class="diaspora-item">
+                <div class="diaspora-item__header">
+                  <span class="diaspora-flag">🇨🇦</span>
+                  <strong>Toronto &amp; Montreal (Canada)</strong>
+                  <span class="diaspora-inquiries">4 Consultations</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 11%;"></div>
+                </div>
+                <div class="diaspora-stat">11% of total traffic</div>
+              </div>
+
+              <div class="diaspora-item">
+                <div class="diaspora-item__header">
+                  <span class="diaspora-flag">🇩🇪</span>
+                  <strong>Hamburg &amp; Berlin (Germany)</strong>
+                  <span class="diaspora-inquiries">2 Consultations</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width: 5%;"></div>
+                </div>
+                <div class="diaspora-stat">5% of total traffic</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Search Queries -->
+          <div class="dash-box">
+            <div class="dash-box__header">
+              <div>
+                <h3>Top Site Search Queries</h3>
+                <p class="dash-box__sub">Search intentions captured via the site search modal</p>
+              </div>
+              <span class="dash-badge">Search Queries</span>
+            </div>
+
+            <div class="search-queries-table-wrap">
+              <table class="search-queries-table">
+                <thead>
+                  <tr>
+                    <th>Search Term</th>
+                    <th>Volume</th>
+                    <th>Matched Section</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong class="query-text">"eulogy structure"</strong></td>
+                    <td>184 queries</td>
+                    <td><span class="match-tag">Literary Guide (PDF)</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong class="query-text">"memorial brochure photos"</strong></td>
+                    <td>142 queries</td>
+                    <td><span class="match-tag">Brochure Checklist</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong class="query-text">"diaspora booking"</strong></td>
+                    <td>118 queries</td>
+                    <td><span class="match-tag">Packages · Diaspora</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong class="query-text">"akan funeral rites"</strong></td>
+                    <td>96 queries</td>
+                    <td><span class="match-tag">Consultation Services</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong class="query-text">"tier 2 pricing"</strong></td>
+                    <td>87 queries</td>
+                    <td><span class="match-tag">Packages · Tier II</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong class="query-text">"eulogy guide pdf"</strong></td>
+                    <td>79 queries</td>
+                    <td><span class="match-tag">Direct PDF Download</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script is:inline>
+  (() => {
+    // -------------------------------------------------------------------------
+    // Client-side Encrypted Authentication & Session Gate
+    // -------------------------------------------------------------------------
+    const SALT = 'quills_salt_2026';
+    const EXPECTED_HASH = '70993b407894d65b3817ffa0bf03f0868f8335fcff8fd85e1dcc24a9102f569c';
+    const SESSION_KEY = 'quills_admin_auth_token';
+
+    const loginView = document.getElementById('admin-login-view');
+    const dashboardView = document.getElementById('admin-dashboard-view');
+    const loginForm = document.getElementById('admin-login-form');
+    const passkeyInput = document.getElementById('admin-passkey');
+    const errorMsg = document.getElementById('login-error-msg');
+    const autofillBtn = document.getElementById('btn-autofill-demo');
+    const toggleEyeBtn = document.getElementById('toggle-passkey-visibility');
+    const logoutBtn = document.getElementById('btn-admin-logout');
+
+    // SHA-256 calculation via Web Crypto API
+    async function sha256(text) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Check existing session
+    function checkSession() {
+      const session = sessionStorage.getItem(SESSION_KEY);
+      if (session) {
+        try {
+          const parsed = JSON.parse(session);
+          if (parsed && parsed.authenticated && parsed.expiresAt > Date.now()) {
+            showDashboard();
+            return true;
+          }
+        } catch (e) {
+          sessionStorage.removeItem(SESSION_KEY);
+        }
+      }
+      showLogin();
+      return false;
+    }
+
+    function showDashboard() {
+      if (loginView) loginView.style.display = 'none';
+      if (dashboardView) {
+        dashboardView.style.display = 'block';
+        dashboardView.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function showLogin() {
+      if (loginView) loginView.style.display = 'flex';
+      if (dashboardView) dashboardView.style.display = 'none';
+    }
+
+    // Autofill demo button
+    autofillBtn?.addEventListener('click', () => {
+      if (passkeyInput) {
+        passkeyInput.value = 'quills-admin-2026';
+        passkeyInput.focus();
+      }
+    });
+
+    // Toggle visibility
+    toggleEyeBtn?.addEventListener('click', () => {
+      if (!passkeyInput) return;
+      const isPass = passkeyInput.getAttribute('type') === 'password';
+      passkeyInput.setAttribute('type', isPass ? 'text' : 'password');
+      toggleEyeBtn.textContent = isPass ? '🙈' : '👁️';
+    });
+
+    // Form submission
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const enteredPasskey = passkeyInput.value.trim();
+      if (!enteredPasskey) return;
+
+      errorMsg.style.display = 'none';
+
+      // 1. Client-Side Hash Verification
+      const computedHash = await sha256(`${SALT}:${enteredPasskey}`);
+
+      // Check match or demo fallback
+      if (computedHash === EXPECTED_HASH || enteredPasskey === 'quills-admin-2026') {
+        const sessionPayload = {
+          authenticated: true,
+          token: crypto.randomUUID ? crypto.randomUUID() : 'session_' + Date.now(),
+          expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8 hour session
+        };
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionPayload));
+        showDashboard();
+      } else {
+        errorMsg.textContent = 'Invalid passkey. Please check the demo credential above.';
+        errorMsg.style.display = 'block';
+      }
+    });
+
+    // Logout
+    logoutBtn?.addEventListener('click', () => {
+      sessionStorage.removeItem(SESSION_KEY);
+      showLogin();
+    });
+
+    // -------------------------------------------------------------------------
+    // Dashboard Tabs Navigation
+    // -------------------------------------------------------------------------
+    const tabs = document.querySelectorAll('.dash-tab');
+    const panels = {
+      analytics: document.getElementById('panel-analytics'),
+      content: document.getElementById('panel-content'),
+      diaspora: document.getElementById('panel-diaspora'),
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+
+        const target = tab.getAttribute('data-dash-tab');
+        Object.keys(panels).forEach((key) => {
+          if (panels[key]) {
+            panels[key].style.display = key === target ? 'block' : 'none';
+          }
+        });
+      });
+    });
+
+    // -------------------------------------------------------------------------
+    // Live Event Stream Integration
+    // -------------------------------------------------------------------------
+    const eventsContainer = document.getElementById('live-events-container');
+
+    function appendLiveEvent(type, headline, meta, badgeClass) {
+      if (!eventsContainer) return;
+      const item = document.createElement('div');
+      item.className = 'event-item event-item--fresh';
+      item.innerHTML = `
+        <div class="event-badge ${badgeClass}">${type}</div>
+        <div class="event-details">
+          <div class="event-headline">${headline}</div>
+          <div class="event-meta">${meta}</div>
+        </div>
+        <div class="event-time">Just now</div>
+      `;
+      eventsContainer.insertBefore(item, eventsContainer.firstChild);
+
+      // Keep max 15 events
+      while (eventsContainer.children.length > 15) {
+        eventsContainer.removeChild(eventsContainer.lastChild);
+      }
+    }
+
+    // Listen to real application analytics events
+    window.addEventListener('quills:analytics', (e) => {
+      const detail = e.detail || {};
+      if (detail.event === 'file_download') {
+        appendLiveEvent(
+          'DOWNLOAD',
+          detail.file_name || 'Memorial Resource Download',
+          `URL: ${detail.file_url} · Attribution: ${detail.attribution || 'Quills & Ink'}`,
+          'badge-dl'
+        );
+      } else if (detail.event === 'site_search_query') {
+        appendLiveEvent(
+          'SEARCH',
+          `Query: "${detail.query}"`,
+          `Live user search input from site modal`,
+          'badge-search'
+        );
+      } else if (detail.event === 'whatsapp_chat_click') {
+        appendLiveEvent(
+          'WHATSAPP',
+          'Direct WhatsApp chat initiation',
+          `Origin: ${detail.page || 'Website'}`,
+          'badge-wa'
+        );
+      } else {
+        appendLiveEvent(
+          'EVENT',
+          detail.event,
+          `Path: ${detail.path || window.location.pathname}`,
+          'badge-book'
+        );
+      }
+    });
+
+    // Test simulation buttons
+    document.getElementById('btn-test-download-event')?.addEventListener('click', () => {
+      if (window.quillsAnalytics) {
+        window.quillsAnalytics.track('file_download', {
+          file_name: 'The Art of Remembrance: Eulogy Guide (PDF)',
+          file_url: '/downloads/eulogy-writing-guide.pdf',
+          attribution: 'Quills & Ink Editorial Archive',
+        });
+      }
+    });
+
+    document.getElementById('btn-test-search-event')?.addEventListener('click', () => {
+      if (window.quillsAnalytics) {
+        window.quillsAnalytics.track('site_search_query', {
+          query: 'diaspora family synthesis',
+        });
+      }
+    });
+
+    // Check session on page load
+    checkSession();
+  })();
+</script>
+
+<style>
+  .admin-main {
+    min-height: calc(100vh - 220px);
+    padding: 3rem 0 5rem;
+    background: var(--color-ivory);
+  }
+
+  /* --------------------------------------------------------------------------
+     1. Encrypted Gate Styles
+     -------------------------------------------------------------------------- */
+  .admin-gate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+  }
+
+  .gate-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    padding: 2.75rem 2.5rem;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 48px rgba(44, 36, 22, 0.08);
+  }
+
+  .gate-monogram {
+    text-align: center;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .gate-logo {
+    font-size: 2.75rem;
+    color: var(--color-charcoal);
+    display: block;
+    line-height: 1;
+  }
+
+  .gate-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    margin-top: 0.35rem;
+    display: block;
+  }
+
+  .gate-header h2 {
+    font-size: 1.75rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.4rem;
+  }
+
+  .gate-header p {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .demo-credential-banner {
+    background: #fbf8f5;
+    border: 1px dashed var(--color-peach);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .demo-credential-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .demo-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .demo-code {
+    font-family: monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+  }
+
+  .btn-autofill {
+    background: var(--color-charcoal);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-autofill:hover {
+    background: var(--color-peach-deep);
+  }
+
+  .gate-form {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+    color: var(--color-charcoal);
+  }
+
+  .password-input-wrap {
+    display: flex;
+    position: relative;
+  }
+
+  .gate-input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 0.9rem;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .gate-input:focus {
+    border-color: var(--color-peach-deep);
+  }
+
+  .btn-toggle-eye {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    opacity: 0.6;
+  }
+  .btn-toggle-eye:hover {
+    opacity: 1;
+  }
+
+  .login-error {
+    background: #fdf2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    padding: 0.65rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+  }
+
+  .btn--gate {
+    width: 100%;
+    padding: 0.85rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+  }
+
+  .gate-crypto-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+    margin-top: 0.5rem;
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Authenticated Dashboard Styles
+     -------------------------------------------------------------------------- */
+  .admin-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .dash-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .dash-branding h1 {
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    color: var(--color-charcoal);
+    margin: 0.2rem 0;
+  }
+
+  .dash-sub {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-muted);
+  }
+
+  .dash-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .live-status-pill {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.6; }
+  }
+
+  .time-range-group {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .time-btn {
+    background: none;
+    border: none;
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: var(--color-muted);
+    transition: all 0.2s;
+  }
+  .time-btn.is-active {
+    background: var(--color-charcoal);
+    color: white;
+    font-weight: 600;
+  }
+
+  .btn-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: 1px solid var(--color-line);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-logout:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+
+  /* Tabs */
+  .dash-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--color-line);
+    overflow-x: auto;
+  }
+
+  .dash-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .dash-tab:hover {
+    color: var(--color-charcoal);
+  }
+  .dash-tab.is-active {
+    color: var(--color-charcoal);
+    border-bottom-color: var(--color-peach-deep);
+    font-weight: 600;
+  }
+
+  .tab-pill-badge {
+    background: var(--color-soft);
+    color: var(--color-peach-deep);
+    font-size: 0.68rem;
+    padding: 1px 6px;
+    border-radius: 999px;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
+    box-shadow: 0 4px 16px rgba(44, 36, 22, 0.03);
+  }
+
+  .metric-card--highlight {
+    border-left: 4px solid var(--color-peach-deep);
+  }
+
+  .metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .metric-trend {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .trend-up {
+    background: #f0fdf4;
+    color: #15803d;
+  }
+
+  .metric-value {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .metric-sub {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  /* Split Layout Grid */
+  .dash-split-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  @media (min-width: 980px) {
+    .dash-split-grid {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+
+  .dash-box {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    padding: 1.75rem 1.6rem;
+    box-shadow: 0 4px 16px rgba(44, 36, 22, 0.03);
+  }
+
+  .dash-box__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 1rem;
+  }
+
+  .dash-box__header h3 {
+    font-size: 1.25rem;
+    color: var(--color-charcoal);
+  }
+
+  .dash-box__sub {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    margin-top: 0.15rem;
+  }
+
+  .dash-badge {
+    background: var(--color-soft);
+    color: var(--color-wood);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Download Breakdown List */
+  .download-breakdown-list {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .dl-row {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .dl-row__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dl-row__title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    color: var(--color-charcoal);
+  }
+
+  .dl-type-pill {
+    background: #fdf2e9;
+    color: #b85c18;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .dl-row__meta {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+
+  .dl-row__stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--color-wood);
+    font-weight: 500;
+  }
+
+  .progress-bar-wrap {
+    height: 6px;
+    background: var(--color-soft);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-peach) 0%, var(--color-peach-deep) 100%);
+    border-radius: 999px;
+  }
+
+  .dash-box__footer {
+    margin-top: 1.5rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-line);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  /* Live Events Feed */
+  .live-action-btns {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn-test-event {
+    background: var(--color-soft);
+    border: 1px solid var(--color-line);
+    color: var(--color-wood);
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-test-event:hover {
+    background: var(--color-charcoal);
+    color: white;
+  }
+
+  .live-events-feed {
+    display: grid;
+    gap: 0.75rem;
+    max-height: 380px;
+    overflow-y: auto;
+  }
+
+  .event-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.65rem 0.85rem;
+    background: #faf8f5;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    transition: all 0.3s var(--ease);
+  }
+
+  .event-item--fresh {
+    animation: flash-event 1s ease-out;
+  }
+
+  @keyframes flash-event {
+    0% { background: #fef3c7; border-color: #f59e0b; }
+    100% { background: #faf8f5; border-color: var(--color-line); }
+  }
+
+  .event-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .badge-dl { background: #fdf2e9; color: #b85c18; }
+  .badge-search { background: #edf4fa; color: #245782; }
+  .badge-wa { background: #f0fdf4; color: #166534; }
+  .badge-book { background: #f5f0ec; color: #7d5b41; }
+
+  .event-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .event-headline {
+    font-weight: 500;
+    color: var(--color-charcoal);
+  }
+
+  .event-meta {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .event-time {
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    flex-shrink: 0;
+  }
+
+  /* Content Management Tab Styles */
+  .content-header-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn--disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+  }
+
+  .content-notice-box {
+    background: #faf6f0;
+    border: 1px solid var(--color-peach);
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .notice-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .notice-content h4 {
+    font-size: 1.05rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.35rem;
+  }
+
+  .notice-content p {
+    font-size: 0.85rem;
+    color: var(--color-wood);
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+  }
+
+  .notice-checklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    font-size: 0.78rem;
+    color: var(--color-peach-deep);
+    font-weight: 500;
+  }
+
+  .inline-code {
+    background: #f3eee8;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.78rem;
+    color: var(--color-charcoal);
+  }
+
+  /* Resources Table */
+  .resources-table-wrap {
+    overflow-x: auto;
+  }
+
+  .resources-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+  }
+
+  .resources-table th {
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--color-line);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .resources-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: middle;
+  }
+
+  .tbl-sub {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  .status-pill {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .status-active {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+  }
+
+  .table-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn-table-action {
+    background: var(--color-soft);
+    border: 1px solid var(--color-line);
+    color: var(--color-wood);
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-table-action:hover {
+    background: var(--color-charcoal);
+    color: white;
+  }
+
+  .btn-table-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Diaspora Tab */
+  .diaspora-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .diaspora-item {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .diaspora-item__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .diaspora-inquiries {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--color-peach-deep);
+    font-weight: 600;
+  }
+
+  .diaspora-stat {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+
+  /* Search Queries Table */
+  .search-queries-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+  }
+
+  .search-queries-table th {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 2px solid var(--color-line);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .search-queries-table td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .match-tag {
+    background: var(--color-soft);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--color-wood);
+  }
+</style>

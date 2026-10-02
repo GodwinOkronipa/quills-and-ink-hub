@@ -46,7 +46,11 @@ const year = new Date().getFullYear();
 
   <div class="site-footer__bottom container">
     <p>© {year} Quills and Ink Hub. All rights reserved.</p>
-    <a href="/contact">Send an inquiry</a>
+    <div class="site-footer__bottom-links">
+      <a href="/contact">Send an inquiry</a>
+      <span aria-hidden="true" style="opacity: 0.4;">·</span>
+      <a href="/admin" class="footer-admin-link">Editorial Desk (Admin)</a>
+    </div>
   </div>
 </footer>
 
@@ -110,9 +114,24 @@ const year = new Date().getFullYear();
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
     gap: 0.75rem;
     padding-top: 1.5rem;
     font-size: 0.8rem;
+  }
+
+  .site-footer__bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .footer-admin-link {
+    opacity: 0.75;
+    font-size: 0.75rem;
+  }
+  .footer-admin-link:hover {
+    opacity: 1;
   }
 
   @media (min-width: 800px) {
