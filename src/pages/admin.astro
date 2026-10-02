@@ -30,17 +30,6 @@ import Footer from '../components/Footer.astro';
           </p>
         </div>
 
-        <!-- Access Key Banner -->
-        <div class="demo-credential-banner">
-          <div class="demo-credential-text">
-            <span class="demo-label">Admin Access Passkey:</span>
-            <code class="demo-code" id="demo-passkey-val">William123</code>
-          </div>
-          <button type="button" id="btn-autofill-demo" class="btn-autofill">
-            Use Key
-          </button>
-        </div>
-
         <form id="admin-login-form" class="gate-form" autocomplete="off">
           <div class="form-group">
             <label for="admin-passkey">Encrypted Passkey / Admin Token</label>
@@ -107,10 +96,6 @@ import Footer from '../components/Footer.astro';
               <span class="info-tooltip">Runs directly at the Cloudflare network edge. Collects real stats with zero third-party tracking cookies and zero ad-blocker loss.</span>
             </span>
           </div>
-
-          <button type="button" id="btn-test-live-event" class="btn-quick-test" title="Send a simulated live visitor event to test real-time D1 pipeline">
-            <span>⚡ Test Live Event</span>
-          </button>
 
           <button type="button" id="btn-refresh-data" class="btn-refresh" title="Fetch fresh statistics from Edge database">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -630,7 +615,6 @@ import Footer from '../components/Footer.astro';
     const loginForm = document.getElementById('admin-login-form');
     const passkeyInput = document.getElementById('admin-passkey');
     const errorMsg = document.getElementById('login-error-msg');
-    const autofillBtn = document.getElementById('btn-autofill-demo');
     const toggleEyeBtn = document.getElementById('toggle-passkey-visibility');
     const logoutBtn = document.getElementById('btn-admin-logout');
     const refreshBtn = document.getElementById('btn-refresh-data');
@@ -696,14 +680,6 @@ import Footer from '../components/Footer.astro';
       if (loginView) loginView.style.display = 'flex';
       if (dashboardView) dashboardView.style.display = 'none';
     }
-
-    // Autofill demo button with William123
-    autofillBtn?.addEventListener('click', () => {
-      if (passkeyInput) {
-        passkeyInput.value = 'William123';
-        passkeyInput.focus();
-      }
-    });
 
     // Toggle visibility
     toggleEyeBtn?.addEventListener('click', () => {
@@ -1053,40 +1029,6 @@ import Footer from '../components/Footer.astro';
     }
 
     // -------------------------------------------------------------------------
-    // Real-Time Simulator Button Listener
-    // -------------------------------------------------------------------------
-    const testEventBtn = document.getElementById('btn-test-live-event');
-    const simulationPool = [
-      { event: 'file_download', file_name: 'Eulogy Reflection & Writing Guide', file_url: '/downloads/eulogy-writing-guide.pdf', path: '/literary', country: 'GB', city: 'London' },
-      { event: 'site_search_query', query: 'order of service hymns', path: '/', country: 'GH', city: 'Accra' },
-      { event: 'whatsapp_chat_click', path: '/contact', country: 'US', city: 'New York' },
-      { event: 'file_download', file_name: 'Memorial Keepsake Brochure Checklist', file_url: '/downloads/memorial-brochure-checklist.pdf', path: '/literary', country: 'CA', city: 'Toronto' },
-      { event: 'consultation_cta_click', path: '/packages', country: 'GH', city: 'Kumasi' },
-      { event: 'page_view', path: '/about', country: 'DE', city: 'Hamburg' },
-    ];
-
-    testEventBtn?.addEventListener('click', async () => {
-      const sample = simulationPool[Math.floor(Math.random() * simulationPool.length)];
-      testEventBtn.disabled = true;
-      testEventBtn.innerHTML = '<span>⚡ Syncing...</span>';
-      try {
-        await fetch('/api/analytics', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(sample),
-        });
-        await loadLiveAnalytics(true);
-      } catch (e) {
-        console.error('Test event error:', e);
-      } finally {
-        setTimeout(() => {
-          testEventBtn.disabled = false;
-          testEventBtn.innerHTML = '<span>⚡ Test Live Event</span>';
-        }, 600);
-      }
-    });
-
-    // -------------------------------------------------------------------------
     // Document Upload Handler (Cloudflare R2 with 10MB limit & Slot checking)
     // -------------------------------------------------------------------------
     const uploadForm = document.getElementById('resource-upload-form');
@@ -1271,53 +1213,6 @@ import Footer from '../components/Footer.astro';
     color: var(--color-muted);
     line-height: 1.6;
     margin-bottom: 1.5rem;
-  }
-
-  .demo-credential-banner {
-    background: #fbf8f5;
-    border: 1px dashed var(--color-peach);
-    border-radius: 6px;
-    padding: 0.85rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .demo-credential-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .demo-label {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-muted);
-  }
-
-  .demo-code {
-    font-family: monospace;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--color-wood);
-    letter-spacing: 0.05em;
-  }
-
-  .btn-autofill {
-    background: var(--color-charcoal);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.72rem;
-    cursor: pointer;
-    transition: background 0.2s var(--ease);
-  }
-
-  .btn-autofill:hover {
-    background: var(--color-peach-deep);
   }
 
   .gate-form {
@@ -1578,26 +1473,6 @@ import Footer from '../components/Footer.astro';
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
     70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-  }
-
-  .btn-quick-test {
-    background: #fff8f1;
-    border: 1px solid var(--color-peach);
-    color: var(--color-peach-deep);
-    font-size: 0.74rem;
-    font-weight: 600;
-    padding: 0.45rem 0.85rem;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .btn-quick-test:hover {
-    background: var(--color-peach);
-    color: white;
   }
 
   .btn-logout {

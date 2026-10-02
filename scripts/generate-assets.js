@@ -459,26 +459,27 @@ const eulogyPdfHtml = `<!DOCTYPE html>
     object-fit: cover;
   }
 
-  /* Contact and Email Update Notice Callout */
-  .contact-update-advisory {
-    background: #fef7ee;
-    border: 1px dashed #d4a373;
+  /* Editorial Contact Desk Strip */
+  .editorial-contact-strip {
+    background: #faf6f0;
+    border: 1px solid #dfd2c4;
     border-radius: 5px;
     padding: 8px 12px;
     margin-top: 14px;
-    font-size: 7.5pt;
-    color: #633e14;
+    font-size: 7.6pt;
+    color: #4a3b2c;
     line-height: 1.4;
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
   }
-  .advisory-tag {
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #b85c18;
-    white-space: nowrap;
-    letter-spacing: 0.05em;
+  .contact-strip-brand {
+    font-weight: 600;
+    color: #2c2416;
+    letter-spacing: 0.03em;
+  }
+  .contact-strip-details {
+    color: #5c4a38;
   }
 
   .attribution-footer {
@@ -581,18 +582,18 @@ const eulogyPdfHtml = `<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- Contact & Email Update Notice -->
-    <div class="contact-update-advisory">
-      <span class="advisory-tag">Communications Update Notice:</span>
-      <div>
-        Please note: Our official direct phone lines and dedicated diaspora email routing are actively being upgraded for our expanded international services. We will update these contacts in our next scheduled revision. For immediate family inquiries, please connect with our active WhatsApp desk or schedule an online session at <strong>quillsandinkhub.com/book</strong>.
-      </div>
+    <!-- Editorial Contact Desk Strip -->
+    <div class="editorial-contact-strip">
+      <span class="contact-strip-brand">Editorial Desk &amp; Consultations:</span>
+      <span class="contact-strip-details">
+        Telephone: <strong>+233 53 922 3757</strong> · WhatsApp: <strong>+233 53 922 3757</strong> · Email: <strong>hello@quillsandinkhub.com</strong>
+      </span>
     </div>
 
     <div class="attribution-footer">
       <div>
         <strong>Quills and Ink Hub</strong> · Literary Archive &amp; Funeral Coordination · Accra, Ghana<br>
-        Web: quillsandinkhub.com · WhatsApp Support Desk Active Daily
+        Web: quillsandinkhub.com · Telephone: +233 53 922 3757 · WhatsApp Active Daily
       </div>
       <div style="text-align: right;">
         Attribution: Curated Editorial Asset © 2026 Quills &amp; Ink Hub.<br>
@@ -770,26 +771,27 @@ const brochurePdfHtml = `<!DOCTYPE html>
     color: #5c4a38;
   }
 
-  /* Contact and Email Update Notice Callout */
-  .contact-update-advisory {
-    background: #fef7ee;
-    border: 1px dashed #d4a373;
+  /* Editorial Contact Desk Strip */
+  .editorial-contact-strip {
+    background: #faf6f0;
+    border: 1px solid #dfd2c4;
     border-radius: 5px;
     padding: 8px 12px;
     margin-top: 12px;
-    font-size: 7.5pt;
-    color: #633e14;
+    font-size: 7.6pt;
+    color: #4a3b2c;
     line-height: 1.4;
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
   }
-  .advisory-tag {
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #b85c18;
-    white-space: nowrap;
-    letter-spacing: 0.05em;
+  .contact-strip-brand {
+    font-weight: 600;
+    color: #2c2416;
+    letter-spacing: 0.03em;
+  }
+  .contact-strip-details {
+    color: #5c4a38;
   }
 
   .attribution-footer {
@@ -879,18 +881,18 @@ const brochurePdfHtml = `<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- Contact & Email Update Notice -->
-    <div class="contact-update-advisory">
-      <span class="advisory-tag">Communications Update Notice:</span>
-      <div>
-        Notice: Direct telephone numbers and official email addresses are actively being updated to support our dedicated diaspora printing desk. We will update these contacts shortly. In the interim, please reach our active WhatsApp desk or book a consultation at <strong>quillsandinkhub.com/book</strong>.
-      </div>
+    <!-- Editorial Contact Desk Strip -->
+    <div class="editorial-contact-strip">
+      <span class="contact-strip-brand">Editorial Desk &amp; Production:</span>
+      <span class="contact-strip-details">
+        Telephone: <strong>+233 53 922 3757</strong> · WhatsApp: <strong>+233 53 922 3757</strong> · Email: <strong>hello@quillsandinkhub.com</strong>
+      </span>
     </div>
 
     <div class="attribution-footer">
       <div>
         <strong>Quills and Ink Hub</strong> · Comprehensive Memorial Coordination &amp; Design · Accra, Ghana<br>
-        Web: quillsandinkhub.com · WhatsApp Support Desk Active Daily
+        Web: quillsandinkhub.com · Telephone: +233 53 922 3757 · WhatsApp Active Daily
       </div>
       <div style="text-align: right;">
         Attribution: Free Planning Guide © Quills &amp; Ink Hub.<br>
@@ -1048,26 +1050,27 @@ const tributePdfHtml = `<!DOCTYPE html>
     font-style: italic;
   }
 
-  /* Contact and Email Update Notice Callout */
-  .contact-update-advisory {
-    background: #fef7ee;
-    border: 1px dashed #d4a373;
+  /* Editorial Contact Desk Strip */
+  .editorial-contact-strip {
+    background: #faf6f0;
+    border: 1px solid #dfd2c4;
     border-radius: 5px;
     padding: 8px 12px;
     margin-top: 14px;
-    font-size: 7.5pt;
-    color: #633e14;
+    font-size: 7.6pt;
+    color: #4a3b2c;
     line-height: 1.4;
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
   }
-  .advisory-tag {
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #b85c18;
-    white-space: nowrap;
-    letter-spacing: 0.05em;
+  .contact-strip-brand {
+    font-weight: 600;
+    color: #2c2416;
+    letter-spacing: 0.03em;
+  }
+  .contact-strip-details {
+    color: #5c4a38;
   }
 
   .attribution-footer {
@@ -1132,18 +1135,18 @@ const tributePdfHtml = `<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- Contact & Email Update Notice -->
-    <div class="contact-update-advisory">
-      <span class="advisory-tag">Communications Update Notice:</span>
-      <div>
-        Please note: Our official direct phone lines and primary email routing are undergoing scheduled upgrades to better serve our international families. We will update these contacts in our forthcoming revision. In the interim, WhatsApp messaging is active daily, or you may book a session at <strong>quillsandinkhub.com/book</strong>.
-      </div>
+    <!-- Editorial Contact Desk Strip -->
+    <div class="editorial-contact-strip">
+      <span class="contact-strip-brand">Ceremonial Reading Liaison:</span>
+      <span class="contact-strip-details">
+        Telephone: <strong>+233 53 922 3757</strong> · WhatsApp: <strong>+233 53 922 3757</strong> · Email: <strong>hello@quillsandinkhub.com</strong>
+      </span>
     </div>
 
     <div class="attribution-footer">
       <div>
         <strong>Quills and Ink Hub</strong> · Literary Archives · Accra, Ghana<br>
-        Web: quillsandinkhub.com · WhatsApp Support Desk Active Daily
+        Web: quillsandinkhub.com · Telephone: +233 53 922 3757 · WhatsApp Active Daily
       </div>
       <div style="text-align: right;">
         Attribution: Public Ceremonial Excerpt © Quills &amp; Ink Hub.<br>
@@ -1195,4 +1198,14 @@ console.log('Tribute PDF created:', tributeOutputPath);
 fs.copyFileSync(eulogyOutputPath, masterGuideOutputPath);
 console.log('Master guide PDF updated:', masterGuideOutputPath);
 
-console.log('Done generating all assets with visible images and contact notices!');
+// Also sync to public/samples directory
+const samplesDir = path.join(rootDir, 'public', 'samples');
+if (fs.existsSync(samplesDir)) {
+  fs.copyFileSync(eulogyOutputPath, path.join(samplesDir, 'eulogy-writing-guide.pdf'));
+  fs.copyFileSync(brochureOutputPath, path.join(samplesDir, 'memorial-brochure-checklist.pdf'));
+  fs.copyFileSync(tributeOutputPath, path.join(samplesDir, 'tribute-reading-excerpt.pdf'));
+  fs.copyFileSync(masterGuideOutputPath, path.join(samplesDir, 'quills-and-ink-family-memorial-guide.pdf'));
+  console.log('Synced all updated PDFs to public/samples directory.');
+}
+
+console.log('Done generating all assets with verified phone and contact details!');
