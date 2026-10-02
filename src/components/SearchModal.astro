@@ -71,41 +71,37 @@
 
     // Search Database
     const items = [
-      // PDF Downloads & Guides
+      // PDF Downloads & Guides (Mapped to in-page literary sections & highlighted)
       {
         title: 'Eulogy Guide',
         description: 'Framework for drafting heartfelt tributes and memorial readings.',
-        url: '/downloads/eulogy-writing-guide.pdf',
+        url: '/literary#toolkit-eulogy',
         category: 'download',
-        tag: 'PDF Guide',
-        isDownload: true,
+        tag: 'PDF Guide · In Literary',
         keywords: ['eulogy', 'guide', 'writing', 'speech', 'tribute', 'pdf', 'download', 'reflection', 'akan', 'ghanaian'],
       },
       {
         title: 'Brochure Checklist',
         description: 'Photo submission specs and order of service printing layout.',
-        url: '/downloads/memorial-brochure-checklist.pdf',
+        url: '/literary#toolkit-brochure',
         category: 'download',
-        tag: 'PDF Checklist',
-        isDownload: true,
+        tag: 'PDF Checklist · In Literary',
         keywords: ['brochure', 'checklist', 'programme', 'program', 'printing', 'photos', 'pdf', 'download', 'order of service'],
       },
       {
         title: 'Selected Memorial Readings',
         description: 'Poetic tributes and scriptures for family and church services.',
-        url: '/downloads/tribute-reading-excerpt.pdf',
+        url: '/literary#toolkit-tribute',
         category: 'download',
-        tag: 'PDF Readings',
-        isDownload: true,
+        tag: 'PDF Readings · In Literary',
         keywords: ['readings', 'poems', 'tribute', 'family reading', 'diaspora kin', 'pdf', 'download'],
       },
       {
         title: 'Family Memorial Guide',
         description: 'Planning timelines and coordination checklists for families.',
-        url: '/downloads/quills-and-ink-family-memorial-guide.pdf',
+        url: '/literary#toolkit-master-guide',
         category: 'download',
-        tag: 'PDF Master Guide',
-        isDownload: true,
+        tag: 'PDF Master Guide · In Literary',
         keywords: ['master guide', 'full guide', 'handbook', 'planning', 'diaspora', 'pdf', 'download'],
       },
 
@@ -139,7 +135,7 @@
       {
         title: 'Spoken Eulogies & Remembrance Writing',
         description: 'Narrative shaped from intimate family conversations — respectful, heartfelt, and true to the deceased’s life and faith.',
-        url: '/literary',
+        url: '/literary#panel-eulogy',
         category: 'literary',
         tag: 'Literary Service',
         keywords: ['eulogy writing', 'spoken remembrance', 'ghostwriting', 'biography', 'story'],
@@ -147,7 +143,7 @@
       {
         title: 'Family & Group Tributes',
         description: 'Individual or collective readings crafted for children, siblings, fellowships, and associations.',
-        url: '/literary',
+        url: '/literary#panel-tribute',
         category: 'literary',
         tag: 'Literary Service',
         keywords: ['group tribute', 'children reading', 'siblings', 'fellowship', 'church tribute'],
@@ -155,7 +151,7 @@
       {
         title: 'Memorial Brochure Design & Editorial Direction',
         description: 'Complete order of service text, biography composition, photo captions, and fine printing guidance.',
-        url: '/literary',
+        url: '/literary#panel-brochure',
         category: 'literary',
         tag: 'Keepsake Print',
         keywords: ['brochure design', 'biography writing', 'keepsake booklet', 'printing accra'],
@@ -163,7 +159,7 @@
       {
         title: 'Diaspora Family Synthesis',
         description: 'Gathering written reflections and voice notes across the UK, US, Canada, and Europe into a unified keepsake.',
-        url: '/literary',
+        url: '/literary#service-diaspora',
         category: 'diaspora',
         tag: 'Remote Coordination',
         keywords: ['diaspora synthesis', 'voice notes', 'remote family', 'london', 'uk', 'usa', 'canada'],
@@ -316,9 +312,7 @@
       emptyState.style.display = 'none';
       resultsContainer.innerHTML = filtered
         .map((item, idx) => {
-          const isDl = item.isDownload;
-          const downloadAttr = isDl ? 'download data-track-download="true" data-download-name="' + item.title + '"' : '';
-          const icon = isDl
+          const icon = item.category === 'download'
             ? '<span class="result-icon-badge dl-badge">PDF</span>'
             : item.category === 'package'
             ? '<span class="result-icon-badge pkg-badge">Tier</span>'
@@ -329,7 +323,6 @@
           return `
             <a
               href="${item.url}"
-              ${downloadAttr}
               class="search-result-item ${idx === 0 ? 'is-selected' : ''}"
               data-index="${idx}"
               role="option"
@@ -349,10 +342,27 @@
         })
         .join('');
 
-      // Attach click events on search results to close modal
+      // Attach click events on search results to close modal and handle in-page highlight
       resultsContainer.querySelectorAll('.search-result-item').forEach((el) => {
-        el.addEventListener('click', () => {
+        el.addEventListener('click', (e) => {
+          const href = el.getAttribute('href');
           closeModal();
+
+          if (href && href.startsWith('/literary#')) {
+            const hash = href.substring('/literary'.length);
+            const currentPath = window.location.pathname.replace(/\/$/, '');
+            if (currentPath === '/literary') {
+              e.preventDefault();
+              if (window.location.hash !== hash) {
+                history.pushState(null, '', href);
+              }
+              if (typeof window.triggerLiteraryHighlight === 'function') {
+                window.triggerLiteraryHighlight(hash);
+              } else {
+                window.location.hash = hash;
+              }
+            }
+          }
         });
       });
     }

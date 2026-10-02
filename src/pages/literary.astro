@@ -105,13 +105,16 @@ const samples = [
         </div>
         <div class="services-list">
           {
-            services.map((s) => (
-              <article class="service-item">
-                <span class="service-item__tag">{s.tag}</span>
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
-              </article>
-            ))
+            services.map((s, idx) => {
+              const serviceIds = ['service-eulogies', 'service-tributes', 'service-brochures', 'service-diaspora'];
+              return (
+                <article class="service-item" id={serviceIds[idx]}>
+                  <span class="service-item__tag">{s.tag}</span>
+                  <h3>{s.title}</h3>
+                  <p>{s.text}</p>
+                </article>
+              );
+            })
           }
         </div>
       </div>
@@ -235,7 +238,7 @@ const samples = [
 
           <ul class="toolkit-list">
             <li>
-              <div class="toolkit-item">
+              <div class="toolkit-item" id="toolkit-eulogy">
                 <a
                   href="/downloads/eulogy-writing-guide.pdf"
                   download
@@ -268,7 +271,7 @@ const samples = [
             </li>
 
             <li>
-              <div class="toolkit-item">
+              <div class="toolkit-item" id="toolkit-brochure">
                 <a
                   href="/downloads/memorial-brochure-checklist.pdf"
                   download
@@ -301,7 +304,7 @@ const samples = [
             </li>
 
             <li>
-              <div class="toolkit-item">
+              <div class="toolkit-item" id="toolkit-tribute">
                 <a
                   href="/downloads/tribute-reading-excerpt.pdf"
                   download
@@ -335,19 +338,21 @@ const samples = [
           </ul>
 
           <!-- Master Guide Highlight Card -->
-          <div class="master-guide-banner">
-            <div class="master-guide-thumb">
-              <img
-                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80"
-                alt="Quills and Ink Family Memorial Guide Keepsake Cover"
-                loading="lazy"
-              />
-              <span class="master-thumb-badge">Complete PDF</span>
-            </div>
-            <div class="master-guide-info">
-              <span class="eyebrow" style="color: var(--color-peach-deep);">Comprehensive Master Edition</span>
-              <h4>Family Memorial Guide &amp; Keepsake (PDF)</h4>
-              <p>Everything in a single printable PDF guide for immediate download without waiting.</p>
+          <div class="master-guide-banner" id="toolkit-master-guide">
+            <div class="master-guide-main">
+              <div class="master-guide-thumb">
+                <img
+                  src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80"
+                  alt="Quills and Ink Family Memorial Guide Keepsake Cover"
+                  loading="lazy"
+                />
+                <span class="master-thumb-badge">Complete PDF</span>
+              </div>
+              <div class="master-guide-info">
+                <span class="eyebrow" style="color: var(--color-peach-deep);">Comprehensive Master Edition</span>
+                <h4>Family Memorial Guide &amp; Keepsake (PDF)</h4>
+                <p>Everything in a single printable PDF guide for immediate download without waiting.</p>
+              </div>
             </div>
             <a
               href="/downloads/quills-and-ink-family-memorial-guide.pdf"
@@ -357,7 +362,12 @@ const samples = [
               data-download-name="Quills &amp; Ink Complete Memorial Guide (PDF)"
               data-attribution="Quills &amp; Ink Hub Central Archive"
             >
-              <span>Download Master PDF</span>
+              <svg class="master-dl-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span class="master-btn-label">Download Master PDF</span>
               <span class="master-size-pill">573 KB</span>
             </a>
           </div>
@@ -411,6 +421,7 @@ const samples = [
     padding: 1.75rem 1.5rem;
     display: grid;
     gap: 0.65rem;
+    scroll-margin-top: 6rem;
     transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
   }
 
@@ -583,6 +594,7 @@ const samples = [
     display: grid;
     gap: 1rem;
     animation: fade-in 0.4s var(--ease);
+    scroll-margin-top: 6rem;
   }
 
   .sample-panel.is-hidden {
@@ -734,6 +746,15 @@ const samples = [
     padding: 2.25rem 1.85rem;
     display: grid;
     gap: 1.25rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  @media (max-width: 600px) {
+    .toolkit-card {
+      padding: 1.35rem 1.1rem;
+    }
   }
 
   .toolkit-header {
@@ -779,6 +800,7 @@ const samples = [
     border: 1px solid var(--color-line);
     border-radius: 6px;
     overflow: hidden;
+    scroll-margin-top: 6rem;
     transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
   }
 
@@ -838,6 +860,7 @@ const samples = [
     flex: 1;
     display: grid;
     gap: 0.2rem;
+    min-width: 0;
   }
 
   .toolkit-title-row {
@@ -896,16 +919,35 @@ const samples = [
     border-radius: 8px;
     padding: 1.25rem 1.4rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 1.15rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    scroll-margin-top: 6rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  @media (min-width: 680px) {
+    .master-guide-banner {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .master-guide-main {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    flex: 1;
+    min-width: 0;
   }
 
   .master-guide-thumb {
     position: relative;
-    width: 72px;
-    height: 72px;
+    width: 68px;
+    height: 68px;
     border-radius: 6px;
     overflow: hidden;
     flex-shrink: 0;
@@ -924,9 +966,9 @@ const samples = [
     bottom: 2px;
     left: 2px;
     right: 2px;
-    background: rgba(26, 22, 18, 0.82);
+    background: rgba(26, 22, 18, 0.85);
     color: #ffffff;
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     font-weight: 600;
     text-align: center;
     padding: 1px 2px;
@@ -936,32 +978,115 @@ const samples = [
 
   .master-guide-info {
     flex: 1;
-    min-width: 200px;
+    min-width: 0;
   }
 
   .master-guide-info h4 {
-    font-size: 1.22rem;
+    font-size: 1.18rem;
     color: var(--color-charcoal);
     margin: 0.2rem 0;
+    line-height: 1.3;
   }
 
   .master-guide-info p {
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     color: var(--color-wood);
+    line-height: 1.45;
+    margin: 0;
   }
 
   .master-guide-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
+    flex-shrink: 0;
+    padding: 0.65rem 1.15rem;
+    letter-spacing: 0.08em;
+    font-size: 0.68rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .master-dl-icon {
     flex-shrink: 0;
   }
 
+  .master-btn-label {
+    white-space: nowrap;
+  }
+
   .master-size-pill {
-    background: rgba(0, 0, 0, 0.15);
-    font-size: 0.7rem;
+    background: rgba(0, 0, 0, 0.16);
+    font-size: 0.68rem;
     padding: 2px 6px;
     border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 679px) {
+    .master-guide-banner {
+      padding: 1.15rem;
+    }
+    .master-guide-main {
+      gap: 0.85rem;
+    }
+    .master-guide-btn {
+      width: 100%;
+      min-height: 2.75rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .master-guide-main {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .master-guide-thumb {
+      width: 56px;
+      height: 56px;
+    }
+    .master-btn-label {
+      font-size: 0.64rem;
+    }
+  }
+
+  /* Keyframes for focus & glow pulse */
+  @keyframes targetPulseGlow {
+    0% {
+      outline: 3px solid rgba(184, 92, 24, 0.9);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 8px rgba(201, 168, 146, 0.45), 0 12px 32px rgba(184, 92, 24, 0.25);
+      background-color: #fff9f2;
+    }
+    30% {
+      outline: 3px solid rgba(184, 92, 24, 1);
+      outline-offset: 6px;
+      box-shadow: 0 0 0 12px rgba(201, 168, 146, 0.6), 0 16px 40px rgba(184, 92, 24, 0.35);
+      background-color: #fff4e6;
+    }
+    70% {
+      outline: 2px solid rgba(184, 92, 24, 0.7);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 8px rgba(201, 168, 146, 0.3), 0 10px 24px rgba(184, 92, 24, 0.15);
+      background-color: #fffbf7;
+    }
+    100% {
+      outline: 1px solid transparent;
+      outline-offset: 0;
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
+
+  .target-highlight-glow {
+    animation: targetPulseGlow 3.8s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    border-color: var(--color-peach-deep) !important;
+    position: relative;
+    z-index: 10;
   }
 
   /* Attribution Box */
@@ -1000,23 +1125,68 @@ const samples = [
   const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab-target]');
   const panels = document.querySelectorAll<HTMLElement>('[data-panel-id]');
 
+  function activateTab(targetId: string) {
+    tabs.forEach((t) => {
+      const isTarget = t.dataset.tabTarget === targetId;
+      t.classList.toggle('is-active', isTarget);
+      t.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+    });
+
+    panels.forEach((p) => {
+      if (p.dataset.panelId === targetId) {
+        p.classList.remove('is-hidden');
+      } else {
+        p.classList.add('is-hidden');
+      }
+    });
+  }
+
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       const target = tab.dataset.tabTarget;
-      tabs.forEach((t) => {
-        t.classList.remove('is-active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('is-active');
-      tab.setAttribute('aria-selected', 'true');
-
-      panels.forEach((p) => {
-        if (p.dataset.panelId === target) {
-          p.classList.remove('is-hidden');
-        } else {
-          p.classList.add('is-hidden');
-        }
-      });
+      if (target) activateTab(target);
     });
+  });
+
+  function triggerLiteraryHighlight(hash: string) {
+    if (!hash) return;
+    const cleanId = hash.replace(/^#/, '');
+
+    // If target is one of the sample panels or tabs (e.g. panel-eulogy, panel-tribute, panel-brochure)
+    if (cleanId.startsWith('panel-') || cleanId.startsWith('tab-')) {
+      const tabTarget = cleanId.replace(/^(panel|tab)-/, '');
+      activateTab(tabTarget);
+    }
+
+    const targetEl = document.getElementById(cleanId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      targetEl.classList.remove('target-highlight-glow');
+      void targetEl.offsetWidth; // Force CSS reflow
+      targetEl.classList.add('target-highlight-glow');
+
+      setTimeout(() => {
+        targetEl.classList.remove('target-highlight-glow');
+      }, 3900);
+    }
+  }
+
+  // Expose globally for SearchModal or same-page interactions
+  (window as any).triggerLiteraryHighlight = triggerLiteraryHighlight;
+
+  // On page load with hash
+  window.addEventListener('load', () => {
+    if (window.location.hash) {
+      setTimeout(() => {
+        triggerLiteraryHighlight(window.location.hash);
+      }, 200);
+    }
+  });
+
+  // On hash change
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash) {
+      triggerLiteraryHighlight(window.location.hash);
+    }
   });
 </script>
