@@ -1,0 +1,128 @@
+---
+const steps = [
+  {
+    n: '01',
+    title: 'Request a Consultation',
+    text: 'Share your needs, location, and preferred time — including diaspora time zones.',
+  },
+  {
+    n: '02',
+    title: 'Gentle Confirmation',
+    text: 'We confirm availability and outline what support will feel most helpful.',
+  },
+  {
+    n: '03',
+    title: 'We Plan With Care',
+    text: 'Coordination, programmes, and literary pieces come together with your guidance.',
+  },
+  {
+    n: '04',
+    title: 'Honour the Day',
+    text: 'You focus on family; we tend the details so the farewell feels dignified.',
+  },
+];
+---
+
+<section class="process" aria-labelledby="process-heading">
+  <div class="container">
+    <div class="process__intro">
+      <h2 id="process-heading" class="section-title section-title--accent">How We Walk With You</h2>
+      <p class="eyebrow">A calm path from first call to farewell</p>
+    </div>
+
+    <ol class="process__steps">
+      {
+        steps.map((step) => (
+          <li>
+            <span class="process__num" aria-hidden="true">{step.n}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="process__path" aria-hidden="true">
+      <svg viewBox="0 0 1100 80" fill="none" preserveAspectRatio="none">
+        <path
+          d="M20 50 C 180 10, 280 70, 420 40 S 680 10, 820 45 S 980 70, 1060 30"
+          stroke="#d9d0c6"
+          stroke-width="1.5"
+          stroke-dasharray="4 8"
+        />
+        <path d="M1050 22l18 8-18 8 4-8-4-8z" fill="#c9a892" />
+      </svg>
+    </div>
+
+    <div class="process__cta">
+      <a class="btn btn--ink" href="/book">Begin with a consultation</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    background: var(--color-white);
+    padding: 5.5rem 0 5rem;
+  }
+
+  .process__intro {
+    margin-bottom: 3rem;
+  }
+
+  .process__intro .eyebrow {
+    margin-top: 0.85rem;
+  }
+
+  .process__steps {
+    display: grid;
+    gap: 2.25rem;
+    counter-reset: none;
+  }
+
+  .process__num {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    line-height: 1;
+    color: #d8d0c6;
+    margin-bottom: 0.65rem;
+  }
+
+  h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.55rem;
+    color: var(--color-charcoal);
+  }
+
+  p {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.02rem;
+  }
+
+  .process__path {
+    display: none;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .process__path svg {
+    width: 100%;
+    height: 4rem;
+  }
+
+  .process__cta {
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .process__steps {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .process__path {
+      display: block;
+    }
+  }
+</style>

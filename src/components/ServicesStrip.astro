@@ -1,0 +1,176 @@
+---
+const services = [
+  {
+    title: 'Coordination',
+    href: '/packages',
+    image:
+      'https://images.unsplash.com/photo-1519167758481-83f29da8c2b5?auto=format&fit=crop&w=1200&q=70',
+    alt: 'Elegant event venue setup with warm lighting',
+  },
+  {
+    title: 'Consultation',
+    href: '/book',
+    image:
+      'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=70',
+    alt: 'Hands writing thoughtfully with a fountain pen',
+  },
+  {
+    title: 'Literary Care',
+    href: '/literary',
+    image:
+      'https://images.unsplash.com/photo-1456513080080-7e87bb4f3d4d?auto=format&fit=crop&w=1200&q=70',
+    alt: 'Open book and soft pages suggesting literary tribute',
+  },
+];
+---
+
+<section class="services" aria-labelledby="services-heading">
+  <div class="services__wood">
+    <h2 id="services-heading" class="sr-only">Our services</h2>
+    <div class="services__track container-wide" data-services-track>
+      {
+        services.map((item) => (
+          <a class="services__card" href={item.href}>
+            <img src={item.image} alt={item.alt} width="800" height="520" loading="lazy" />
+            <span class="services__label">{item.title}</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <button class="services__arrow services__arrow--prev" type="button" data-services-prev aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </button>
+    <button class="services__arrow services__arrow--next" type="button" data-services-next aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  .services {
+    margin-top: 0;
+  }
+
+  .services__wood {
+    position: relative;
+    background:
+      linear-gradient(180deg, rgba(28, 22, 16, 0.92), rgba(28, 22, 16, 0.88)),
+      url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=60')
+        center / cover;
+    padding: 7rem 0 4.5rem;
+    color: var(--color-white);
+  }
+
+  .services__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(260px, 1fr);
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-inline: 0.25rem;
+  }
+
+  .services__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .services__card {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 16rem;
+    overflow: hidden;
+    scroll-snap-align: center;
+  }
+
+  .services__card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease);
+  }
+
+  .services__card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 16, 12, 0.42);
+  }
+
+  .services__card:hover img {
+    transform: scale(1.05);
+  }
+
+  .services__label {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+  }
+
+  .services__arrow {
+    display: none;
+    position: absolute;
+    top: 55%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid color-mix(in srgb, white 40%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+  }
+
+  .services__arrow--prev {
+    left: 1rem;
+  }
+
+  .services__arrow--next {
+    right: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .services__wood {
+      padding: 8.5rem 0 5rem;
+    }
+
+    .services__track {
+      grid-auto-flow: unset;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: visible;
+    }
+
+    .services__card {
+      min-height: 18rem;
+    }
+
+    .services__arrow {
+      display: grid;
+      place-items: center;
+    }
+  }
+</style>
+
+<script>
+  const track = document.querySelector('[data-services-track]');
+  const prev = document.querySelector('[data-services-prev]');
+  const next = document.querySelector('[data-services-next]');
+
+  const scrollByCard = (dir: number) => {
+    if (!(track instanceof HTMLElement)) return;
+    const amount = track.clientWidth * 0.85 * dir;
+    track.scrollBy({ left: amount, behavior: 'smooth' });
+  };
+
+  prev?.addEventListener('click', () => scrollByCard(-1));
+  next?.addEventListener('click', () => scrollByCard(1));
+</script>

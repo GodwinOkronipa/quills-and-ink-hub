@@ -1,0 +1,412 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="Book a Consultation"
+  description="Schedule an initial funeral planning or literary consultation — diaspora-friendly time zones and gentle guidance."
+>
+  <Header />
+  <main>
+    <PageHero
+      script="Consult"
+      title="Book a gentle first conversation"
+      subtitle="Share your family's needs and preferred time. We coordinate across time zones so you never feel alone in this season."
+      image="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1800&q=70"
+    />
+
+    <section class="book container">
+      <div class="book__main">
+        <form class="book__form" data-booking-form novalidate>
+          <div class="form-section-title">
+            <p class="eyebrow">Step 1 of 2</p>
+            <h3>Family &amp; Contact Information</h3>
+          </div>
+
+          <div class="field">
+            <label for="name">Your full name</label>
+            <input id="name" name="name" type="text" placeholder="e.g. Kwame Asante" required autocomplete="name" />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" name="email" type="email" placeholder="kwame@example.com" required autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="phone">Phone / WhatsApp number</label>
+              <input id="phone" name="phone" type="tel" placeholder="+233 24 123 4567 or +44 7..." required autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="location">Current location</label>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                placeholder="e.g. Accra, London, Toronto, New York"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="timezone">Your local time zone</label>
+              <select id="timezone" name="timezone" required>
+                <option value="">Select time zone…</option>
+                <option value="GMT">GMT / UTC (Accra, Ghana)</option>
+                <option value="BST">GMT / BST (United Kingdom)</option>
+                <option value="EST">EST / EDT (US &amp; Canada East)</option>
+                <option value="CST">CST / CDT (US &amp; Canada Central)</option>
+                <option value="PST">PST / PDT (US &amp; Canada West)</option>
+                <option value="CET">CET / CEST (Central Europe)</option>
+                <option value="Other">Other (Noted in message)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-section-title" style="margin-top: 1rem;">
+            <p class="eyebrow">Step 2 of 2</p>
+            <h3>Consultation Details</h3>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="date">Preferred date</label>
+              <input id="date" name="date" type="date" required />
+            </div>
+            <div class="field">
+              <label for="time">Preferred time</label>
+              <input id="time" name="time" type="time" required />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="meeting-mode">Preferred meeting channel</label>
+              <select id="meeting-mode" name="meetingMode" required>
+                <option value="Zoom Video Call">Zoom Video Call (Great for diaspora)</option>
+                <option value="WhatsApp Video / Call">WhatsApp Video / Audio</option>
+                <option value="Standard Phone Call">Standard Phone Call</option>
+                <option value="In-Person Meeting">In-Person Meeting (Accra Office)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="interest">What service do you require?</label>
+              <select id="interest" name="interest" required>
+                <option value="">Select service…</option>
+                <option value="Full Funeral Coordination Package">Full Funeral Coordination Package</option>
+                <option value="Essential Logistics Oversight">Essential Logistics Oversight</option>
+                <option value="Literary Services Only (Eulogy / Tributes)">Literary Services Only (Eulogy / Tributes)</option>
+                <option value="Memorial Brochure Design &amp; Print">Memorial Brochure Design &amp; Print</option>
+                <option value="Both Event Coordination &amp; Literary Suite">Both Event Coordination &amp; Literary Suite</option>
+                <option value="General Family Inquiry">General Family Inquiry</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="message">Family notes or specific cultural considerations</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Any details about your loved one, tentative service dates, or diaspora family members joining..."
+            ></textarea>
+          </div>
+
+          <p class="book__note" data-form-status role="status" aria-live="polite"></p>
+
+          <button class="btn btn--ink" type="submit">Submit Consultation Request</button>
+        </form>
+
+        <div class="book__success is-hidden" data-booking-success>
+          <span class="success-icon" aria-hidden="true">🕊️</span>
+          <h2>Thank you. Your request is received.</h2>
+          <p class="success-lead">
+            We understand how heavy this season is. Our senior coordinator will review your request and confirm your appointment details via WhatsApp and email.
+          </p>
+          <div class="success-summary" data-success-details></div>
+          <div class="success-actions">
+            <a
+              class="btn btn--peach"
+              href="https://wa.me/233240000000?text=Hello%20Quills%20and%20Ink%20Hub,%20I%20just%20submitted%20a%20consultation%20request%20on%20your%20website."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Confirm on WhatsApp Immediately
+            </a>
+            <button class="btn btn--outline" type="button" data-reset-form>
+              Submit Another Inquiry
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="book__aside">
+        <div class="aside-box">
+          <p class="eyebrow">Immediate Assistance</p>
+          <h2>Prefer direct WhatsApp?</h2>
+          <p>
+            For bereaved families who prefer not to fill out forms, our coordinator is available via WhatsApp for immediate, confidential assistance.
+          </p>
+          <a
+            class="btn btn--peach"
+            href="https://wa.me/233240000000?text=Hello%20Quills%20and%20Ink%20Hub,%20I%20would%20like%20to%20discuss%20funeral%20planning%20support."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Chat with us on WhatsApp
+          </a>
+        </div>
+
+        <div class="aside-box aside-box--subtle">
+          <p class="eyebrow">What to expect</p>
+          <h3>Our Listening Promise</h3>
+          <ul class="promise-list">
+            <li><strong>No Pressure:</strong> Our first call is simply to listen and understand your timeline.</li>
+            <li><strong>Diaspora Mindful:</strong> We work around your work hours across London, New York, or Toronto.</li>
+            <li><strong>Cultural Sensitivity:</strong> We respect family elders and traditional community protocols.</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .book {
+    display: grid;
+    gap: 2.5rem;
+    padding: 4rem 0 5.5rem;
+  }
+
+  .form-section-title h3 {
+    font-size: 1.4rem;
+    color: var(--color-charcoal);
+    margin-top: 0.2rem;
+  }
+
+  .book__form,
+  .book__success,
+  .aside-box {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 2.25rem 1.75rem;
+  }
+
+  .book__form {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .field-row {
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    font-weight: 500;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    background: var(--color-ivory);
+    padding: 0.85rem 0.95rem;
+    color: var(--color-ink);
+    border-radius: 0;
+    transition: border-color 0.2s var(--ease);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2px solid color-mix(in srgb, var(--color-peach) 55%, transparent);
+    outline-offset: 1px;
+    border-color: var(--color-peach);
+  }
+
+  .book__note {
+    min-height: 1.4em;
+    font-family: var(--font-serif);
+    color: #a8422b;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    justify-self: start;
+  }
+
+  .book__success {
+    display: grid;
+    gap: 1.25rem;
+    animation: fade-in 0.45s var(--ease);
+  }
+
+  .book__success.is-hidden {
+    display: none;
+  }
+
+  .success-icon {
+    font-size: 2.5rem;
+  }
+
+  .book__success h2 {
+    font-size: 2rem;
+    color: var(--color-charcoal);
+  }
+
+  .success-lead {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--color-wood-mid);
+    line-height: 1.7;
+  }
+
+  .success-summary {
+    background: var(--color-soft);
+    border: 1px solid var(--color-line);
+    padding: 1.25rem 1.5rem;
+    font-size: 0.95rem;
+    color: var(--color-charcoal);
+    line-height: 1.8;
+  }
+
+  .success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  .book__aside {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+
+  .aside-box {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .aside-box h2 {
+    font-size: 1.75rem;
+    color: var(--color-charcoal);
+  }
+
+  .aside-box h3 {
+    font-size: 1.35rem;
+    color: var(--color-charcoal);
+  }
+
+  .aside-box p:not(.eyebrow) {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+
+  .aside-box--subtle {
+    background: var(--color-ivory);
+  }
+
+  .promise-list {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .promise-list li {
+    font-size: 0.92rem;
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+
+  @media (min-width: 720px) {
+    .field-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .book {
+      grid-template-columns: 1.35fr 0.8fr;
+      align-items: start;
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-booking-form]');
+  const successCard = document.querySelector<HTMLElement>('[data-booking-success]');
+  const statusNote = document.querySelector<HTMLElement>('[data-form-status]');
+  const detailsBox = document.querySelector<HTMLElement>('[data-success-details]');
+  const resetBtn = document.querySelector<HTMLButtonElement>('[data-reset-form]');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!form) return;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      if (statusNote) statusNote.textContent = 'Please fill out all required fields marked with an asterisk.';
+      return;
+    }
+
+    const formData = new FormData(form);
+    const name = formData.get('name') as string;
+    const date = formData.get('date') as string;
+    const time = formData.get('time') as string;
+    const timezone = formData.get('timezone') as string;
+    const mode = formData.get('meetingMode') as string;
+    const service = formData.get('interest') as string;
+
+    if (detailsBox) {
+      detailsBox.innerHTML = `
+        <strong>Appointment Details:</strong><br />
+        • Client: <em>${name}</em><br />
+        • Date &amp; Time: <em>${date} at ${time} (${timezone})</em><br />
+        • Channel: <em>${mode}</em><br />
+        • Focus: <em>${service}</em>
+      `;
+    }
+
+    form.classList.add('is-hidden');
+    form.style.display = 'none';
+    if (successCard) {
+      successCard.classList.remove('is-hidden');
+      successCard.style.display = 'grid';
+    }
+  });
+
+  resetBtn?.addEventListener('click', () => {
+    form?.reset();
+    if (form) {
+      form.style.display = 'grid';
+      form.classList.remove('is-hidden');
+    }
+    if (successCard) {
+      successCard.classList.add('is-hidden');
+      successCard.style.display = 'none';
+    }
+    if (statusNote) statusNote.textContent = '';
+  });
+</script>
+

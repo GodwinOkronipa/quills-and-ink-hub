@@ -1,0 +1,81 @@
+---
+interface Props {
+  title: string;
+  script?: string;
+  subtitle?: string;
+  image?: string;
+}
+
+const {
+  title,
+  script,
+  subtitle,
+  image = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=70',
+} = Astro.props;
+---
+
+<section class="page-hero">
+  <img src={image} alt="" width="1800" height="900" fetchpriority="high" />
+  <div class="page-hero__veil"></div>
+  <div class="page-hero__content container">
+    {script && <p class="script page-hero__script">{script}</p>}
+    <h1>{title}</h1>
+    {subtitle && <p>{subtitle}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    min-height: 48vh;
+    display: grid;
+    place-items: end stretch;
+    color: white;
+    overflow: hidden;
+  }
+
+  .page-hero img,
+  .page-hero__veil {
+    position: absolute;
+    inset: 0;
+  }
+
+  .page-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.72) saturate(0.85);
+  }
+
+  .page-hero__veil {
+    background: linear-gradient(
+      180deg,
+      rgba(26, 22, 18, 0.35),
+      rgba(26, 22, 18, 0.55)
+    );
+  }
+
+  .page-hero__content {
+    position: relative;
+    z-index: 1;
+    padding: 8rem 0 3.5rem;
+  }
+
+  .page-hero__script {
+    font-size: 2.75rem;
+    margin-bottom: 0.25rem;
+    opacity: 0.95;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    max-width: 16ch;
+  }
+
+  p:not(.script) {
+    margin-top: 0.85rem;
+    max-width: 36rem;
+    font-weight: 300;
+    opacity: 0.9;
+  }
+</style>

@@ -1,0 +1,21 @@
+{
+  "name": "quills-and-ink-hub",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "pages:dev": "wrangler pages dev ./dist",
+    "pages:deploy": "npm run build && wrangler pages deploy ./dist"
+  },
+  "dependencies": {
+    "astro": "^5.7.10"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.14.0"
+  }
+}

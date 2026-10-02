@@ -1,0 +1,328 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+
+const packages = [
+  {
+    name: 'Essential Coordination',
+    tag: 'Tier I · Focused Support',
+    summary: 'Essential logistics and structure for families with active local support who need experienced oversight.',
+    includes: [
+      'Initial listening consultation (virtual or in person)',
+      'Order of service design & liturgy flow curation',
+      'Venue & vendor liaison checklist',
+      'Programme timeline and procession coordination',
+      'Remote day-of check-ins and troubleshooting',
+    ],
+  },
+  {
+    name: 'Complete Memorial Care',
+    tag: 'Tier II · Most Chosen',
+    summary: 'Full-spectrum planning and on-the-ground management for a dignified, stress-free celebration of life.',
+    includes: [
+      'Everything in Tier I Essential Coordination',
+      'Dedicated lead coordinator and on-site event team',
+      'Direct vendor management (catering, floral, canopy, seating, AV)',
+      'Memorial brochure editorial direction & proofing',
+      'International family briefing call (UK / US / Canada / Europe)',
+      'Livestream & virtual guest participation guidance',
+      'Day-of protocol management for dignitaries and family heads',
+    ],
+    featured: true,
+  },
+  {
+    name: 'Legacy Gathering',
+    tag: 'Tier III · Comprehensive Suite',
+    summary: 'Tailored coordination for multi-day, multi-location, or culturally layered state or family funerals.',
+    includes: [
+      'Everything in Tier II Complete Memorial Care',
+      'Multi-day scheduling (Wake keeping, Burial service, Thanksgiving)',
+      'Complete literary package (Eulogy, personal tributes, printed booklet)',
+      'Diaspora concierge (airport transfer coordination & family logistics)',
+      'Executive floral design & custom memorial keepsake creation',
+      'Post-funeral thank-you stationery & family archive compilation',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: 'How do you coordinate with family members living abroad?',
+    a: 'We schedule consultations across your local time zone (GMT, BST, EST, PST, etc.) via Zoom or WhatsApp. We provide regular photo/video updates and coordinate with local family elders in Ghana so everyone stays aligned.',
+  },
+  {
+    q: 'Can we book literary services separately from event coordination?',
+    a: 'Yes. You can engage us solely for writing eulogies, tributes, or editing your memorial brochure, or choose an integrated package.',
+  },
+  {
+    q: 'How are cultural traditions and religious rites accommodated?',
+    a: 'We respect and honor Ghanaian customs across traditions (Akan, Ga-Dangme, Ewe, Northern cultures, etc.) as well as diverse Christian, Muslim, and secular memorial services.',
+  },
+  {
+    q: 'When should we reach out after a loved one passes?',
+    a: 'As early as you feel ready. Reaching out early helps secure preferred dates, permits, and allows unhurried time for thoughtful tribute writing.',
+  },
+];
+---
+
+<BaseLayout
+  title="Funeral Packages"
+  description="Transparent funeral planning packages with clear inclusions for Ghanaian families locally and abroad."
+>
+  <Header />
+  <main>
+    <PageHero
+      script="Packages"
+      title="Clear tiers. Honest inclusions."
+      subtitle="Choose the level of support that fits your family — every package begins with a listening consultation."
+      image="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=1800&q=70"
+    />
+
+    <section class="packages container">
+      <div class="packages__header">
+        <p class="eyebrow">Structured Planning Packages</p>
+        <h2>Thoughtfully tailored to your family's needs</h2>
+      </div>
+
+      <div class="packages__grid">
+        {
+          packages.map((pkg) => (
+            <article class:list={['pkg', pkg.featured && 'pkg--featured']}>
+              {pkg.featured && <span class="pkg__badge">Recommended</span>}
+              <p class="eyebrow">{pkg.tag}</p>
+              <h2>{pkg.name}</h2>
+              <p class="pkg__summary">{pkg.summary}</p>
+              <ul>
+                {pkg.includes.map((item) => (
+                  <li>
+                    <span aria-hidden="true">—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a class:list={['btn', pkg.featured ? 'btn--peach' : 'btn--outline']} href="/book">
+                Request This Package
+              </a>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="diaspora-banner">
+        <div class="diaspora-banner__text">
+          <p class="eyebrow">Diaspora Focused</p>
+          <h3>Arranging from abroad? We are your eyes and hands on the ground.</h3>
+          <p>
+            Coordinating a funeral in Ghana while living in the UK, United States, Canada, or Europe presents unique challenges. We bridge the distance with flexible time-zone communication, WhatsApp status reports, transparent accounting, and compassionate execution.
+          </p>
+        </div>
+        <div class="diaspora-banner__action">
+          <a class="btn btn--ink" href="/book">Schedule a Diaspora Consultation</a>
+        </div>
+      </div>
+
+      <section class="faqs-section">
+        <p class="eyebrow">Frequently Asked Questions</p>
+        <h2>Everything you need to know about our coordination</h2>
+        <div class="faqs-grid">
+          {faqs.map((faq) => (
+            <div class="faq-card">
+              <h3>{faq.q}</h3>
+              <p>{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="packages__note">
+        <p>
+          Pricing is tailored during our listening consultation to honour your family’s specific wishes, scale, and location. There are no surprise fees or sales pressure.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .packages {
+    padding: 4.5rem 0 5.5rem;
+  }
+
+  .packages__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .packages__header h2 {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    color: var(--color-charcoal);
+    margin-top: 0.4rem;
+  }
+
+  .packages__grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .pkg {
+    position: relative;
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 2.25rem 1.75rem 2.5rem;
+    display: grid;
+    gap: 1.15rem;
+    align-content: start;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+
+  .pkg:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .pkg--featured {
+    border-color: color-mix(in srgb, var(--color-peach) 65%, var(--color-line));
+    box-shadow: var(--shadow-soft);
+    background: linear-gradient(180deg, #ffffff 0%, #fdfbf8 100%);
+  }
+
+  .pkg__badge {
+    position: absolute;
+    top: -0.85rem;
+    right: 1.5rem;
+    background: var(--color-peach);
+    color: white;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  .pkg h2 {
+    font-size: 1.9rem;
+    color: var(--color-charcoal);
+  }
+
+  .pkg__summary {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0.75rem 0 1rem;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--color-charcoal);
+    line-height: 1.5;
+  }
+
+  li span:first-child {
+    color: var(--color-peach);
+    font-weight: 600;
+  }
+
+  .btn {
+    justify-self: start;
+    margin-top: 0.5rem;
+  }
+
+  .diaspora-banner {
+    margin-top: 4.5rem;
+    background: var(--color-soft);
+    border: 1px solid var(--color-line);
+    padding: 2.75rem 2rem;
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .diaspora-banner__text h3 {
+    font-size: 1.75rem;
+    margin: 0.4rem 0 0.75rem;
+    color: var(--color-charcoal);
+  }
+
+  .diaspora-banner__text p {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-wood-mid);
+    max-width: 44rem;
+  }
+
+  .faqs-section {
+    margin-top: 4.5rem;
+  }
+
+  .faqs-section h2 {
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    margin: 0.4rem 0 2rem;
+    color: var(--color-charcoal);
+  }
+
+  .faqs-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .faq-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .faq-card h3 {
+    font-size: 1.25rem;
+    color: var(--color-charcoal);
+  }
+
+  .faq-card p {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.02rem;
+  }
+
+  .packages__note {
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .packages__note p {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.1rem;
+    max-width: 36rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 900px) {
+    .packages__grid {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+    }
+
+    .diaspora-banner {
+      grid-template-columns: 1fr auto;
+      padding: 3.25rem;
+    }
+
+    .faqs-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+

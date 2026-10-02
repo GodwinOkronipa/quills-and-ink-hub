@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="About Us"
+  description="Learn how Quills and Ink Hub supports Ghanaian families with dignified funeral planning and literary care."
+>
+  <Header variant="transparent" />
+  <main>
+    <PageHero
+      script="Our story"
+      title="Care that listens before it plans"
+      subtitle="We exist to make farewell gatherings orderly, culturally resonant, and gently held — for families in Ghana and across the diaspora."
+      image="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1800&q=70"
+    />
+
+    <section class="about container">
+      <div class="about__copy">
+        <h2 class="section-title">A steady presence in tender seasons</h2>
+        <p>
+          Quills and Ink Hub brings together funeral event coordination and literary
+          craft. Families often need both at once: someone to organise logistics,
+          and someone to find the right words.
+        </p>
+        <p>
+          Our approach is calm and clear. We honour Ghanaian traditions while making
+          space for modern family realities — including relatives joining from abroad.
+        </p>
+      </div>
+      <figure>
+        <img
+          src="https://images.unsplash.com/photo-1481627834876-b7833e8f6540?auto=format&fit=crop&w=1000&q=70"
+          alt="Stacked books suggesting literary tribute and remembrance"
+          width="1000"
+          height="1250"
+          loading="lazy"
+        />
+      </figure>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .about {
+    display: grid;
+    gap: 2.5rem;
+    padding: 4.5rem 0 5.5rem;
+  }
+
+  .about__copy {
+    display: grid;
+    gap: 1.15rem;
+    align-content: start;
+  }
+
+  p {
+    font-family: var(--font-serif);
+    font-size: 1.12rem;
+    color: var(--color-muted);
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-height: 22rem;
+  }
+
+  @media (min-width: 880px) {
+    .about {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+</style>

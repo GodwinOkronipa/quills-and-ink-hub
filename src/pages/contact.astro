@@ -1,0 +1,282 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Quills and Ink Hub — inquiry form, direct phone, WhatsApp integration, and Accra office details."
+>
+  <Header />
+  <main>
+    <PageHero
+      script="Hello"
+      title="We are here when you need us"
+      subtitle="Send a quiet inquiry, call our desk, or reach us on WhatsApp. We respond promptly across local and international time zones."
+      image="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=1800&q=70"
+    />
+
+    <section class="contact container">
+      <div class="contact__main">
+        <form class="contact__form" data-contact-form novalidate>
+          <div class="field">
+            <label for="c-name">Your Full Name</label>
+            <input id="c-name" name="name" type="text" placeholder="e.g. Ama Serwaa" required autocomplete="name" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="c-email">Email Address</label>
+              <input id="c-email" name="email" type="email" placeholder="ama@example.com" required autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="c-phone">Phone / WhatsApp</label>
+              <input id="c-phone" name="phone" type="tel" placeholder="+233 24 000 0000" required autocomplete="tel" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-subject">Subject</label>
+            <input id="c-subject" name="subject" type="text" placeholder="e.g. Planning support for upcoming memorial in Accra" required />
+          </div>
+          <div class="field">
+            <label for="c-message">How may we support you?</label>
+            <textarea
+              id="c-message"
+              name="message"
+              rows="5"
+              placeholder="Tell us about your timeline, expected attendees, or whether you need literary support..."
+              required
+            ></textarea>
+          </div>
+          <p class="contact__status" data-contact-status role="status" aria-live="polite"></p>
+          <button class="btn btn--ink" type="submit">Send Message</button>
+        </form>
+
+        <div class="contact__success is-hidden" data-contact-success>
+          <span class="success-icon" aria-hidden="true">✉️</span>
+          <h2>Thank you for reaching out.</h2>
+          <p>
+            Your inquiry has been received. Our team will review your message and reply via email or WhatsApp within a few hours.
+          </p>
+          <a
+            class="btn btn--peach"
+            href="https://wa.me/233240000000?text=Hello%20Quills%20and%20Ink%20Hub,%20I%20just%20sent%20an%20inquiry%20via%20your%20website."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Continue to WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <aside class="contact__details">
+        <div class="contact-card">
+          <p class="eyebrow">WhatsApp (Fastest Response)</p>
+          <a
+            class="contact-link contact-link--highlight"
+            href="https://wa.me/233240000000?text=Hello%20Quills%20and%20Ink%20Hub,%20I%20am%20reaching%20out%20for%20information%20on%20your%20funeral%20services."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            +233 24 000 0000
+          </a>
+          <p class="muted">Active messaging for both Ghana &amp; overseas families.</p>
+        </div>
+
+        <div class="contact-card">
+          <p class="eyebrow">Direct Telephone</p>
+          <a class="contact-link" href="tel:+233240000000">+233 (0) 24 000 0000</a>
+          <p class="muted">Office line open 8:00 AM – 7:00 PM GMT.</p>
+        </div>
+
+        <div class="contact-card">
+          <p class="eyebrow">Direct Email</p>
+          <a class="contact-link" href="mailto:hello@quillsandinkhub.com">hello@quillsandinkhub.com</a>
+          <p class="muted">For proposals, tribute manuscripts, and brochures.</p>
+        </div>
+
+        <div class="contact-card">
+          <p class="eyebrow">Accra Office Location</p>
+          <p class="contact-address">
+            Suite 4B, Heritage House<br />
+            Liberation Road, Airport Residential Area<br />
+            Accra, Ghana
+          </p>
+          <p class="muted">In-person consultations by prior appointment.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contact {
+    display: grid;
+    gap: 2.5rem;
+    padding: 4rem 0 5.5rem;
+  }
+
+  .contact__form,
+  .contact__success {
+    display: grid;
+    gap: 1.15rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 2.25rem 1.75rem;
+  }
+
+  .contact__success {
+    gap: 1.25rem;
+    animation: fade-in 0.4s var(--ease);
+  }
+
+  .contact__success.is-hidden {
+    display: none;
+  }
+
+  .success-icon {
+    font-size: 2.25rem;
+  }
+
+  .contact__success h2 {
+    font-size: 1.85rem;
+    color: var(--color-charcoal);
+  }
+
+  .contact__success p {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--color-wood-mid);
+    line-height: 1.7;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .field-row {
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    font-weight: 500;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    background: var(--color-ivory);
+    padding: 0.85rem 0.95rem;
+    color: var(--color-ink);
+    border-radius: 0;
+    transition: border-color 0.2s var(--ease);
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 2px solid color-mix(in srgb, var(--color-peach) 55%, transparent);
+    outline-offset: 1px;
+    border-color: var(--color-peach);
+  }
+
+  .btn {
+    justify-self: start;
+  }
+
+  .contact__status {
+    min-height: 1.4em;
+    font-family: var(--font-serif);
+    color: #a8422b;
+    font-size: 0.95rem;
+  }
+
+  .contact__details {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+
+  .contact-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 1.75rem 1.5rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .contact-link {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--color-charcoal);
+    transition: color 0.2s var(--ease);
+  }
+
+  .contact-link:hover {
+    color: var(--color-peach-deep);
+  }
+
+  .contact-link--highlight {
+    color: var(--color-peach-deep);
+    font-weight: 600;
+  }
+
+  .contact-address {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-charcoal);
+  }
+
+  .muted {
+    color: var(--color-muted);
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    margin-top: 0.2rem;
+  }
+
+  @media (min-width: 720px) {
+    .field-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .contact {
+      grid-template-columns: 1.25fr 0.75fr;
+      align-items: start;
+    }
+  }
+</style>
+
+<script>
+  const contactForm = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const successBox = document.querySelector<HTMLElement>('[data-contact-success]');
+  const statusElem = document.querySelector<HTMLElement>('[data-contact-status]');
+
+  contactForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!contactForm) return;
+
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      if (statusElem) statusElem.textContent = 'Please fill out all required fields.';
+      return;
+    }
+
+    contactForm.style.display = 'none';
+    if (successBox) {
+      successBox.classList.remove('is-hidden');
+      successBox.style.display = 'grid';
+    }
+  });
+</script>
+

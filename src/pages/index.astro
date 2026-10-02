@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Welcome from '../components/Welcome.astro';
+import ServicesStrip from '../components/ServicesStrip.astro';
+import Process from '../components/Process.astro';
+
+const offerings = [
+  {
+    title: 'Event Planning',
+    text: 'Venue liaison, programme flow, and day-of coordination handled with quiet precision.',
+  },
+  {
+    title: 'Family Consultation',
+    text: 'A listening first conversation — local or remote — to map needs, budget, and culture.',
+  },
+  {
+    title: 'Literary Services',
+    text: 'Eulogies, tributes, and memorial brochures written with warmth and clarity.',
+  },
+];
+---
+
+<BaseLayout>
+  <Header />
+  <main>
+    <Hero />
+    <Welcome />
+    <ServicesStrip />
+
+    <section class="offerings">
+      <div class="container offerings__grid">
+        {
+          offerings.map((item) => (
+            <article>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <Process />
+
+    <section class="cta-band">
+      <div class="container cta-band__inner">
+        <div>
+          <p class="script">Begin gently</p>
+          <h2>Ready when you are — a consultation that respects your time and heart.</h2>
+        </div>
+        <div class="cta-band__actions">
+          <a class="btn btn--peach" href="/book">Book a Consultation</a>
+          <a class="btn btn--ghost" href="/contact">WhatsApp / Contact</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .offerings {
+    background: var(--color-ivory);
+    padding: 4.5rem 0;
+  }
+
+  .offerings__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  article {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.65rem;
+  }
+
+  p {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  .cta-band {
+    background:
+      linear-gradient(180deg, rgba(26, 22, 18, 0.72), rgba(26, 22, 18, 0.78)),
+      url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1600&q=60')
+        center / cover;
+    color: white;
+    padding: 5rem 0;
+  }
+
+  .cta-band__inner {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .cta-band .script {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-band h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    max-width: 18ch;
+  }
+
+  .cta-band__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 800px) {
+    .offerings__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .cta-band__inner {
+      grid-template-columns: 1.3fr 1fr;
+      align-items: end;
+    }
+  }
+</style>

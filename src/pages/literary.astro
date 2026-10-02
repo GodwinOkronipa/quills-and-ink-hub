@@ -1,0 +1,418 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+
+const services = [
+  {
+    title: 'Eulogies',
+    tag: 'Spoken Remembrance',
+    text: 'A narrative shaped from intimate family conversations — respectful, heartfelt, and true to the deceased’s life values, faith, and ancestry.',
+  },
+  {
+    title: 'Family & Group Tributes',
+    tag: 'Personal Voices',
+    text: 'Individual or collective readings crafted for children, siblings, friends, church fellowships, or professional associations.',
+  },
+  {
+    title: 'Memorial Brochures & Programs',
+    tag: 'Keepsake Print',
+    text: 'Complete order of service text, biography composition, hymns selection, photo captions, and acknowledgments tailored for printing in Ghana or abroad.',
+  },
+  {
+    title: 'Diaspora Family Synthesis',
+    tag: 'Remote Coordination',
+    text: 'Gathering written reflections and voice notes from loved ones across multiple countries and blending them into a harmonious, polished family keepsake.',
+  },
+];
+
+const samples = [
+  {
+    id: 'tribute',
+    title: 'Memorial Tribute',
+    context: 'Spoken on behalf of the family',
+    content: [
+      'In quiet rooms and crowded courtyards alike, we remember a life that made space for others.',
+      'Not by grand speeches alone, but by the ordinary kindnesses that became our family’s compass — the open door at dusk, the unhurried counsel, the steady reassurance when storms gathered.',
+      'Today we gather not to finish this story, but to place it reverently in our collective keeping — so that love may continue to speak in the warm language of home.',
+    ],
+    file: '/samples/tribute-excerpt.txt',
+    downloadLabel: 'Download Tribute Excerpt',
+  },
+  {
+    id: 'eulogy',
+    title: 'Eulogy Excerpt · Life & Legacy',
+    context: 'Read during the church celebration of life',
+    content: [
+      'To speak of Papa is to speak of patience forged in faith and quiet perseverance. Born in the rolling hills of the Eastern Region, he understood early that true nobility is not in what one gathers, but in what one pours out.',
+      'Through decades of devotion to his family, his church, and the young minds he mentored, he wore integrity like a familiar cloth. His laughter could disarm a room; his silence carried wisdom that outlasted hours of debate.',
+      'We stand here today as trees planted by his rivers of sacrifice. Though his physical voice is still, the soil of our lives remains forever enriched by his living.',
+    ],
+    file: '/samples/eulogy-writing-guide.txt',
+    downloadLabel: 'Download Eulogy Guide',
+  },
+  {
+    id: 'brochure',
+    title: 'Memorial Brochure Dedication',
+    context: 'Frontispiece and order of service introduction',
+    content: [
+      '“A life well lived is a quiet hymn that echoes across generations.”',
+      'This memorial brochure is compiled with heartfelt gratitude by the family across Accra, London, Washington, and Toronto. As you hold these pages, may the memories within comfort your spirit and remind you of the grace that walked among us.',
+    ],
+    file: '/samples/memorial-brochure-checklist.txt',
+    downloadLabel: 'Download Brochure Checklist',
+  },
+];
+---
+
+<BaseLayout
+  title="Literary Services"
+  description="Professional eulogies, tributes, memorial brochures, and diaspora family writing services for Ghanaian families."
+>
+  <Header />
+  <main>
+    <PageHero
+      script="Words"
+      title="Literary services that honour a life"
+      subtitle="When families need language for love and loss, we write with restraint, cultural dignity, and gentle care."
+      image="https://images.unsplash.com/photo-1456513080080-7e87bb4f3d4d?auto=format&fit=crop&w=1800&q=70"
+    />
+
+    <section class="literary container">
+      <div class="literary__services">
+        <div class="literary__heading">
+          <p class="eyebrow">Our Literary Offerings</p>
+          <h2>Crafted with dignity, patience, and cultural resonance</h2>
+        </div>
+        <div class="services-list">
+          {
+            services.map((s) => (
+              <article class="service-item">
+                <span class="service-item__tag">{s.tag}</span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="literary__samples">
+        <div class="samples-card">
+          <p class="eyebrow">Reading Samples &amp; Templates</p>
+          <h2>Sample excerpts from our literary archives</h2>
+
+          <div class="samples-tabs" role="tablist" aria-label="Sample excerpts">
+            {samples.map((s, idx) => (
+              <button
+                type="button"
+                role="tab"
+                class:list={['sample-tab', idx === 0 && 'is-active']}
+                data-tab-target={s.id}
+                aria-selected={idx === 0 ? 'true' : 'false'}
+                aria-controls={`panel-${s.id}`}
+                id={`tab-${s.id}`}
+              >
+                {s.title}
+              </button>
+            ))}
+          </div>
+
+          <div class="samples-panels">
+            {samples.map((s, idx) => (
+              <div
+                id={`panel-${s.id}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${s.id}`}
+                class:list={['sample-panel', idx !== 0 && 'is-hidden']}
+                data-panel-id={s.id}
+              >
+                <p class="sample-context">{s.context}</p>
+                <blockquote>
+                  {s.content.map((p) => (
+                    <p>{p}</p>
+                  ))}
+                </blockquote>
+                <div class="sample-actions">
+                  <a class="btn btn--outline" href={s.file} download>
+                    {s.downloadLabel}
+                  </a>
+                  <a class="btn btn--peach" href="/book">
+                    Commission This Service
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="toolkit-card">
+          <p class="eyebrow">Resource Toolkit</p>
+          <h3>Downloadable Planning Resources</h3>
+          <p class="toolkit-desc">
+            Helpful templates and guides to assist your family in organizing thoughts and collecting tributes from relatives at home and abroad.
+          </p>
+          <ul class="toolkit-list">
+            <li>
+              <a href="/samples/eulogy-writing-guide.txt" download class="toolkit-link">
+                <span class="toolkit-icon" aria-hidden="true">📄</span>
+                <div>
+                  <strong>Eulogy Reflection &amp; Writing Guide (.txt)</strong>
+                  <span>Key questions, speech structure, and delivery tips</span>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="/samples/memorial-brochure-checklist.txt" download class="toolkit-link">
+                <span class="toolkit-icon" aria-hidden="true">📋</span>
+                <div>
+                  <strong>Memorial Brochure Checklist (.txt)</strong>
+                  <span>Complete layout blueprint and photo requirements</span>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="/samples/tribute-excerpt.txt" download class="toolkit-link">
+                <span class="toolkit-icon" aria-hidden="true">🖋️</span>
+                <div>
+                  <strong>Memorial Tribute Reading Excerpt (.txt)</strong>
+                  <span>Poetic reflection ready for family readings</span>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .literary {
+    display: grid;
+    gap: 3rem;
+    padding: 4.5rem 0 5.5rem;
+  }
+
+  .literary__heading h2 {
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    margin-top: 0.5rem;
+    color: var(--color-charcoal);
+  }
+
+  .services-list {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .service-item {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .service-item__tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    font-weight: 500;
+  }
+
+  .service-item h3 {
+    font-size: 1.5rem;
+    color: var(--color-charcoal);
+  }
+
+  .service-item p {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  .literary__samples {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .samples-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 2.25rem 1.85rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .samples-card h2 {
+    font-size: 1.85rem;
+    color: var(--color-charcoal);
+  }
+
+  .samples-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 0.75rem;
+  }
+
+  .sample-tab {
+    background: none;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    padding: 0.5rem 0.85rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.25s var(--ease);
+  }
+
+  .sample-tab:hover {
+    color: var(--color-ink);
+    background: var(--color-soft);
+  }
+
+  .sample-tab.is-active {
+    color: var(--color-charcoal);
+    background: var(--color-soft);
+    font-weight: 600;
+  }
+
+  .sample-panel {
+    display: grid;
+    gap: 1rem;
+    animation: fade-in 0.4s var(--ease);
+  }
+
+  .sample-panel.is-hidden {
+    display: none;
+  }
+
+  .sample-context {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+  }
+
+  blockquote {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--color-charcoal);
+    border-left: 2px solid var(--color-peach);
+    padding-left: 1.25rem;
+  }
+
+  blockquote p + p {
+    margin-top: 1rem;
+  }
+
+  .sample-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .toolkit-card {
+    background: var(--color-ivory);
+    border: 1px solid var(--color-line);
+    padding: 2rem 1.75rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .toolkit-card h3 {
+    font-size: 1.45rem;
+    color: var(--color-charcoal);
+  }
+
+  .toolkit-desc {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1rem;
+  }
+
+  .toolkit-list {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .toolkit-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 1rem 1.15rem;
+    transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+
+  .toolkit-link:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-peach);
+  }
+
+  .toolkit-icon {
+    font-size: 1.5rem;
+  }
+
+  .toolkit-link div {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .toolkit-link strong {
+    font-size: 0.88rem;
+    color: var(--color-charcoal);
+  }
+
+  .toolkit-link span {
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 960px) {
+    .literary {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab-target]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-panel-id]');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tabTarget;
+      tabs.forEach((t) => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+
+      panels.forEach((p) => {
+        if (p.dataset.panelId === target) {
+          p.classList.remove('is-hidden');
+        } else {
+          p.classList.add('is-hidden');
+        }
+      });
+    });
+  });
+</script>
+

@@ -1,0 +1,108 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__top container">
+    <div class="site-footer__brand">
+      <p class="script site-footer__logo">Quills &amp; Ink</p>
+      <p>
+        Honouring lives with careful coordination and words that carry love —
+        for families in Ghana and across the diaspora.
+      </p>
+    </div>
+
+    <div>
+      <p class="eyebrow">Explore</p>
+      <ul>
+        <li><a href="/packages">Funeral Packages</a></li>
+        <li><a href="/literary">Literary Services</a></li>
+        <li><a href="/portfolio">Portfolio</a></li>
+        <li><a href="/book">Book Consultation</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="eyebrow">Reach Us</p>
+      <ul>
+        <li><a href="tel:+233000000000">+233 (0) XX XXX XXXX</a></li>
+        <li><a href="mailto:hello@quillsandinkhub.com">hello@quillsandinkhub.com</a></li>
+        <li>
+          <a
+            href="https://wa.me/233000000000"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp Inquiry
+          </a>
+        </li>
+        <li>Accra, Ghana · Serving diaspora families worldwide</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom container">
+    <p>© {year} Quills and Ink Hub. All rights reserved.</p>
+    <a href="/contact">Send an inquiry</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-charcoal);
+    color: color-mix(in srgb, white 78%, transparent);
+    padding: 4.5rem 0 1.75rem;
+  }
+
+  .site-footer__top {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid color-mix(in srgb, white 12%, transparent);
+  }
+
+  .site-footer__logo {
+    font-size: 2.5rem;
+    color: var(--color-white);
+    margin-bottom: 0.75rem;
+  }
+
+  .site-footer__brand p:last-child {
+    max-width: 28rem;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+  }
+
+  .eyebrow {
+    color: var(--color-blush);
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  a {
+    transition: color 0.25s var(--ease);
+  }
+
+  a:hover {
+    color: var(--color-white);
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  @media (min-width: 800px) {
+    .site-footer__top {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+</style>

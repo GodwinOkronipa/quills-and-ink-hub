@@ -1,0 +1,201 @@
+---
+interface Props {
+  variant?: 'transparent' | 'solid';
+}
+
+const { variant = 'transparent' } = Astro.props;
+
+const leftLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About Us' },
+  { href: '/packages', label: 'Packages' },
+  { href: '/literary', label: 'Literary' },
+];
+
+const rightLinks = [
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/book', label: 'Book' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<header class:list={['site-header', variant === 'solid' && 'site-header--solid']} data-header>
+  <div class="site-header__inner container-wide">
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-nav-toggle
+    >
+      <span class="sr-only">Menu</span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-header__nav site-header__nav--left" aria-label="Primary left">
+      {
+        leftLinks.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))
+      }
+    </nav>
+
+    <a class="site-header__brand" href="/" aria-label="Quills and Ink Hub home">
+      <span class="site-header__logo script">Quills &amp; Ink</span>
+      <span class="site-header__tag">Funeral Planning &amp; Literary Services</span>
+    </a>
+
+    <nav class="site-header__nav site-header__nav--right" aria-label="Primary right">
+      {
+        rightLinks.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))
+      }
+    </nav>
+  </div>
+
+  <nav id="site-nav" class="site-header__mobile" data-mobile-nav hidden>
+    {[...leftLinks, ...rightLinks].map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+    <a class="btn btn--peach" href="/book">Book a Consultation</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 40;
+    color: var(--color-white);
+    padding-top: 1.25rem;
+  }
+
+  .site-header--solid {
+    position: sticky;
+    top: 0;
+    background: color-mix(in srgb, var(--color-ivory) 92%, transparent);
+    backdrop-filter: blur(12px);
+    color: var(--color-charcoal);
+    border-bottom: 1px solid var(--color-line);
+    padding-block: 0.85rem;
+  }
+
+  .site-header__inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    min-height: var(--nav-h);
+  }
+
+  .site-header__brand {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 0.15rem;
+  }
+
+  .site-header__logo {
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    line-height: 1;
+    color: inherit;
+  }
+
+  .site-header__tag {
+    font-size: 0.55rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+
+  .site-header__nav {
+    display: none;
+    gap: 1.35rem;
+    align-items: center;
+  }
+
+  .site-header__nav a {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 400;
+    opacity: 0.92;
+    transition: opacity 0.25s var(--ease);
+  }
+
+  .site-header__nav a:hover {
+    opacity: 0.6;
+  }
+
+  .site-header__nav--left {
+    justify-content: flex-start;
+  }
+
+  .site-header__nav--right {
+    justify-content: flex-end;
+  }
+
+  .site-header__toggle {
+    display: grid;
+    gap: 0.4rem;
+    width: 2rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    justify-self: start;
+  }
+
+  .site-header__toggle span {
+    display: block;
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .site-header__mobile {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem 1.25rem 2rem;
+    background: var(--color-charcoal);
+    color: var(--color-white);
+  }
+
+  .site-header__mobile a:not(.btn) {
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .site-header__mobile .btn {
+    justify-self: start;
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 980px) {
+    .site-header__toggle,
+    .site-header__mobile {
+      display: none !important;
+    }
+
+    .site-header__nav {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const mobileNav = document.querySelector('[data-mobile-nav]');
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (mobileNav instanceof HTMLElement) {
+      mobileNav.hidden = open;
+    }
+  });
+</script>

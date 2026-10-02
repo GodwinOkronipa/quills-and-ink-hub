@@ -1,0 +1,142 @@
+---
+---
+
+<section class="hero" aria-label="Welcome">
+  <div class="hero__media" aria-hidden="true">
+    <!-- Swap poster + optional video when final asset is ready -->
+    <img
+      class="hero__poster"
+      src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=2000&q=70"
+      alt=""
+      width="2000"
+      height="1200"
+      fetchpriority="high"
+    />
+    <!--
+      <video class="hero__video" autoplay muted loop playsinline poster="...">
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+    -->
+    <div class="hero__veil"></div>
+  </div>
+
+  <div class="hero__content reveal">
+    <p class="hero__script script">Remembrance</p>
+    <p class="hero__sub reveal-delay-1">
+      Dignified funeral coordination &amp; literary care for Ghanaian families
+    </p>
+    <div class="hero__actions reveal-delay-2">
+      <a class="btn btn--peach" href="/book">Book a Consultation</a>
+      <a class="btn btn--ghost" href="/packages">View Packages</a>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span></span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    color: var(--color-white);
+    overflow: hidden;
+  }
+
+  .hero__media,
+  .hero__poster,
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    filter: saturate(0.85) brightness(0.78);
+  }
+
+  .hero__veil {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(26, 22, 18, 0.45) 0%,
+        rgba(26, 22, 18, 0.28) 45%,
+        rgba(26, 22, 18, 0.55) 100%
+      );
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 6rem 1.25rem 4rem;
+    max-width: 48rem;
+  }
+
+  .hero__script {
+    font-size: clamp(4.5rem, 12vw, 8.5rem);
+    line-height: 0.95;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  .hero__sub {
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    opacity: 0.92;
+    margin-bottom: 2rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 3rem;
+    background: color-mix(in srgb, white 35%, transparent);
+    overflow: hidden;
+  }
+
+  .hero__scroll span {
+    display: block;
+    width: 100%;
+    height: 40%;
+    background: white;
+    animation: scroll-line 1.8s var(--ease) infinite;
+  }
+
+  @keyframes scroll-line {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(250%);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__scroll span {
+      animation: none;
+    }
+  }
+</style>

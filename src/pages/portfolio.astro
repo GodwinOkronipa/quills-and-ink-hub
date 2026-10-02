@@ -1,0 +1,383 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+
+const categories = ['All', 'Gatherings', 'Décor & Floral', 'Brochures & Print'];
+
+const projects = [
+  {
+    category: 'Gatherings',
+    title: 'Garden Memorial · East Legon, Accra',
+    text: 'Outdoor remembrance service with canopy drapery, soft ivory florals, live quartet coordination, and order of service delivery.',
+    image:
+      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=70',
+    tag: 'Full Event Coordination',
+  },
+  {
+    category: 'Gatherings',
+    title: 'Diaspora-Supported Service · Cantonments',
+    text: 'Seamless synchronization between Accra organizers and diaspora family in London and Calgary, featuring synchronized livestream and hybrid eulogy readings.',
+    image:
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=70',
+    tag: 'Hybrid Coordination',
+  },
+  {
+    category: 'Gatherings',
+    title: 'Quiet Chapel Farewell · Ridge Church, Accra',
+    text: 'Intimate seating layout, clergy liaison, acoustic sound check, and carefully paced processional and recessional hymns.',
+    image:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=70',
+    tag: 'Church Memorial',
+  },
+  {
+    category: 'Décor & Floral',
+    title: 'Floral Sanctuary & Memorial Wreaths',
+    text: 'Curated white roses, lilies, and lush greenery accents arranged to provide a serene, dignified atmosphere for the viewing and service.',
+    image:
+      'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=70',
+    tag: 'Floral Design',
+  },
+  {
+    category: 'Brochures & Print',
+    title: '36-Page Memorial Keepsake Brochure',
+    text: 'Matte gold foil stamped cover, family photo chronology, biography synthesis, and hymn lyrics printed on premium recycled stock in Accra.',
+    image:
+      'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=70',
+    tag: 'Stationery & Print',
+  },
+  {
+    category: 'Décor & Floral',
+    title: 'Evening Vigil & Candlelight Reception',
+    text: 'Soft architectural uplighting, wooden guestbook table, coordinated hospitality team, and respectful background acoustic tributes.',
+    image:
+      'https://images.unsplash.com/photo-1519167758481-83f29da8c2b5?auto=format&fit=crop&w=1200&q=70',
+    tag: 'Evening Gathering',
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      'Planning my mother’s funeral from London was terrifying until we connected with Quills and Ink Hub. They took care of vendors, the program, and local family protocol with immense grace.',
+    author: 'Kofi Mensah · London, UK',
+  },
+  {
+    quote:
+      'The eulogy they helped us craft brought our father’s true personality to life. Guests commented on how beautifully organized and calm the entire service felt.',
+    author: 'Dr. Akosua Boateng · Accra & Atlanta',
+  },
+];
+---
+
+<BaseLayout
+  title="Portfolio & Gallery"
+  description="A visual and narrative gallery of memorial services coordinated with dignity and attention to detail."
+>
+  <Header />
+  <main>
+    <PageHero
+      script="Portfolio"
+      title="Past gatherings, held with care"
+      subtitle="A selection of atmospheres, details, and stories — shared with respect for the families we serve."
+      image="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=70"
+    />
+
+    <section class="gallery container">
+      <div class="gallery__header">
+        <p class="eyebrow">Our Work</p>
+        <h2>Moments of remembrance executed with precision</h2>
+      </div>
+
+      <div class="filter-bar" role="tablist" aria-label="Portfolio filters">
+        {
+          categories.map((cat, idx) => (
+            <button
+              type="button"
+              class:list={['filter-btn', idx === 0 && 'is-active']}
+              data-filter={cat}
+              role="tab"
+              aria-selected={idx === 0 ? 'true' : 'false'}
+            >
+              {cat}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="gallery__grid">
+        {
+          projects.map((item) => (
+            <article class="gallery-item" data-category={item.category}>
+              <div class="gallery-item__image-wrap">
+                <img src={item.image} alt={item.title} width="800" height="600" loading="lazy" />
+                <span class="gallery-item__tag">{item.tag}</span>
+              </div>
+              <div class="gallery-item__body">
+                <h2>{item.title}</h2>
+                <p>{item.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <section class="testimonials">
+        <div class="testimonials__intro">
+          <p class="eyebrow">Family Words</p>
+          <h2>Kind words from the families we have walked beside</h2>
+        </div>
+        <div class="testimonials__grid">
+          {testimonials.map((t) => (
+            <blockquote class="testimonial-card">
+              <p>“{t.quote}”</p>
+              <cite>— {t.author}</cite>
+            </blockquote>
+          ))}
+        </div>
+      </section>
+
+      <div class="gallery__cta">
+        <div>
+          <h3>Allow us to carry the logistical weight</h3>
+          <p>Schedule a no-obligation listening session to explore what support your family needs.</p>
+        </div>
+        <a class="btn btn--peach" href="/book">Book Consultation</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .gallery {
+    padding: 4.5rem 0 5.5rem;
+  }
+
+  .gallery__header {
+    margin-bottom: 2rem;
+  }
+
+  .gallery__header h2 {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    color: var(--color-charcoal);
+    margin-top: 0.4rem;
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--color-line);
+    padding: 0.5rem 1.15rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-charcoal);
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.25s var(--ease);
+  }
+
+  .filter-btn:hover {
+    border-color: var(--color-peach);
+  }
+
+  .filter-btn.is-active {
+    background: var(--color-charcoal);
+    color: var(--color-white);
+    border-color: var(--color-charcoal);
+  }
+
+  .gallery__grid {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .gallery-item {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    overflow: hidden;
+    display: grid;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+
+  .gallery-item.is-hidden {
+    display: none;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .gallery-item__image-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .gallery-item__image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .gallery-item:hover .gallery-item__image-wrap img {
+    transform: scale(1.04);
+  }
+
+  .gallery-item__tag {
+    position: absolute;
+    bottom: 0.85rem;
+    left: 0.85rem;
+    background: rgba(26, 22, 18, 0.75);
+    backdrop-filter: blur(8px);
+    color: white;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+  }
+
+  .gallery-item__body {
+    padding: 1.5rem 1.35rem 1.75rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .gallery-item__body h2 {
+    font-size: 1.45rem;
+    color: var(--color-charcoal);
+  }
+
+  .gallery-item__body p {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+
+  .testimonials {
+    margin-top: 5rem;
+    background: var(--color-ivory);
+    border: 1px solid var(--color-line);
+    padding: 3.5rem 2rem;
+  }
+
+  .testimonials__intro h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin: 0.4rem 0 2.25rem;
+    color: var(--color-charcoal);
+  }
+
+  .testimonials__grid {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .testimonial-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 2rem;
+    display: grid;
+    gap: 1.25rem;
+    margin: 0;
+  }
+
+  .testimonial-card p {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--color-charcoal);
+    font-style: italic;
+  }
+
+  .testimonial-card cite {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .gallery__cta {
+    margin-top: 4.5rem;
+    background: var(--color-soft);
+    border: 1px solid var(--color-line);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .gallery__cta h3 {
+    font-size: 1.65rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.35rem;
+  }
+
+  .gallery__cta p {
+    font-family: var(--font-serif);
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  @media (min-width: 720px) {
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonials__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .gallery__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const selected = btn.dataset.filter;
+      filterBtns.forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+
+      galleryItems.forEach((item) => {
+        const itemCat = item.dataset.category;
+        if (selected === 'All' || itemCat === selected) {
+          item.classList.remove('is-hidden');
+        } else {
+          item.classList.add('is-hidden');
+        }
+      });
+    });
+  });
+</script>
+
