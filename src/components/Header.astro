@@ -27,10 +27,11 @@ const rightLinks = [
       aria-expanded="false"
       aria-controls="site-nav"
       data-nav-toggle
+      aria-label="Toggle navigation menu"
     >
       <span class="sr-only">Menu</span>
-      <span></span>
-      <span></span>
+      <span class="site-header__bar"></span>
+      <span class="site-header__bar"></span>
     </button>
 
     <nav class="site-header__nav site-header__nav--left" aria-label="Primary left">
@@ -56,8 +57,17 @@ const rightLinks = [
   </div>
 
   <nav id="site-nav" class="site-header__mobile" data-mobile-nav hidden>
+    <div class="site-header__mobile-top">
+      <span class="eyebrow" style="color: var(--color-blush);">Menu</span>
+      <button type="button" class="site-header__close" data-nav-close aria-label="Close navigation menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
     {[...leftLinks, ...rightLinks].map((link) => (
-      <a href={link.href}>{link.label}</a>
+      <a href={link.href} class="site-header__mobile-link">{link.label}</a>
     ))}
     <a class="btn btn--peach" href="/book">Book a Consultation</a>
   </nav>
@@ -140,34 +150,90 @@ const rightLinks = [
 
   .site-header__toggle {
     display: grid;
-    gap: 0.4rem;
-    width: 2rem;
-    padding: 0;
+    gap: 0.45rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.25rem;
     border: 0;
     background: transparent;
     cursor: pointer;
     justify-self: start;
+    align-content: center;
+    color: currentColor;
   }
 
-  .site-header__toggle span {
+  .site-header__toggle .site-header__bar {
     display: block;
     width: 1.5rem;
-    height: 1px;
+    height: 1.5px;
     background: currentColor;
+    transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+  }
+
+  .site-header__toggle.is-open .site-header__bar:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+
+  .site-header__toggle.is-open .site-header__bar:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
   }
 
   .site-header__mobile {
     display: grid;
-    gap: 1rem;
-    padding: 1.5rem 1.25rem 2rem;
+    gap: 1.15rem;
+    padding: 1.5rem 1.5rem 2.25rem;
     background: var(--color-charcoal);
     color: var(--color-white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+    animation: fade-down 0.25s var(--ease);
+  }
+
+  @keyframes fade-down {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .site-header__mobile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .site-header__close {
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    padding: 0.25rem;
+    opacity: 0.8;
+    transition: opacity 0.2s var(--ease);
+  }
+
+  .site-header__close:hover {
+    opacity: 1;
   }
 
   .site-header__mobile a:not(.btn) {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
+    padding: 0.25rem 0;
+    transition: color 0.2s var(--ease);
+  }
+
+  .site-header__mobile a:not(.btn):hover {
+    color: var(--color-blush);
   }
 
   .site-header__mobile .btn {
@@ -188,14 +254,61 @@ const rightLinks = [
 </style>
 
 <script>
-  const toggle = document.querySelector('[data-nav-toggle]');
-  const mobileNav = document.querySelector('[data-mobile-nav]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const mobileNav = document.querySelector<HTMLElement>('[data-mobile-nav]');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-nav-close]');
 
-  toggle?.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!open));
-    if (mobileNav instanceof HTMLElement) {
-      mobileNav.hidden = open;
+  const closeMenu = () => {
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.classList.remove('is-open');
+    if (mobileNav) {
+      mobileNav.hidden = true;
+    }
+  };
+
+  const openMenu = () => {
+    toggle?.setAttribute('aria-expanded', 'true');
+    toggle?.classList.add('is-open');
+    if (mobileNav) {
+      mobileNav.hidden = false;
+    }
+  };
+
+  toggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  closeBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeMenu();
+  });
+
+  // When any link inside the mobile menu is pressed, disappear the nav menu
+  mobileNav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // Also close when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    if (mobileNav && !mobileNav.hidden && !toggle?.contains(target) && !mobileNav.contains(target)) {
+      closeMenu();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMenu();
     }
   });
 </script>
+
