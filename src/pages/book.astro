@@ -172,6 +172,14 @@ import PageHero from '../components/PageHero.astro';
             <li><strong>Cultural Sensitivity:</strong> We respect family elders and traditional community protocols.</li>
           </ul>
         </div>
+
+        <div class="aside-box aside-box--notice">
+          <span class="advisory-pill">Desk Notice</span>
+          <h3>Communications Advisory</h3>
+          <p>
+            Please note: Our official direct phone lines and primary email routing are actively being upgraded for expanded diaspora service. We will update these contacts in our upcoming release. WhatsApp consultations and Zoom calls remain fully active daily.
+          </p>
+        </div>
       </aside>
     </section>
   </main>
@@ -325,6 +333,40 @@ import PageHero from '../components/PageHero.astro';
 
   .aside-box--subtle {
     background: var(--color-ivory);
+  }
+
+  .aside-box--notice {
+    background: #fdf8f2;
+    border: 1px solid #ebd0b5;
+    border-left: 3px solid #d48b48;
+    padding: 1.5rem 1.35rem;
+    gap: 0.6rem;
+  }
+
+  .advisory-pill {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: #fdf2e9;
+    color: #b85c18;
+    border: 1px solid #f6d8be;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    width: fit-content;
+  }
+
+  .aside-box--notice h3 {
+    font-size: 1.15rem;
+    color: #4a2810;
+    margin: 0;
+  }
+
+  .aside-box--notice p {
+    font-size: 0.92rem !important;
+    color: #5c3e24 !important;
+    line-height: 1.55;
+    margin: 0;
   }
 
   .promise-list {

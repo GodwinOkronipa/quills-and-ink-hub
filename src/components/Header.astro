@@ -461,9 +461,9 @@ const rightLinks = [
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background: rgba(18, 14, 11, 0.78);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(18, 14, 11, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 9998;
     opacity: 0;
     visibility: hidden;
@@ -485,12 +485,12 @@ const rightLinks = [
     bottom: 0;
     height: 100vh;
     height: 100dvh;
-    width: 100%;
+    width: min(330px, 82vw);
     background: var(--color-charcoal);
     color: var(--color-white);
     z-index: 9999;
     transform: translateX(-100%);
-    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 12px 0 48px rgba(0, 0, 0, 0.55);
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1.25rem 2rem;
@@ -498,12 +498,14 @@ const rightLinks = [
     overscroll-behavior: contain;
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     box-sizing: border-box;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0 18px 18px 0;
   }
 
   @media (min-width: 540px) {
     .site-drawer {
-      width: 380px;
-      max-width: 85vw;
+      width: 360px;
+      max-width: 80vw;
     }
   }
 

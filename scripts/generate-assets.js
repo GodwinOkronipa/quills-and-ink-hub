@@ -9,7 +9,7 @@ const rootDir = path.resolve(__dirname, '..');
 
 const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
-console.log('Generating OG image and PDF downloads for Quills & Ink Hub...');
+console.log('Generating updated PDFs with visible editorial imagery & contact update notices...');
 
 // 1. OG Image Template (1200 x 630)
 const ogHtml = `<!DOCTYPE html>
@@ -216,7 +216,7 @@ const ogHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// 2. Eulogy Writing Guide PDF Template (A4 Multi-page / Comprehensive)
+// 2. Eulogy Writing Guide PDF Template (A4 with visible images & contact update notice)
 const eulogyPdfHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -226,7 +226,7 @@ const eulogyPdfHtml = `<!DOCTYPE html>
   
   @page {
     size: A4 portrait;
-    margin: 16mm 14mm 16mm 14mm;
+    margin: 14mm 12mm 14mm 12mm;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -234,22 +234,16 @@ const eulogyPdfHtml = `<!DOCTYPE html>
     font-family: 'Montserrat', sans-serif;
     color: #1a1612;
     background: #faf8f5;
-    line-height: 1.6;
-    font-size: 10.5pt;
+    line-height: 1.55;
+    font-size: 10pt;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  .page-container {
-    padding: 10px;
-    background: #faf8f5;
-  }
-
   .border-box {
     border: 1px solid #d9cebf;
-    padding: 24px 28px;
+    padding: 22px 26px;
     background: #ffffff;
-    position: relative;
     box-shadow: 0 4px 15px rgba(0,0,0,0.02);
   }
 
@@ -258,13 +252,13 @@ const eulogyPdfHtml = `<!DOCTYPE html>
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 2px solid #c9a892;
-    padding-bottom: 14px;
-    margin-bottom: 20px;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
   }
 
   .logo-group h1 {
     font-family: 'Great Vibes', cursive;
-    font-size: 34pt;
+    font-size: 32pt;
     color: #2c2416;
     line-height: 1;
     font-weight: normal;
@@ -274,7 +268,7 @@ const eulogyPdfHtml = `<!DOCTYPE html>
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: #8a7e72;
-    margin-top: 4px;
+    margin-top: 3px;
     font-weight: 500;
   }
 
@@ -282,14 +276,14 @@ const eulogyPdfHtml = `<!DOCTYPE html>
     text-align: right;
     font-size: 8pt;
     color: #5c4a38;
-    line-height: 1.4;
+    line-height: 1.35;
   }
   .doc-badge {
     display: inline-block;
     background: #f3eee8;
     color: #5c4a38;
     font-weight: 600;
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 4px;
     font-size: 7.5pt;
     letter-spacing: 0.08em;
@@ -299,332 +293,11 @@ const eulogyPdfHtml = `<!DOCTYPE html>
 
   .doc-title-block {
     text-align: center;
-    margin-bottom: 22px;
-  }
-  .doc-title-block h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24pt;
-    color: #2c2416;
-    font-weight: 600;
-    line-height: 1.15;
-    margin-bottom: 6px;
-  }
-  .doc-title-block p {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 13pt;
-    color: #705f4e;
-  }
-
-  .intro-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
-    background: #faf8f5;
-    border: 1px solid #ebd8c8;
-    padding: 16px;
-    border-radius: 4px;
-  }
-  .intro-text p {
-    font-size: 9.5pt;
-    line-height: 1.55;
-    color: #3d3226;
-    margin-bottom: 8px;
-  }
-  .intro-text p:last-child { margin-bottom: 0; }
-  
-  .intro-image {
-    border-radius: 4px;
-    overflow: hidden;
-    height: 130px;
-  }
-  .intro-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .section-heading {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0 12px;
-  }
-  .section-num {
-    background: #c9a892;
-    color: white;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8pt;
-    font-weight: 600;
-  }
-  .section-heading h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15pt;
-    font-weight: 600;
-    color: #2c2416;
-  }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
     margin-bottom: 18px;
   }
-
-  .guide-card {
-    background: #ffffff;
-    border: 1px solid #e6ded4;
-    border-top: 3px solid #c9a892;
-    padding: 12px 14px;
-    border-radius: 3px;
-  }
-  .guide-card h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 12pt;
-    font-weight: 600;
-    color: #2c2416;
-    margin-bottom: 6px;
-  }
-  .guide-card ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  .guide-card li {
-    font-size: 8.5pt;
-    color: #4a3e33;
-    margin-bottom: 5px;
-    position: relative;
-    padding-left: 14px;
-    line-height: 1.4;
-  }
-  .guide-card li::before {
-    content: '•';
-    position: absolute;
-    left: 2px;
-    color: #c9a892;
-    font-size: 11pt;
-  }
-
-  .quote-box {
-    margin: 18px 0;
-    padding: 14px 20px;
-    background: #fbf9f6;
-    border-left: 3px solid #b8927a;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 12.5pt;
-    font-style: italic;
-    color: #3d3226;
-    line-height: 1.5;
-  }
-  .quote-author {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 7.5pt;
-    font-style: normal;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #8a7e72;
-    margin-top: 6px;
-  }
-
-  .attribution-footer {
-    margin-top: 24px;
-    padding-top: 14px;
-    border-top: 1px solid #e0d6cb;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 7.5pt;
-    color: #8a7e72;
-  }
-  .attribution-left strong {
-    color: #2c2416;
-  }
-</style>
-</head>
-<body>
-  <div class="page-container">
-    <div class="border-box">
-      <div class="header-band">
-        <div class="logo-group">
-          <h1>Quills &amp; Ink</h1>
-          <div class="sub">Literary Archival Department · Accra, Ghana</div>
-        </div>
-        <div class="doc-meta">
-          <span class="doc-badge">Family Resource Edition</span>
-          <div>Document Ref: QI-LIT-EUG-01</div>
-          <div>Authorized Free Circulation</div>
-        </div>
-      </div>
-
-      <div class="doc-title-block">
-        <h2>The Art of Remembrance: Eulogy &amp; Tribute Guide</h2>
-        <p>A quiet framework for families preparing words of honour, faith, and ancestry</p>
-      </div>
-
-      <div class="intro-grid">
-        <div class="intro-text">
-          <p>
-            Writing a eulogy or family tribute is an act of love and pastoral care. In Ghanaian tradition, the spoken word at a celebration of life is not a recital of titles alone; it is the weaving together of an elder or loved one's true essence, their generosity, their humor, and the quiet sacrifices that anchored their lineage.
-          </p>
-          <p>
-            This guide is provided by <strong>Quills and Ink Hub</strong> to give your family structure, calm confidence, and cultural dignity when articulating your most tender memories.
-          </p>
-        </div>
-        <div class="intro-image">
-          <img src="https://images.unsplash.com/photo-1456513080080-7e87bb4f3d4d?auto=format&fit=crop&w=700&q=80" alt="Quiet study and pen" />
-        </div>
-      </div>
-
-      <div class="section-heading">
-        <div class="section-num">1</div>
-        <h3>The Four Foundations of a Ghanaian Memorial Reading</h3>
-      </div>
-
-      <div class="cards-grid">
-        <div class="guide-card">
-          <h4>1. The Roots &amp; Lineage</h4>
-          <ul>
-            <li>Acknowledge their ancestral home, parental roots, and childhood environment.</li>
-            <li>Capture early formative values, humility, and family resilience.</li>
-            <li>Highlight the community ethos that shaped their worldview.</li>
-          </ul>
-        </div>
-        <div class="guide-card">
-          <h4>2. The Living Impact</h4>
-          <ul>
-            <li>Focus on 2-3 specific personal anecdotes rather than a long chronological resume.</li>
-            <li>Describe how they treated strangers, workers, family, and vulnerable persons.</li>
-            <li>Recall signature phrases, warm habits, or moments of hearty laughter.</li>
-          </ul>
-        </div>
-        <div class="guide-card">
-          <h4>3. Faith &amp; Stewardship</h4>
-          <ul>
-            <li>Reflect on their moral compass, church or community fellowships, and mentorship.</li>
-            <li>Include cherished hymns, scriptures, or proverbs that guided their decisions.</li>
-            <li>Honor their stewardship as a mother, father, sibling, elder, or friend.</li>
-          </ul>
-        </div>
-        <div class="guide-card">
-          <h4>4. The Benediction &amp; Release</h4>
-          <ul>
-            <li>Synthesize feelings of gratitude and peace rather than despair.</li>
-            <li>Voice words of blessing on behalf of children, grandchildren, and diaspora kin.</li>
-            <li>Conclude with a respectful prayer of rest into eternity.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="quote-box">
-        “A life well lived is not measured by the applause it commanded, but by the quiet shade it provided for those who walked beside it.”
-        <div class="quote-author">— Quills and Ink Hub Literary Synthesis</div>
-      </div>
-
-      <div class="section-heading">
-        <div class="section-num">2</div>
-        <h3>Delivery &amp; Podium Guidance</h3>
-      </div>
-
-      <div class="cards-grid">
-        <div class="guide-card">
-          <h4>Pacing &amp; Emotion</h4>
-          <ul>
-            <li>Read slowly: 120 words per minute allows the congregation to absorb every thought.</li>
-            <li>If overcome by grief, pause, take a breath, or have a standing family member step up beside you.</li>
-          </ul>
-        </div>
-        <div class="guide-card">
-          <h4>Preparation &amp; Print</h4>
-          <ul>
-            <li>Print on heavy paper with 14pt double-spaced text. Avoid reading from tiny mobile screens.</li>
-            <li>Our literary team offers full ghostwriting, diaspora synthesis, and podium coaching.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="attribution-footer">
-        <div class="attribution-left">
-          <strong>Quills and Ink Hub</strong> · Literary Archive &amp; Funeral Coordination · Accra, Ghana<br>
-          Web: quillsandinkhub.com · Inquiries: hello@quillsandinkhub.com · WhatsApp Support: +233 (0) XX XXX XXXX
-        </div>
-        <div class="attribution-right">
-          Attribution: Curated Editorial Asset © 2026 Quills &amp; Ink Hub.<br>
-          Photography: Unsplash Open Collection (Editorial).
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>`;
-
-// 3. Memorial Brochure Checklist PDF Template
-const brochurePdfHtml = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap');
-  
-  @page {
-    size: A4 portrait;
-    margin: 16mm 14mm 16mm 14mm;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Montserrat', sans-serif;
-    color: #1a1612;
-    background: #faf8f5;
-    line-height: 1.55;
-    font-size: 10.5pt;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .border-box {
-    border: 1px solid #d9cebf;
-    padding: 24px 28px;
-    background: #ffffff;
-  }
-
-  .header-band {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 2px solid #c9a892;
-    padding-bottom: 14px;
-    margin-bottom: 20px;
-  }
-
-  .logo-group h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 34pt;
-    color: #2c2416;
-    line-height: 1;
-    font-weight: normal;
-  }
-  .logo-group .sub {
-    font-size: 8pt;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #8a7e72;
-    margin-top: 4px;
-    font-weight: 500;
-  }
-
-  .doc-title-block {
-    text-align: center;
-    margin-bottom: 20px;
-  }
   .doc-title-block h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 23pt;
+    font-size: 22pt;
     color: #2c2416;
     font-weight: 600;
     line-height: 1.15;
@@ -637,40 +310,438 @@ const brochurePdfHtml = `<!DOCTYPE html>
     color: #705f4e;
   }
 
+  /* Visible Images Hero Grid */
+  .intro-visual-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+    background: #faf8f5;
+    border: 1px solid #ebd8c8;
+    padding: 14px;
+    border-radius: 6px;
+  }
+  .intro-text p {
+    font-size: 9.2pt;
+    line-height: 1.55;
+    color: #3d3226;
+    margin-bottom: 8px;
+  }
+  .intro-text p:last-child { margin-bottom: 0; }
+  
+  .intro-image-frame {
+    border-radius: 6px;
+    overflow: hidden;
+    height: 135px;
+    box-shadow: 0 4px 12px rgba(44, 36, 22, 0.08);
+    border: 1px solid #e4dacd;
+    position: relative;
+  }
+  .intro-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 22, 18, 0.72);
+    color: #faf8f5;
+    font-size: 6.5pt;
+    padding: 3px 6px;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0 10px;
+  }
+  .section-num {
+    background: #c9a892;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7.5pt;
+    font-weight: 600;
+  }
+  .section-heading h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14pt;
+    font-weight: 600;
+    color: #2c2416;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .guide-card {
+    background: #ffffff;
+    border: 1px solid #e6ded4;
+    border-top: 3px solid #c9a892;
+    padding: 10px 12px;
+    border-radius: 3px;
+  }
+  .guide-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11.5pt;
+    font-weight: 600;
+    color: #2c2416;
+    margin-bottom: 4px;
+  }
+  .guide-card ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .guide-card li {
+    font-size: 8.2pt;
+    color: #4a3e33;
+    margin-bottom: 4px;
+    position: relative;
+    padding-left: 12px;
+    line-height: 1.35;
+  }
+  .guide-card li::before {
+    content: '•';
+    position: absolute;
+    left: 2px;
+    color: #c9a892;
+  }
+
+  .quote-and-image-strip {
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    gap: 14px;
+    margin: 14px 0;
+    background: #fbf9f6;
+    border-left: 3px solid #b8927a;
+    padding: 10px 14px;
+    align-items: center;
+  }
+  .quote-content {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12pt;
+    font-style: italic;
+    color: #3d3226;
+    line-height: 1.45;
+  }
+  .quote-author {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 7pt;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #8a7e72;
+    margin-top: 4px;
+  }
+  .strip-thumbnail {
+    width: 110px;
+    height: 75px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #e0d5c7;
+  }
+  .strip-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Contact and Email Update Notice Callout */
+  .contact-update-advisory {
+    background: #fef7ee;
+    border: 1px dashed #d4a373;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-top: 14px;
+    font-size: 7.5pt;
+    color: #633e14;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .advisory-tag {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #b85c18;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .attribution-footer {
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px solid #e0d6cb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #8a7e72;
+  }
+</style>
+</head>
+<body>
+  <div class="border-box">
+    <div class="header-band">
+      <div class="logo-group">
+        <h1>Quills &amp; Ink</h1>
+        <div class="sub">Literary Archival Department · Accra, Ghana</div>
+      </div>
+      <div class="doc-meta">
+        <span class="doc-badge">Family Resource Edition</span>
+        <div>Ref: QI-LIT-EUG-01 · Rev 2.0</div>
+        <div>Authorized Free Family Circulation</div>
+      </div>
+    </div>
+
+    <div class="doc-title-block">
+      <h2>The Art of Remembrance: Eulogy &amp; Tribute Guide</h2>
+      <p>A quiet framework for families preparing words of honour, faith, and ancestry</p>
+    </div>
+
+    <!-- Visible Visual Introduction -->
+    <div class="intro-visual-grid">
+      <div class="intro-text">
+        <p>
+          Writing a eulogy or family tribute is an act of love and pastoral care. In Ghanaian tradition, the spoken word at a celebration of life is not a recital of titles alone; it is the weaving together of an elder or loved one's true essence, their generosity, their humor, and the quiet sacrifices that anchored their lineage.
+        </p>
+        <p>
+          This guide is provided by <strong>Quills and Ink Hub</strong> to give your family structure, calm confidence, and cultural dignity when articulating your most tender memories.
+        </p>
+      </div>
+      <div class="intro-image-frame">
+        <img src="https://images.unsplash.com/photo-1456513080080-7e87bb4f3d4d?auto=format&fit=crop&w=700&q=80" alt="Pen and memorial study journal" />
+        <div class="image-caption">Literary Archival Reflection · Curated Web Asset</div>
+      </div>
+    </div>
+
+    <div class="section-heading">
+      <div class="section-num">1</div>
+      <h3>The Four Foundations of a Ghanaian Memorial Reading</h3>
+    </div>
+
+    <div class="cards-grid">
+      <div class="guide-card">
+        <h4>1. The Roots &amp; Lineage</h4>
+        <ul>
+          <li>Acknowledge their ancestral home, parental roots, and childhood environment.</li>
+          <li>Capture early formative values, humility, and family resilience.</li>
+          <li>Highlight the community ethos that shaped their worldview.</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <h4>2. The Living Impact</h4>
+        <ul>
+          <li>Focus on 2-3 specific personal anecdotes rather than a long chronological resume.</li>
+          <li>Describe how they treated strangers, workers, family, and vulnerable persons.</li>
+          <li>Recall signature phrases, warm habits, or moments of hearty laughter.</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <h4>3. Faith &amp; Stewardship</h4>
+        <ul>
+          <li>Reflect on their moral compass, church fellowships, and mentorship.</li>
+          <li>Include cherished hymns, scriptures, or proverbs that guided their decisions.</li>
+          <li>Honor their stewardship as a mother, father, sibling, elder, or friend.</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <h4>4. The Benediction &amp; Release</h4>
+        <ul>
+          <li>Synthesize feelings of gratitude and peace rather than despair.</li>
+          <li>Voice words of blessing on behalf of children and diaspora kin.</li>
+          <li>Conclude with a respectful prayer of rest into eternity.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Quote Strip with Visible Thumbnail Image -->
+    <div class="quote-and-image-strip">
+      <div>
+        <div class="quote-content">
+          “A life well lived is not measured by the applause it commanded, but by the quiet shade it provided for those who walked beside it.”
+        </div>
+        <div class="quote-author">— Quills and Ink Hub Literary Synthesis</div>
+      </div>
+      <div class="strip-thumbnail">
+        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400&q=80" alt="White memorial floral tribute" />
+      </div>
+    </div>
+
+    <!-- Contact & Email Update Notice -->
+    <div class="contact-update-advisory">
+      <span class="advisory-tag">Communications Update Notice:</span>
+      <div>
+        Please note: Our official direct phone lines and dedicated diaspora email routing are actively being upgraded for our expanded international services. We will update these contacts in our next scheduled revision. For immediate family inquiries, please connect with our active WhatsApp desk or schedule an online session at <strong>quillsandinkhub.com/book</strong>.
+      </div>
+    </div>
+
+    <div class="attribution-footer">
+      <div>
+        <strong>Quills and Ink Hub</strong> · Literary Archive &amp; Funeral Coordination · Accra, Ghana<br>
+        Web: quillsandinkhub.com · WhatsApp Support Desk Active Daily
+      </div>
+      <div style="text-align: right;">
+        Attribution: Curated Editorial Asset © 2026 Quills &amp; Ink Hub.<br>
+        Photography: Curated via Unsplash Open Editorial License.
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+// 3. Memorial Brochure Checklist PDF Template (with visible imagery & contact update notice)
+const brochurePdfHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap');
+  
+  @page {
+    size: A4 portrait;
+    margin: 14mm 12mm 14mm 12mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: #1a1612;
+    background: #faf8f5;
+    line-height: 1.5;
+    font-size: 10pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .border-box {
+    border: 1px solid #d9cebf;
+    padding: 22px 26px;
+    background: #ffffff;
+  }
+
+  .header-band {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #c9a892;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+
+  .logo-group h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 32pt;
+    color: #2c2416;
+    line-height: 1;
+    font-weight: normal;
+  }
+  .logo-group .sub {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #8a7e72;
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  .doc-title-block {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .doc-title-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22pt;
+    color: #2c2416;
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 3px;
+  }
+  .doc-title-block p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12pt;
+    color: #705f4e;
+  }
+
+  /* Two column visual banner */
+  .visual-intro-strip {
+    display: grid;
+    grid-template-columns: 1fr 140px;
+    gap: 16px;
+    background: #faf8f5;
+    border: 1px solid #e4dacd;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .visual-intro-text p {
+    font-size: 8.8pt;
+    color: #44372c;
+    line-height: 1.45;
+  }
+  .visual-intro-thumb {
+    width: 140px;
+    height: 85px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #d8cbbe;
+  }
+  .visual-intro-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .checklist-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 18px;
+    gap: 14px;
+    margin-bottom: 16px;
   }
 
   .check-card {
     background: #faf8f5;
     border: 1px solid #e4dacd;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-radius: 4px;
   }
   .check-card h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 13pt;
+    font-size: 12.5pt;
     font-weight: 600;
     color: #2c2416;
     border-bottom: 1px solid #ebd8c8;
-    padding-bottom: 6px;
-    margin-bottom: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 8px;
   }
 
   .check-item {
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    margin-bottom: 8px;
-    font-size: 8.5pt;
+    margin-bottom: 7px;
+    font-size: 8.2pt;
     color: #3d3226;
+    line-height: 1.35;
   }
   .checkbox {
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
     border: 1.5px solid #b8927a;
     border-radius: 2px;
     flex-shrink: 0;
@@ -681,32 +752,54 @@ const brochurePdfHtml = `<!DOCTYPE html>
   .specs-box {
     background: #fdfaf6;
     border: 1px dashed #c9a892;
-    padding: 12px 18px;
-    margin: 16px 0;
+    padding: 10px 16px;
+    margin: 14px 0;
     border-radius: 4px;
   }
   .specs-box h4 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 12.5pt;
+    font-size: 12pt;
     color: #2c2416;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .specs-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    font-size: 8pt;
+    gap: 10px;
+    font-size: 7.8pt;
     color: #5c4a38;
   }
 
+  /* Contact and Email Update Notice Callout */
+  .contact-update-advisory {
+    background: #fef7ee;
+    border: 1px dashed #d4a373;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-top: 12px;
+    font-size: 7.5pt;
+    color: #633e14;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .advisory-tag {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #b85c18;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
   .attribution-footer {
-    margin-top: 22px;
-    padding-top: 14px;
+    margin-top: 16px;
+    padding-top: 10px;
     border-top: 1px solid #e0d6cb;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 7.5pt;
+    font-size: 7pt;
     color: #8a7e72;
   }
 </style>
@@ -719,14 +812,26 @@ const brochurePdfHtml = `<!DOCTYPE html>
         <div class="sub">Print Editorial &amp; Production Division</div>
       </div>
       <div style="text-align: right; font-size: 8pt; color: #5c4a38;">
-        <span style="background: #f3eee8; padding: 4px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Planning Blueprint</span>
-        <div style="margin-top: 4px;">Ref: QI-PRT-BCH-02</div>
+        <span style="background: #f3eee8; padding: 3px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Planning Blueprint</span>
+        <div style="margin-top: 3px;">Ref: QI-PRT-BCH-02 · Rev 2.0</div>
       </div>
     </div>
 
     <div class="doc-title-block">
       <h2>Memorial Keepsake Brochure Checklist</h2>
       <p>A master blueprint for content compilation, photo curations, and printing</p>
+    </div>
+
+    <!-- Visible Visual Introduction -->
+    <div class="visual-intro-strip">
+      <div class="visual-intro-text">
+        <p>
+          A funeral brochure is a permanent family archive. This checklist ensures proper collation of biographic facts, order of service liturgy, family tributes from Accra to London and Toronto, and high-resolution photo specifications.
+        </p>
+      </div>
+      <div class="visual-intro-thumb">
+        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80" alt="Printed editorial book keepsake" />
+      </div>
     </div>
 
     <div class="checklist-grid">
@@ -774,21 +879,29 @@ const brochurePdfHtml = `<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- Contact & Email Update Notice -->
+    <div class="contact-update-advisory">
+      <span class="advisory-tag">Communications Update Notice:</span>
+      <div>
+        Notice: Direct telephone numbers and official email addresses are actively being updated to support our dedicated diaspora printing desk. We will update these contacts shortly. In the interim, please reach our active WhatsApp desk or book a consultation at <strong>quillsandinkhub.com/book</strong>.
+      </div>
+    </div>
+
     <div class="attribution-footer">
       <div>
         <strong>Quills and Ink Hub</strong> · Comprehensive Memorial Coordination &amp; Design · Accra, Ghana<br>
-        Web: quillsandinkhub.com · Email: hello@quillsandinkhub.com
+        Web: quillsandinkhub.com · WhatsApp Support Desk Active Daily
       </div>
       <div style="text-align: right;">
         Attribution: Free Planning Guide © Quills &amp; Ink Hub.<br>
-        Printed &amp; digital brochure design services available on request.
+        Photography: Curated via Unsplash Open Editorial License.
       </div>
     </div>
   </div>
 </body>
 </html>`;
 
-// 4. Tribute Reading Excerpt PDF Template
+// 4. Tribute Reading Excerpt PDF Template (with visible imagery & contact update notice)
 const tributePdfHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -798,7 +911,7 @@ const tributePdfHtml = `<!DOCTYPE html>
   
   @page {
     size: A4 portrait;
-    margin: 16mm 14mm 16mm 14mm;
+    margin: 14mm 12mm 14mm 12mm;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -806,15 +919,15 @@ const tributePdfHtml = `<!DOCTYPE html>
     font-family: 'Montserrat', sans-serif;
     color: #1a1612;
     background: #faf8f5;
-    line-height: 1.6;
-    font-size: 10.5pt;
+    line-height: 1.55;
+    font-size: 10pt;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
   .border-box {
     border: 1px solid #d9cebf;
-    padding: 28px 32px;
+    padding: 24px 28px;
     background: #ffffff;
   }
 
@@ -823,13 +936,13 @@ const tributePdfHtml = `<!DOCTYPE html>
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 2px solid #c9a892;
-    padding-bottom: 14px;
-    margin-bottom: 24px;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
   }
 
   .logo-group h1 {
     font-family: 'Great Vibes', cursive;
-    font-size: 34pt;
+    font-size: 32pt;
     color: #2c2416;
     line-height: 1;
     font-weight: normal;
@@ -839,83 +952,132 @@ const tributePdfHtml = `<!DOCTYPE html>
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: #8a7e72;
-    margin-top: 4px;
+    margin-top: 3px;
     font-weight: 500;
   }
 
   .doc-title-block {
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 18px;
   }
   .doc-title-block h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24pt;
+    font-size: 22pt;
     color: #2c2416;
     font-weight: 600;
     line-height: 1.15;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .doc-title-block p {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 13pt;
+    font-size: 12pt;
     color: #705f4e;
+  }
+
+  /* Visual Banner */
+  .tribute-hero-visual {
+    width: 100%;
+    height: 110px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border: 1px solid #e0d5c7;
+    position: relative;
+  }
+  .tribute-hero-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .tribute-visual-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(44, 36, 22, 0.2) 0%, rgba(44, 36, 22, 0.6) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 8px 14px;
+    color: #faf8f5;
+    font-size: 7.5pt;
+    font-style: italic;
   }
 
   .reading-excerpt {
     background: #faf8f5;
     border: 1px solid #e6ded4;
     border-left: 4px solid #b8927a;
-    padding: 20px 24px;
-    margin-bottom: 24px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
     border-radius: 4px;
   }
 
   .reading-excerpt p {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 13.5pt;
-    line-height: 1.65;
+    font-size: 13pt;
+    line-height: 1.6;
     color: #2c2416;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }
   .reading-excerpt p:last-child { margin-bottom: 0; }
 
   .two-col-quotes {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-bottom: 20px;
+    gap: 14px;
+    margin-bottom: 16px;
   }
 
   .mini-reading {
     background: #ffffff;
     border: 1px solid #e0d5c7;
-    padding: 16px;
+    padding: 12px 14px;
     border-radius: 4px;
   }
   .mini-reading h4 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 13pt;
+    font-size: 12pt;
     color: #8f654b;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 600;
   }
   .mini-reading p {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 11.5pt;
+    font-size: 10.5pt;
     color: #44372c;
-    line-height: 1.5;
+    line-height: 1.45;
     font-style: italic;
   }
 
+  /* Contact and Email Update Notice Callout */
+  .contact-update-advisory {
+    background: #fef7ee;
+    border: 1px dashed #d4a373;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-top: 14px;
+    font-size: 7.5pt;
+    color: #633e14;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .advisory-tag {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #b85c18;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
   .attribution-footer {
-    margin-top: 30px;
-    padding-top: 14px;
+    margin-top: 18px;
+    padding-top: 10px;
     border-top: 1px solid #e0d6cb;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 7.5pt;
+    font-size: 7pt;
     color: #8a7e72;
   }
 </style>
@@ -928,14 +1090,22 @@ const tributePdfHtml = `<!DOCTYPE html>
         <div class="sub">Spoken Word &amp; Ceremony Archive</div>
       </div>
       <div style="text-align: right; font-size: 8pt; color: #5c4a38;">
-        <span style="background: #f3eee8; padding: 4px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Sample Excerpt</span>
-        <div style="margin-top: 4px;">Ref: QI-SPK-TRB-03</div>
+        <span style="background: #f3eee8; padding: 3px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Sample Excerpt</span>
+        <div style="margin-top: 3px;">Ref: QI-SPK-TRB-03 · Rev 2.0</div>
       </div>
     </div>
 
     <div class="doc-title-block">
       <h2>Memorial Tribute Reading Excerpt</h2>
       <p>Curated ceremonial readings for church celebrations and family gatherings</p>
+    </div>
+
+    <!-- Visible Visual Hero Banner -->
+    <div class="tribute-hero-visual">
+      <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=900&q=80" alt="Quiet morning light and contemplation" />
+      <div class="tribute-visual-overlay">
+        “In quiet rooms and crowded courtyards alike, we remember a life that made space for others.”
+      </div>
     </div>
 
     <div class="reading-excerpt">
@@ -962,14 +1132,22 @@ const tributePdfHtml = `<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- Contact & Email Update Notice -->
+    <div class="contact-update-advisory">
+      <span class="advisory-tag">Communications Update Notice:</span>
+      <div>
+        Please note: Our official direct phone lines and primary email routing are undergoing scheduled upgrades to better serve our international families. We will update these contacts in our forthcoming revision. In the interim, WhatsApp messaging is active daily, or you may book a session at <strong>quillsandinkhub.com/book</strong>.
+      </div>
+    </div>
+
     <div class="attribution-footer">
       <div>
         <strong>Quills and Ink Hub</strong> · Literary Archives · Accra, Ghana<br>
-        Web: quillsandinkhub.com · Commission bespoke tributes: hello@quillsandinkhub.com
+        Web: quillsandinkhub.com · WhatsApp Support Desk Active Daily
       </div>
       <div style="text-align: right;">
         Attribution: Public Ceremonial Excerpt © Quills &amp; Ink Hub.<br>
-        Free to read and adapt for private memorial services.
+        Photography: Curated via Unsplash Open Editorial License.
       </div>
     </div>
   </div>
@@ -1002,41 +1180,19 @@ const masterGuideOutputPath = path.join(rootDir, 'public', 'downloads', 'quills-
 const tempUserData = 'C:\\\\Users\\\\gokro\\\\AppData\\\\Local\\\\Temp\\\\chrome-pdf-temp';
 const chromeFlags = `--headless=new --disable-gpu --no-first-run --no-default-browser-check --user-data-dir="${tempUserData}"`;
 
-console.log('1. Rendering OG image...');
-if (!fs.existsSync(ogOutputPath)) {
-  execSync(`"${chromePath}" ${chromeFlags} --window-size=1200,630 --hide-scrollbars --screenshot="${ogOutputPath}" "file:///${ogHtmlPath.replace(/\\\\/g, '/')}"`);
-  console.log('OG image created:', ogOutputPath);
-} else {
-  console.log('OG image already exists, skipping.');
-}
+console.log('1. Rendering Eulogy PDF with images and contact notice...');
+execSync(`"${chromePath}" ${chromeFlags} --print-to-pdf="${eulogyOutputPath}" --no-pdf-header-footer "file:///${eulogyPdfPath.replace(/\\\\/g, '/')}"`);
+console.log('Eulogy PDF created:', eulogyOutputPath);
 
-console.log('2. Rendering Eulogy PDF...');
-if (!fs.existsSync(eulogyOutputPath)) {
-  execSync(`"${chromePath}" ${chromeFlags} --print-to-pdf="${eulogyOutputPath}" --no-pdf-header-footer "file:///${eulogyPdfPath.replace(/\\\\/g, '/')}"`);
-  console.log('Eulogy PDF created:', eulogyOutputPath);
-} else {
-  console.log('Eulogy PDF already exists, skipping.');
-}
+console.log('2. Rendering Brochure Checklist PDF with images and contact notice...');
+execSync(`"${chromePath}" ${chromeFlags} --print-to-pdf="${brochureOutputPath}" --no-pdf-header-footer "file:///${brochurePdfPath.replace(/\\\\/g, '/')}"`);
+console.log('Brochure PDF created:', brochureOutputPath);
 
-console.log('3. Rendering Brochure Checklist PDF...');
-if (!fs.existsSync(brochureOutputPath)) {
-  execSync(`"${chromePath}" ${chromeFlags} --print-to-pdf="${brochureOutputPath}" --no-pdf-header-footer "file:///${brochurePdfPath.replace(/\\\\/g, '/')}"`);
-  console.log('Brochure PDF created:', brochureOutputPath);
-} else {
-  console.log('Brochure PDF already exists, skipping.');
-}
+console.log('3. Rendering Tribute Excerpt PDF with images and contact notice...');
+execSync(`"${chromePath}" ${chromeFlags} --print-to-pdf="${tributeOutputPath}" --no-pdf-header-footer "file:///${tributePdfPath.replace(/\\\\/g, '/')}"`);
+console.log('Tribute PDF created:', tributeOutputPath);
 
-console.log('4. Rendering Tribute Excerpt PDF...');
-if (!fs.existsSync(tributeOutputPath)) {
-  execSync(`"${chromePath}" ${chromeFlags} --print-to-pdf="${tributeOutputPath}" --no-pdf-header-footer "file:///${tributePdfPath.replace(/\\\\/g, '/')}"`);
-  console.log('Tribute PDF created:', tributeOutputPath);
-} else {
-  console.log('Tribute PDF already exists, skipping.');
-}
+fs.copyFileSync(eulogyOutputPath, masterGuideOutputPath);
+console.log('Master guide PDF updated:', masterGuideOutputPath);
 
-if (!fs.existsSync(masterGuideOutputPath)) {
-  fs.copyFileSync(eulogyOutputPath, masterGuideOutputPath);
-  console.log('Master guide PDF created:', masterGuideOutputPath);
-}
-
-console.log('Done generating all assets!');
+console.log('Done generating all assets with visible images and contact notices!');

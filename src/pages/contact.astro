@@ -71,6 +71,14 @@ import PageHero from '../components/PageHero.astro';
       </div>
 
       <aside class="contact__details">
+        <div class="contact-advisory-banner">
+          <span class="advisory-badge">Desk Update Notice</span>
+          <h3>Communications Advisory</h3>
+          <p>
+            Please note: Our official direct phone lines and primary email routing are actively being upgraded for our expanded international diaspora liaison. We will update these contacts in our upcoming release. In the interim, please reach out via our active WhatsApp desk or reserve an online listening session.
+          </p>
+        </div>
+
         <div class="contact-card">
           <p class="eyebrow">WhatsApp (Fastest Response)</p>
           <a
@@ -85,15 +93,21 @@ import PageHero from '../components/PageHero.astro';
         </div>
 
         <div class="contact-card">
-          <p class="eyebrow">Direct Telephone</p>
+          <div class="card-eyebrow-row">
+            <p class="eyebrow">Direct Telephone</p>
+            <span class="updating-tag">Updating Soon</span>
+          </div>
           <a class="contact-link" href="tel:+233240000000">+233 (0) 24 000 0000</a>
-          <p class="muted">Office line open 8:00 AM – 7:00 PM GMT.</p>
+          <p class="muted">Office line open 8:00 AM – 7:00 PM GMT. (Line actively being updated)</p>
         </div>
 
         <div class="contact-card">
-          <p class="eyebrow">Direct Email</p>
+          <div class="card-eyebrow-row">
+            <p class="eyebrow">Direct Email</p>
+            <span class="updating-tag">Updating Soon</span>
+          </div>
           <a class="contact-link" href="mailto:hello@quillsandinkhub.com">hello@quillsandinkhub.com</a>
-          <p class="muted">For proposals, tribute manuscripts, and brochures.</p>
+          <p class="muted">For proposals and manuscripts. (Dedicated routing being updated)</p>
         </div>
 
         <div class="contact-card">
@@ -203,6 +217,63 @@ import PageHero from '../components/PageHero.astro';
     display: grid;
     gap: 1.5rem;
     align-content: start;
+  }
+
+  .contact-advisory-banner {
+    background: #fbf6ef;
+    border: 1px dashed var(--color-peach-deep);
+    border-radius: 6px;
+    padding: 1.25rem 1.4rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .advisory-badge {
+    display: inline-block;
+    background: #fdf2e9;
+    color: #b85c18;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    width: fit-content;
+  }
+
+  .contact-advisory-banner h3 {
+    font-size: 1.2rem;
+    color: var(--color-charcoal);
+  }
+
+  .contact-advisory-banner p {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    color: var(--color-wood);
+    line-height: 1.55;
+  }
+
+  .card-eyebrow-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.15rem;
+  }
+
+  .card-eyebrow-row .eyebrow {
+    margin-bottom: 0;
+  }
+
+  .updating-tag {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: #fdf2e9;
+    color: #b85c18;
+    border: 1px solid #f6d8be;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 600;
   }
 
   .contact-card {

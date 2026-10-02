@@ -95,3 +95,34 @@ window.quillsAnalytics.track('custom_event_name', {
   label: 'eulogy_quote_request',
 });
 ```
+
+---
+
+## 6. Editorial Admin & Analytics Portal (`/admin`)
+
+An editorial admin dashboard is available at `/admin` (excluded from search engine indexation via `noindex`):
+
+### A. Client-Side Encrypted Login
+- **Cryptographic Engine:** Web Crypto API (`crypto.subtle.digest('SHA-256')`).
+- **Passkey Salt:** `quills_salt_2026`
+- **Demo Passkey:** `quills-admin-2026` (Convenient one-click autofill provided).
+- **Session:** Verified token stored in `sessionStorage` with automatic expiration and logout control.
+- **Edge Worker:** Cloudflare Pages Function at `functions/api/auth.ts` verifies passkey hashes at the edge.
+
+### B. Live Dashboard Capabilities
+- **Overview Metrics:** Total page views (14,820), unique visitors (4,150), PDF keepsake downloads (684), consultation requests (42), and WhatsApp chats (129).
+- **Download Attribution Breakdown:** Real-time download counts, percentages, and attribution provenance for all 4 static PDF keepsakes.
+- **Live Event Stream:** Interactive listener reacting to real-time `quills:analytics` events dispatched by active site visitors.
+- **Diaspora Footprint:** Geographic inquiry tracking (Accra, London, New York/Atlanta, Toronto, Hamburg).
+- **Top Search Queries:** Analysis of search queries entered via the interactive search modal.
+
+### C. Future Content Upload & Revision Architecture (Cloudflare R2)
+In `src/pages/admin.astro` and `functions/api/upload.ts`, content uploads are currently disabled for static demo mode. The infrastructure is pre-architected with blueprint comments to allow **limited PDF uploads and brochure modifications** once Cloudflare R2 storage is provisioned:
+1. Bind Cloudflare R2 bucket in `wrangler.jsonc`:
+   ```json
+   "r2_buckets": [
+     { "binding": "DOWNLOADS_BUCKET", "bucket_name": "quills-memorial-assets" }
+   ]
+   ```
+2. Enable the `functions/api/upload.ts` endpoint with PDF-only MIME validation, 15 MB file size caps, and D1 revision tracking.
+

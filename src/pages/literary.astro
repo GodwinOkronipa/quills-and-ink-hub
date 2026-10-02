@@ -42,6 +42,9 @@ const samples = [
     downloadLabel: 'Download Tribute Keepsake (PDF)',
     fileSize: '145 KB',
     attribution: 'Quills & Ink Hub Ceremonial Spoken Archive',
+    image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=800&q=80',
+    alt: 'Tranquil dawn light reflection for ceremonial tribute',
+    imageCaption: 'Ceremonial Archive · Dawn Reflection',
   },
   {
     id: 'eulogy',
@@ -57,6 +60,9 @@ const samples = [
     downloadLabel: 'Download Eulogy Guide (PDF)',
     fileSize: '358 KB',
     attribution: 'Quills & Ink Hub Editorial Archive · Ghanaian Remembrance Series',
+    image: 'https://images.unsplash.com/photo-1456513080080-7e87bb4f3d4d?auto=format&fit=crop&w=800&q=80',
+    alt: 'Open study journal and pen for family eulogy writing',
+    imageCaption: 'Literary Study & Eulogy Framework',
   },
   {
     id: 'brochure',
@@ -71,6 +77,9 @@ const samples = [
     downloadLabel: 'Download Brochure Checklist (PDF)',
     fileSize: '224 KB',
     attribution: 'Quills & Ink Hub Print & Editorial Division',
+    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    alt: 'Printed memorial keepsake book and layout',
+    imageCaption: 'Memorial Keepsake Print Archive',
   },
 ];
 ---
@@ -166,32 +175,46 @@ const samples = [
                 class:list={['sample-panel', idx !== 0 && 'is-hidden']}
                 data-panel-id={s.id}
               >
-                <p class="sample-context">{s.context}</p>
-                <blockquote>
-                  {s.content.map((p) => (
-                    <p>{p}</p>
-                  ))}
-                </blockquote>
-                <div class="sample-actions">
-                  <a
-                    class="btn btn--outline btn--pdf-download"
-                    href={s.file}
-                    download
-                    data-track-download="true"
-                    data-download-name={s.downloadLabel}
-                    data-attribution={s.attribution}
-                  >
-                    <span class="btn-pdf-badge">PDF</span>
-                    <span>{s.downloadLabel}</span>
-                    <span class="btn-size-tag">({s.fileSize})</span>
-                  </a>
-                  <a class="btn btn--peach" href="/book">
-                    Commission This Service
-                  </a>
-                </div>
-                <div class="sample-attribution-line">
-                  <span class="attribution-dot"></span>
-                  <span>Attribution: {s.attribution} · Free for family memorial use</span>
+                <div class="sample-split-grid">
+                  <div class="sample-content-side">
+                    <p class="sample-context">{s.context}</p>
+                    <blockquote>
+                      {s.content.map((p) => (
+                        <p>{p}</p>
+                      ))}
+                    </blockquote>
+                    <div class="sample-actions">
+                      <a
+                        class="btn btn--outline btn--pdf-download"
+                        href={s.file}
+                        download
+                        data-track-download="true"
+                        data-download-name={s.downloadLabel}
+                        data-attribution={s.attribution}
+                      >
+                        <span class="btn-pdf-badge">PDF</span>
+                        <span>{s.downloadLabel}</span>
+                        <span class="btn-size-tag">({s.fileSize})</span>
+                      </a>
+                      <a class="btn btn--peach" href="/book">
+                        Commission This Service
+                      </a>
+                    </div>
+                    <div class="sample-attribution-line">
+                      <span class="attribution-dot"></span>
+                      <span>Attribution: {s.attribution} · Free for family memorial use</span>
+                    </div>
+                  </div>
+
+                  <div class="sample-visual-side">
+                    <div class="sample-visual-card">
+                      <img src={s.image} alt={s.alt} loading="lazy" width="600" height="400" />
+                      <div class="sample-visual-overlay">
+                        <span class="sample-visual-badge">Visible Keepsake Preview</span>
+                        <span class="sample-visual-caption">{s.imageCaption}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -207,7 +230,7 @@ const samples = [
             <span class="toolkit-badge">Printable PDFs</span>
           </div>
           <p class="toolkit-desc">
-            Nicely formatted PDF templates with Cormorant Garamond typography and abstract imagery from the web, created to help families organize thoughts without slow generators.
+            Nicely formatted PDF templates with Cormorant Garamond typography and curated editorial imagery from the web, created to help families organize thoughts without slow generators.
           </p>
 
           <ul class="toolkit-list">
@@ -221,13 +244,18 @@ const samples = [
                   data-download-name="Eulogy Reflection & Writing Guide (PDF)"
                   data-attribution="Quills & Ink Hub Editorial Archive"
                 >
-                  <div class="file-icon-box">
-                    <span class="file-icon-text">PDF</span>
+                  <div class="toolkit-thumb-box">
+                    <img
+                      src="https://images.unsplash.com/photo-1456513080080-7e87bb4f3d4d?auto=format&fit=crop&w=300&q=80"
+                      alt="Eulogy Writing Guide Preview"
+                      loading="lazy"
+                    />
+                    <span class="toolkit-thumb-badge">PDF</span>
                   </div>
                   <div class="toolkit-content">
                     <div class="toolkit-title-row">
                       <strong>Eulogy Reflection &amp; Writing Guide</strong>
-                      <span class="file-tag">358 KB · PDF</span>
+                      <span class="file-tag">573 KB · PDF</span>
                     </div>
                     <span>Four pillars of remembrance, Akan family reflections, and delivery pacing</span>
                   </div>
@@ -249,13 +277,18 @@ const samples = [
                   data-download-name="Memorial Keepsake Brochure Checklist (PDF)"
                   data-attribution="Quills & Ink Hub Print Division"
                 >
-                  <div class="file-icon-box">
-                    <span class="file-icon-text">PDF</span>
+                  <div class="toolkit-thumb-box">
+                    <img
+                      src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=300&q=80"
+                      alt="Memorial Brochure Checklist Preview"
+                      loading="lazy"
+                    />
+                    <span class="toolkit-thumb-badge">PDF</span>
                   </div>
                   <div class="toolkit-content">
                     <div class="toolkit-title-row">
                       <strong>Memorial Brochure Checklist &amp; Blueprint</strong>
-                      <span class="file-tag">224 KB · PDF</span>
+                      <span class="file-tag">493 KB · PDF</span>
                     </div>
                     <span>Complete order of service, 300 DPI photo guidelines, and print specs</span>
                   </div>
@@ -277,13 +310,18 @@ const samples = [
                   data-download-name="Memorial Tribute Reading Excerpt (PDF)"
                   data-attribution="Quills & Ink Hub Spoken Archives"
                 >
-                  <div class="file-icon-box">
-                    <span class="file-icon-text">PDF</span>
+                  <div class="toolkit-thumb-box">
+                    <img
+                      src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=300&q=80"
+                      alt="Memorial Tribute Reading Preview"
+                      loading="lazy"
+                    />
+                    <span class="toolkit-thumb-badge">PDF</span>
                   </div>
                   <div class="toolkit-content">
                     <div class="toolkit-title-row">
                       <strong>Memorial Tribute Reading Excerpt</strong>
-                      <span class="file-tag">145 KB · PDF</span>
+                      <span class="file-tag">540 KB · PDF</span>
                     </div>
                     <span>Poetic tributes for family, children, and diaspora reflections</span>
                   </div>
@@ -298,6 +336,14 @@ const samples = [
 
           <!-- Master Guide Highlight Card -->
           <div class="master-guide-banner">
+            <div class="master-guide-thumb">
+              <img
+                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80"
+                alt="Quills and Ink Family Memorial Guide Keepsake Cover"
+                loading="lazy"
+              />
+              <span class="master-thumb-badge">Complete PDF</span>
+            </div>
             <div class="master-guide-info">
               <span class="eyebrow" style="color: var(--color-peach-deep);">Comprehensive Master Edition</span>
               <h4>Family Memorial Guide &amp; Keepsake (PDF)</h4>
@@ -312,8 +358,23 @@ const samples = [
               data-attribution="Quills &amp; Ink Hub Central Archive"
             >
               <span>Download Master PDF</span>
-              <span class="master-size-pill">358 KB</span>
+              <span class="master-size-pill">573 KB</span>
             </a>
+          </div>
+
+          <!-- Communications Desk Advisory Notice -->
+          <div class="toolkit-advisory-box">
+            <div class="advisory-title-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <strong>Communications Advisory: Direct Phone &amp; Email Updates</strong>
+            </div>
+            <p>
+              Please note: Our official direct phone lines and primary diaspora email routing are actively undergoing infrastructure upgrades. We will update these contacts in our upcoming release. In the interim, WhatsApp coordination remains fully active daily, or you may book an online consultation directly through our website.
+            </p>
           </div>
 
           <!-- Formal Attribution Block -->
@@ -543,6 +604,77 @@ const samples = [
     display: none;
   }
 
+  .sample-split-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 680px) {
+    .sample-split-grid {
+      grid-template-columns: 1.25fr 1fr;
+      align-items: stretch;
+      gap: 1.5rem;
+    }
+  }
+
+  .sample-content-side {
+    display: grid;
+    gap: 0.85rem;
+    align-content: start;
+  }
+
+  .sample-visual-side {
+    display: flex;
+  }
+
+  .sample-visual-card {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: var(--color-soft);
+    box-shadow: 0 6px 20px rgba(26, 22, 18, 0.06);
+  }
+
+  .sample-visual-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .sample-visual-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .sample-visual-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem 1rem 0.85rem;
+    background: linear-gradient(180deg, rgba(26, 22, 18, 0) 0%, rgba(26, 22, 18, 0.84) 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sample-visual-badge {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f6d8be;
+    font-weight: 600;
+  }
+
+  .sample-visual-caption {
+    font-family: var(--font-serif);
+    font-size: 0.92rem;
+    color: var(--color-white);
+  }
+
   .sample-context {
     font-size: 0.75rem;
     letter-spacing: 0.12em;
@@ -680,23 +812,41 @@ const samples = [
     color: inherit;
   }
 
-  .file-icon-box {
-    width: 44px;
-    height: 44px;
-    background: #faf4ee;
-    border: 1px solid #e8d5c4;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .toolkit-thumb-box {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
     flex-shrink: 0;
+    border: 1px solid #dfd2c4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    background: #faf4ee;
   }
 
-  .file-icon-text {
-    font-size: 0.78rem;
+  .toolkit-thumb-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s var(--ease);
+  }
+
+  .toolkit-item:hover .toolkit-thumb-box img {
+    transform: scale(1.08);
+  }
+
+  .toolkit-thumb-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background: #b85c18;
+    color: #ffffff;
+    font-size: 0.62rem;
     font-weight: 700;
-    color: #b85c18;
-    letter-spacing: 0.05em;
+    padding: 1px 4px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
   }
 
   .toolkit-content {
@@ -759,16 +909,53 @@ const samples = [
     background: linear-gradient(135deg, #f7f1eb 0%, #efe5da 100%);
     border: 1px solid var(--color-peach);
     border-radius: 8px;
-    padding: 1.4rem 1.5rem;
+    padding: 1.25rem 1.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1.25rem;
+    gap: 1.15rem;
+  }
+
+  .master-guide-thumb {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--color-peach);
+    box-shadow: 0 4px 12px rgba(44, 36, 22, 0.12);
+  }
+
+  .master-guide-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .master-thumb-badge {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    background: rgba(26, 22, 18, 0.82);
+    color: #ffffff;
+    font-size: 0.58rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 1px 2px;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  .master-guide-info {
+    flex: 1;
+    min-width: 200px;
   }
 
   .master-guide-info h4 {
-    font-size: 1.25rem;
+    font-size: 1.22rem;
     color: var(--color-charcoal);
     margin: 0.2rem 0;
   }
@@ -790,6 +977,32 @@ const samples = [
     font-size: 0.7rem;
     padding: 2px 6px;
     border-radius: 999px;
+  }
+
+  /* Communications Advisory Box */
+  .toolkit-advisory-box {
+    background: #fef8f0;
+    border: 1px solid #ebd0b5;
+    border-left: 4px solid #d48b48;
+    border-radius: 6px;
+    padding: 1.05rem 1.25rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .advisory-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #7c4415;
+    font-size: 0.85rem;
+  }
+
+  .toolkit-advisory-box p {
+    font-size: 0.82rem;
+    color: #5c3a1d;
+    line-height: 1.55;
+    margin: 0;
   }
 
   /* Attribution Box */

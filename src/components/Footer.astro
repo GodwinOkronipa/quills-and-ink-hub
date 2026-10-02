@@ -28,19 +28,28 @@ const year = new Date().getFullYear();
     <div>
       <p class="eyebrow">Reach Us</p>
       <ul>
-        <li><a href="tel:+233000000000">+233 (0) XX XXX XXXX</a></li>
-        <li><a href="mailto:hello@quillsandinkhub.com">hello@quillsandinkhub.com</a></li>
+        <li>
+          <a href="tel:+233240000000">+233 24 000 0000</a>
+          <span class="footer-note-tag">(Updating soon)</span>
+        </li>
+        <li>
+          <a href="mailto:hello@quillsandinkhub.com">hello@quillsandinkhub.com</a>
+          <span class="footer-note-tag">(Updating soon)</span>
+        </li>
         <li>
           <a
-            href="https://wa.me/233000000000"
+            href="https://wa.me/233240000000?text=Hello%20Quills%20and%20Ink%20Hub,%20I%20would%20like%20to%20inquire%20about%20your%20services."
             target="_blank"
             rel="noopener noreferrer"
           >
-            WhatsApp Inquiry
+            WhatsApp Inquiry (Active Desk)
           </a>
         </li>
         <li>Accra, Ghana · Serving diaspora families worldwide</li>
       </ul>
+      <p class="footer-update-disclaimer">
+        Note: Official direct phone lines and primary email routing are actively being upgraded. WhatsApp messaging remains live daily.
+      </p>
     </div>
   </div>
 
@@ -50,6 +59,16 @@ const year = new Date().getFullYear();
       <a href="/contact">Send an inquiry</a>
       <span aria-hidden="true" style="opacity: 0.4;">·</span>
       <a href="/admin" class="footer-admin-link">Editorial Desk (Admin)</a>
+      <span aria-hidden="true" style="opacity: 0.4;">·</span>
+      <a
+        href="https://bookflywheel.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flywheel-link"
+        title="Powered by Flywheel"
+      >
+        Powered by Flywheel
+      </a>
     </div>
   </div>
 </footer>
@@ -110,6 +129,25 @@ const year = new Date().getFullYear();
     color: var(--color-white);
   }
 
+  .footer-note-tag {
+    font-size: 0.72rem;
+    color: var(--color-peach);
+    margin-left: 0.35rem;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .footer-update-disclaimer {
+    font-size: 0.75rem;
+    color: var(--color-peach);
+    line-height: 1.45;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-style: italic;
+    opacity: 0.85;
+  }
+
   .site-footer__bottom {
     display: flex;
     flex-wrap: wrap;
@@ -132,6 +170,21 @@ const year = new Date().getFullYear();
   }
   .footer-admin-link:hover {
     opacity: 1;
+  }
+
+  .flywheel-link {
+    color: var(--color-peach-light, #ffd5b5);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+    transition: opacity 0.2s var(--ease), color 0.2s var(--ease);
+    text-decoration: none;
+  }
+  .flywheel-link:hover {
+    opacity: 1;
+    color: var(--color-white);
+    text-decoration: underline;
   }
 
   @media (min-width: 800px) {
