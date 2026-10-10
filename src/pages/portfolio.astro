@@ -9,11 +9,19 @@ const categories = ['All', 'Gatherings', 'Décor & Floral', 'Brochures & Print']
 const projects = [
   {
     category: 'Gatherings',
-    title: 'Garden Memorial · East Legon, Accra',
-    text: 'Outdoor remembrance service with canopy drapery, soft ivory florals, live quartet coordination, and order of service delivery.',
-    image:
-      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=70',
-    tag: 'Full Event Coordination',
+    title: 'Memorial Service of the Late William Dowridge Adu-Asare Snr (Kwame Adu)',
+    text: 'Solemn burial and memorial rites held on 2nd–3rd May 2026 at The Church in Accra and Dreamz & Memoriez Events Garden, Achimota. Laying-in-state logistics, candlelight memorial shrine, protocol donation secretariat, and family tribute facilitation.',
+    image: '/images/portfolio/william-dowridge-adu-asare/01-memorial-portrait-registry.jpg',
+    tag: 'Achimota, Accra · May 2026',
+    href: '/portfolio/william-dowridge-adu-asare',
+  },
+  {
+    category: 'Gatherings',
+    title: 'Memorial Service of the Late Nicholas Nii Adamma (Opanin Kwame Darko)',
+    text: 'Solemn thanksgiving and memorial service held on 30-03-2019 at All Souls\' Chapel, Lashibi Funeral Home. Ceremonial Kente casket styling, bespoke floral artistry, order of service coordination, and keepsake print literature.',
+    image: '/images/portfolio/nicholas-nii-adamma/01-casket-kente-tribute.jpg',
+    tag: 'Lashibi Funeral Home · 30-03-2019',
+    href: '/portfolio/nicholas-nii-adamma',
   },
   {
     category: 'Gatherings',
@@ -22,14 +30,6 @@ const projects = [
     image:
       'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=70',
     tag: 'Hybrid Coordination',
-  },
-  {
-    category: 'Gatherings',
-    title: 'Quiet Chapel Farewell · Ridge Church, Accra',
-    text: 'Intimate seating layout, clergy liaison, acoustic sound check, and carefully paced processional and recessional hymns.',
-    image:
-      'https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=1200&q=70',
-    tag: 'Church Memorial',
   },
   {
     category: 'Décor & Floral',
@@ -46,14 +46,6 @@ const projects = [
     image:
       'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=70',
     tag: 'Stationery & Print',
-  },
-  {
-    category: 'Décor & Floral',
-    title: 'Evening Vigil & Candlelight Reception',
-    text: 'Soft architectural uplighting, wooden guestbook table, coordinated hospitality team, and respectful background acoustic tributes.',
-    image:
-      'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
-    tag: 'Evening Gathering',
   },
 ];
 
@@ -108,18 +100,39 @@ const testimonials = [
 
       <div class="gallery__grid">
         {
-          projects.map((item) => (
-            <article class="gallery-item" data-category={item.category}>
-              <div class="gallery-item__image-wrap">
-                <img src={item.image} alt={item.title} width="800" height="600" loading="lazy" />
-                <span class="gallery-item__tag">{item.tag}</span>
-              </div>
-              <div class="gallery-item__body">
-                <h2>{item.title}</h2>
-                <p>{item.text}</p>
-              </div>
-            </article>
-          ))
+          projects.map((item) => {
+            const isLink = Boolean(item.href);
+            const CardTag = isLink ? 'a' : 'article';
+            return (
+              <CardTag
+                href={item.href}
+                class:list={['gallery-item', isLink && 'gallery-item--link']}
+                data-category={item.category}
+              >
+                <div class="gallery-item__image-wrap">
+                  <img src={item.image} alt={item.title} width="800" height="600" loading="lazy" />
+                  <span class="gallery-item__tag">{item.tag}</span>
+                  {isLink && (
+                    <span class="gallery-item__action-badge">
+                      <span>View Gallery</span>
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  )}
+                </div>
+                <div class="gallery-item__body">
+                  <h2>{item.title}</h2>
+                  <p>{item.text}</p>
+                  {isLink && (
+                    <span class="gallery-item__cta-link">
+                      Open Memorial Gallery &amp; Retrospective &rarr;
+                    </span>
+                  )}
+                </div>
+              </CardTag>
+            );
+          })
         }
       </div>
 
@@ -267,6 +280,55 @@ const testimonials = [
     color: var(--color-muted);
     font-size: 1.02rem;
     line-height: 1.6;
+  }
+
+  .gallery-item--link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .gallery-item__action-badge {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    background: rgba(201, 168, 146, 0.95);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    box-shadow: 0 4px 14px rgba(26, 22, 18, 0.25);
+    transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+  }
+
+  .gallery-item:hover .gallery-item__action-badge {
+    background: var(--color-charcoal);
+    transform: translateY(-2px);
+  }
+
+  .gallery-item__cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    margin-top: 0.65rem;
+    transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+
+  .gallery-item:hover .gallery-item__cta-link {
+    color: var(--color-charcoal);
+    transform: translateX(4px);
   }
 
   .testimonials {

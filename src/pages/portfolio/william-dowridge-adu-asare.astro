@@ -1,0 +1,1324 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const galleryImages = [
+  {
+    id: 'memorial-portrait',
+    title: 'Memorial Portrait & Candlelight Altar',
+    tag: 'Altar & Memorial Shrine',
+    src: '/images/portfolio/william-dowridge-adu-asare/01-memorial-portrait-registry.jpg',
+    aspect: 'wide',
+    description:
+      'The commemorative portrait of the late William Dowridge Adu-Asare Snr presented on a red-draped ceremonial table with warm candle illumination and the official condolence register.',
+    placeholderNotes:
+      'Intimate memorial table staging, ambient pillar candles, and guestbook placement for arriving family, colleagues, and church brethren.',
+  },
+  {
+    id: 'funeral-invitation',
+    title: 'Official Funeral Announcement & Schedule of Rites',
+    tag: 'Literature & Announcements',
+    src: '/images/portfolio/william-dowridge-adu-asare/02-funeral-invitation-arrangements.jpg',
+    aspect: 'wide',
+    description:
+      'The official commemorative funeral invitation outlining the schedule of rites from the laying in state and burial service at The Church in Accra, Achimota to the final funeral rites at Dreamz & Memoriez Events Garden.',
+    placeholderNotes:
+      'Graphic design typography, gold-accented layout, event coordination itinerary, and dress code guidance for Saturday and Sunday rites.',
+  },
+  {
+    id: 'garden-arrival',
+    title: 'Garden Reception & Dignitary Greetings',
+    tag: 'Venue & Protocol',
+    src: '/images/portfolio/william-dowridge-adu-asare/03-garden-reception-arrival.jpg',
+    aspect: 'wide',
+    description:
+      'Family heads, dignitaries, and sympathizers arriving under the shaded canopy at Dreamz and Memoriez Events Garden, greeted by family elders.',
+    placeholderNotes:
+      'Canopy drapery, lush garden venue staging, guest arrival reception, and protocol flow.',
+  },
+  {
+    id: 'donation-protocol',
+    title: 'Condolence Register & Protocol Desk',
+    tag: 'Secretariat & Protocol',
+    src: '/images/portfolio/william-dowridge-adu-asare/04-donation-registry-protocol.jpg',
+    aspect: 'wide',
+    description:
+      'The memorial coordination desk receiving sympathizers, managing formal donation recordings (Nsawa), and logging heartfelt tribute messages.',
+    placeholderNotes:
+      'Traditional Ghanaian funeral donation administration, receipting protocol, and secure cashbox management.',
+  },
+  {
+    id: 'family-spokesperson',
+    title: 'Family Announcements & Word of Appreciation',
+    tag: 'Family Leadership',
+    src: '/images/portfolio/william-dowridge-adu-asare/05-family-spokesperson-announcements.jpg',
+    aspect: 'wide',
+    description:
+      'The family elder and spokesperson addressing the gathered mourners from the microphone, flanked by the family matriarch and elders.',
+    placeholderNotes:
+      'Family acknowledgments, announcement of committal arrangements, and formal vote of thanks to guests and well-wishers.',
+  },
+  {
+    id: 'memorial-congregation',
+    title: 'Mourners Gathered in Solemn Remembrance',
+    tag: 'Memorial Gathering',
+    src: '/images/portfolio/william-dowridge-adu-asare/06-memorial-canopy-congregation.jpg',
+    aspect: 'wide',
+    description:
+      'A solemn assembly of extended family, friends, and sympathizers seated under the red and black canopy drapery during the remembrance rites.',
+    placeholderNotes:
+      'Seating capacity arrangement, natural shade integration, and dignified ambiance for reflection and prayer.',
+  },
+  {
+    id: 'eulogy-tribute',
+    title: 'Eulogy & Farewell Tribute Delivery',
+    tag: 'Tributes & Reflections',
+    src: '/images/portfolio/william-dowridge-adu-asare/07-eulogy-tribute-delivery.jpg',
+    aspect: 'portrait',
+    description:
+      'A poignant personal tribute and eulogy delivered at the microphone honoring the life, virtues, and lasting legacy of William Dowridge Adu-Asare Snr.',
+    placeholderNotes:
+      'Microphone audio coordination, spoken tribute facilitation, and emotional family support during readings.',
+  },
+  {
+    id: 'chief-mourners',
+    title: 'Chief Mourners & Widow in Reflection',
+    tag: 'Family Protocol',
+    src: '/images/portfolio/william-dowridge-adu-asare/08-chief-mourners-vigil.jpg',
+    aspect: 'wide',
+    description:
+      'The bereaved widow, matriarchs, and chief mourners standing in traditional black memorial mourning cloths during prayers and songs.',
+    placeholderNotes:
+      'Chief mourners designated seating area, cultural mourning attire etiquette, and pastoral comfort.',
+  },
+  {
+    id: 'family-drapery',
+    title: 'Family Secretariat Beneath Red & Black Canopies',
+    tag: 'Venue Coordination',
+    src: '/images/portfolio/william-dowridge-adu-asare/09-family-protocol-drapery.jpg',
+    aspect: 'wide',
+    description:
+      'Family members gathered in unity behind the central coordination table framed by traditional red and black canopy drapery.',
+    placeholderNotes:
+      'Canopy ceiling draping with red and black Ghanaian funeral colors, coordinating staff, and hospitality support.',
+  },
+  {
+    id: 'condolence-recording',
+    title: 'Secretariat Attendants & Tributes Logging',
+    tag: 'Secretariat & Records',
+    src: '/images/portfolio/william-dowridge-adu-asare/10-condolence-desk-recording.jpg',
+    aspect: 'wide',
+    description:
+      'Protocol attendants in commemorative memorial t-shirts diligently recording attendee sympathy messages and condolence tokens.',
+    placeholderNotes:
+      'Branded memorial attire, structured registry ledger, and attendee assistance during the funeral rites.',
+  },
+];
+---
+
+<BaseLayout
+  title="Memorial Service of the Late William Dowridge Adu-Asare Snr (Kwame Adu) | Portfolio | Quills and Ink Hub"
+  description="A photographic and narrative retrospective of the memorial service and funeral rites of the late William Dowridge Adu-Asare Snr (Kwame Adu, 1960–2026), held at The Church in Accra and Dreamz & Memoriez Events Garden, Achimota."
+  image="/images/portfolio/william-dowridge-adu-asare/01-memorial-portrait-registry.jpg"
+  imageAlt="Memorial portrait and candlelight tribute for the late William Dowridge Adu-Asare Snr"
+>
+  <Header />
+
+  <main>
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb container" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><span class="sep">/</span><a href="/portfolio">Portfolio</a></li>
+        <li><span class="sep">/</span><span aria-current="page">William Dowridge Adu-Asare Snr</span></li>
+      </ol>
+    </nav>
+
+    <!-- Case Study Hero -->
+    <header class="case-hero">
+      <div class="case-hero__bg">
+        <img
+          src="/images/portfolio/william-dowridge-adu-asare/01-memorial-portrait-registry.jpg"
+          alt="Memorial altar and portrait of the late William Dowridge Adu-Asare Snr"
+          width="1800"
+          height="900"
+          fetchpriority="high"
+        />
+        <div class="case-hero__overlay"></div>
+      </div>
+
+      <div class="case-hero__content container">
+        <p class="script case-hero__script">Memorial Retrospective</p>
+        <span class="case-hero__tag">Full Memorial Service & Gathering</span>
+        <h1 class="case-hero__title">
+          The Memorial Service of the Late William Dowridge Adu-Asare Snr
+        </h1>
+        <p class="case-hero__alias">
+          Affectionately known as <strong>Kwame Adu</strong> &middot; 1960 &ndash; 2026 &middot; Achimota &amp; Amrahia-Otinibi, Greater Accra
+        </p>
+      </div>
+    </header>
+
+    <!-- Key Facts Strip -->
+    <section class="facts-strip">
+      <div class="container facts-strip__grid">
+        <div class="fact-card">
+          <span class="fact-label">Dates of Service</span>
+          <strong class="fact-val">Saturday 2nd &amp; Sunday 3rd May, 2026</strong>
+        </div>
+        <div class="fact-card">
+          <span class="fact-label">Service Venues</span>
+          <strong class="fact-val">The Church in Accra &amp; Dreamz and Memoriez Events Garden</strong>
+        </div>
+        <div class="fact-card">
+          <span class="fact-label">Locations</span>
+          <strong class="fact-val">Achimota &amp; Amrahia-Otinibi, Greater Accra</strong>
+        </div>
+        <div class="fact-card">
+          <span class="fact-label">Scope of Care</span>
+          <strong class="fact-val">Full Event Coordination, Protocol Secretariat, Floral Altar &amp; Tributes</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Narrative & Story Section -->
+    <section class="case-narrative container">
+      <div class="narrative-grid">
+        <div class="narrative-main">
+          <div class="section-badge">Service Retrospective</div>
+          <h2>Honoring a cherished patriarch with poise, reverence, and cultural grace</h2>
+          <p class="lead">
+            On Saturday, 2nd May and Sunday, 3rd May 2026, family members, colleagues, church brethren, and community
+            sympathizers assembled in Achimota and Amrahia-Otinibi to celebrate the life and solemn transition of the late
+            William Dowridge Adu-Asare Snr, affectionately remembered by all as Kwame Adu (1960–2026).
+          </p>
+          <p>
+            The memorial program was orchestrated to harmonize deep Christian liturgical reverence with warm, respectful Ghanaian
+            customs. From the early morning laying-in-state and burial service at The Church in Accra near Kingsby Roundabout,
+            to the expansive final funeral gathering at Dreamz and Memoriez Events Garden, every touchpoint was curated to bring
+            comfort to the family and afford guests an orderly, reflective experience.
+          </p>
+
+          <div class="narrative-highlights">
+            <div class="highlight-box">
+              <h3>Memorial Altar &amp; Candlelight Sanctuary</h3>
+              <p>
+                A designated focal shrine featuring an elegant framed portrait of William Dowridge Adu-Asare Snr was staged
+                upon richly draped ceremonial crimson linens. Flanked by gentle glowing candlelight and a leather-bound condolence
+                register, it offered each arriving mourner an immediate sanctuary for private reflection and prayer.
+              </p>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Protocol Secretariat &amp; Donation Desk (Nsawa)</h3>
+              <p>
+                To ease administrative stress during high attendance hours, our secretariat deployed a dedicated protocol desk
+                manned by trained attendants in commemorative memorial attire. Sympathy contributions, guest arrivals, and handwritten
+                expressions of condolence were methodically organized and recorded with complete transparency.
+              </p>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Eulogy Readings &amp; Family Tributes</h3>
+              <p>
+                The memorial gathering under the garden canopies was punctuated by heartfelt spoken tributes. Family members,
+                children, and church leaders took to the lectern to recount his generosity, firm counsel, and warm smile,
+                creating an atmosphere of profound gratitude and enduring family solidarity.
+              </p>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Thanksgiving Service &amp; Amrahia-Otinibi Reception</h3>
+              <p>
+                The weekend concluded on Sunday morning with a joyous thanksgiving service at The Church in Accra followed
+                by a peaceful family hospitality gathering at the family residence along Honey Crisp Street in Amrahia-Otinibi,
+                celebrating a life well-lived in celebratory black and white attire.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="narrative-sidebar">
+          <div class="sidebar-card">
+            <h3>Service Information</h3>
+            <ul class="meta-list">
+              <li>
+                <span class="meta-title">Honoree</span>
+                <span class="meta-desc">William Dowridge Adu-Asare Snr (Kwame Adu)</span>
+              </li>
+              <li>
+                <span class="meta-title">Life Dates</span>
+                <span class="meta-desc">1960 &ndash; 2026 (66 Years)</span>
+              </li>
+              <li>
+                <span class="meta-title">Service Dates</span>
+                <span class="meta-desc">Saturday, 2nd May &amp; Sunday, 3rd May 2026</span>
+              </li>
+              <li>
+                <span class="meta-title">Church Venue</span>
+                <span class="meta-desc">The Church in Accra, Achimota near Kingsby Roundabout</span>
+              </li>
+              <li>
+                <span class="meta-title">Funeral Grounds</span>
+                <span class="meta-desc">Dreamz &amp; Memoriez Events Garden, Achimota</span>
+              </li>
+              <li>
+                <span class="meta-title">Thanksgiving Residence</span>
+                <span class="meta-desc">V137 Honey Crisp Street, Amrahia-Otinibi</span>
+              </li>
+              <li>
+                <span class="meta-title">Attire Protocol</span>
+                <span class="meta-desc">
+                  &bull; Saturday: Black / Red<br />
+                  &bull; Sunday: Black &amp; White
+                </span>
+              </li>
+              <li>
+                <span class="meta-title">Services Provided</span>
+                <span class="meta-desc">
+                  &bull; Church &amp; Garden Venue Coordination<br />
+                  &bull; Memorial Altar &amp; Candlelight Staging<br />
+                  &bull; Protocol Secretariat &amp; Registry Desk<br />
+                  &bull; Order of Service &amp; Spoken Tribute Audio<br />
+                  &bull; Thanksgiving Reception Logistics
+                </span>
+              </li>
+            </ul>
+
+            <div class="sidebar-cta">
+              <p>Download the official memorial tribute booklet and order of service:</p>
+              <a
+                href="/downloads/william-dowridge-adu-asare-brochure.pdf"
+                class="btn btn--outline btn--full"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="margin-bottom: 0.75rem;"
+              >
+                📄 Download Memorial Brochure (PDF)
+              </a>
+              <p style="margin-top: 1rem;">Need dedicated guidance arranging a memorial service in Ghana?</p>
+              <a href="/book" class="btn btn--peach btn--full">Book Consultation</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Full Photo Gallery Section -->
+    <section class="case-gallery">
+      <div class="container">
+        <div class="case-gallery__header">
+          <p class="eyebrow">Visual Documentation</p>
+          <h2>Memorial Gallery &amp; Archival Moments</h2>
+          <p class="gallery-sub">
+            Tap any photograph to view in high resolution. Detailed archival notes are preserved alongside each image to
+            commemorate specific liturgical rituals, protocol milestones, and family memories.
+          </p>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+          {
+            galleryImages.map((img, idx) => (
+              <figure
+                class={`gallery-card ${img.aspect === 'portrait' ? 'gallery-card--portrait' : 'gallery-card--wide'}`}
+                data-index={idx}
+              >
+                <div class="gallery-card__image-container">
+                  <img
+                    src={img.src}
+                    alt={img.description}
+                    loading={idx < 3 ? 'eager' : 'lazy'}
+                    width="900"
+                    height="600"
+                  />
+                  <span class="gallery-card__tag">{img.tag}</span>
+                  <button
+                    type="button"
+                    class="gallery-card__zoom-btn"
+                    aria-label={`Enlarge photo: ${img.title}`}
+                    data-zoom-idx={idx}
+                  >
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      <line x1="11" y1="8" x2="11" y2="14"></line>
+                      <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <figcaption class="gallery-card__caption">
+                  <div class="gallery-card__header-line">
+                    <span class="gallery-card__num">{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}</span>
+                    <h3 class="gallery-card__title">{img.title}</h3>
+                  </div>
+                  <p class="gallery-card__desc">{img.description}</p>
+                  <div class="gallery-card__placeholder">
+                    <span class="placeholder-badge">Archival Note</span>
+                    <p>{img.placeholderNotes}</p>
+                  </div>
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="lightbox__overlay" id="lightboxOverlay"></div>
+      <div class="lightbox__container">
+        <button type="button" class="lightbox__close" id="lightboxClose" aria-label="Close image viewer">
+          &times;
+        </button>
+
+        <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Previous photo">
+          &#8249;
+        </button>
+        <button type="button" class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Next photo">
+          &#8250;
+        </button>
+
+        <div class="lightbox__content">
+          <div class="lightbox__media">
+            <img id="lightboxImg" src="" alt="" />
+          </div>
+          <div class="lightbox__info">
+            <div class="lightbox__meta">
+              <span id="lightboxTag" class="lightbox__tag"></span>
+              <span id="lightboxCounter" class="lightbox__counter"></span>
+            </div>
+            <h3 id="lightboxTitle" class="lightbox__title"></h3>
+            <p id="lightboxDesc" class="lightbox__desc"></p>
+            <div class="lightbox__notes-wrap">
+              <span class="placeholder-badge">Archival Details</span>
+              <p id="lightboxNotes" class="lightbox__notes"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Footer -->
+    <section class="case-footer container">
+      <div class="case-footer__box">
+        <div>
+          <p class="eyebrow">Explore Further</p>
+          <h2>Plan with serenity, honor with grace</h2>
+          <p>
+            Let our experienced team manage every logistical and aesthetic detail of your family's memorial
+            gathering with the composure and reverence they deserve.
+          </p>
+        </div>
+        <div class="case-footer__actions">
+          <a href="/portfolio" class="btn btn--outline">&larr; Back to Portfolio</a>
+          <a href="/book" class="btn btn--peach">Book Consultation</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Breadcrumbs */
+  .breadcrumb {
+    padding: 1.5rem 0 0.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .breadcrumb ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .breadcrumb a {
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-charcoal);
+  }
+
+  .breadcrumb .sep {
+    color: var(--color-line);
+    margin: 0 0.2rem;
+  }
+
+  .breadcrumb [aria-current='page'] {
+    color: var(--color-charcoal);
+    font-weight: 500;
+  }
+
+  /* Hero Section */
+  .case-hero {
+    position: relative;
+    min-height: 60vh;
+    display: grid;
+    place-items: end stretch;
+    color: white;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+
+  .case-hero__bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .case-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.68) saturate(0.9);
+  }
+
+  .case-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(26, 22, 18, 0.4) 0%,
+      rgba(26, 22, 18, 0.72) 70%,
+      rgba(26, 22, 18, 0.9) 100%
+    );
+  }
+
+  .case-hero__content {
+    position: relative;
+    z-index: 1;
+    padding: 7rem 0 4rem;
+    max-width: 900px;
+  }
+
+  .case-hero__script {
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    margin: 0 0 0.4rem;
+    color: var(--color-blush);
+  }
+
+  .case-hero__tag {
+    display: inline-block;
+    background: rgba(201, 168, 146, 0.35);
+    border: 1px solid rgba(232, 213, 196, 0.4);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.25rem;
+  }
+
+  .case-hero__title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    line-height: 1.15;
+    color: #ffffff;
+    margin: 0 0 1rem;
+    font-weight: 500;
+  }
+
+  .case-hero__alias {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .case-hero__alias strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  /* Facts Strip */
+  .facts-strip {
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-line);
+    padding: 2.25rem 0;
+  }
+
+  .facts-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .fact-card {
+    border-left: 2px solid var(--color-peach);
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .fact-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .fact-val {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--color-charcoal);
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  /* Narrative & Story */
+  .case-narrative {
+    padding: 5rem 0 4rem;
+  }
+
+  .narrative-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .narrative-grid {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  .section-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .narrative-main h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    line-height: 1.25;
+    color: var(--color-charcoal);
+    margin: 0 0 1.5rem;
+  }
+
+  .narrative-main .lead {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: var(--color-wood);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .narrative-main p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-ink);
+    margin-bottom: 1.25rem;
+  }
+
+  .narrative-highlights {
+    margin-top: 2.75rem;
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .highlight-box {
+    background: var(--color-soft);
+    border: 1px solid var(--color-line);
+    border-left: 4px solid var(--color-peach);
+    padding: 1.75rem 2rem;
+    border-radius: 4px;
+  }
+
+  .highlight-box h3 {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--color-charcoal);
+    margin: 0 0 0.5rem;
+  }
+
+  .highlight-box p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--color-wood);
+  }
+
+  /* Sidebar */
+  .sidebar-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 2.25rem 1.75rem;
+    position: sticky;
+    top: 6rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .sidebar-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--color-charcoal);
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  .meta-title {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .meta-desc {
+    font-size: 0.95rem;
+    color: var(--color-charcoal);
+    line-height: 1.5;
+  }
+
+  .sidebar-cta {
+    background: var(--color-soft);
+    padding: 1.25rem;
+    text-align: center;
+    border: 1px dashed var(--color-peach);
+  }
+
+  .sidebar-cta p {
+    font-size: 0.88rem;
+    color: var(--color-wood);
+    margin: 0 0 1rem;
+  }
+
+  .btn--full {
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+
+  /* Gallery Section */
+  .case-gallery {
+    background: var(--color-ivory);
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    padding: 5rem 0 6rem;
+  }
+
+  .case-gallery__header {
+    max-width: 760px;
+    margin-bottom: 3.5rem;
+  }
+
+  .case-gallery__header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    color: var(--color-charcoal);
+    margin: 0.4rem 0 1rem;
+  }
+
+  .gallery-sub {
+    font-size: 1.05rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  @media (min-width: 720px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+
+  .gallery-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(26, 22, 18, 0.08);
+  }
+
+  .gallery-card__image-container {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-soft);
+    cursor: pointer;
+  }
+
+  .gallery-card__image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .gallery-card:hover .gallery-card__image-container img {
+    transform: scale(1.04);
+  }
+
+  .gallery-card__tag {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    background: rgba(26, 22, 18, 0.75);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border-radius: 3px;
+  }
+
+  .gallery-card__zoom-btn {
+    position: absolute;
+    bottom: 0.85rem;
+    right: 0.85rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: grid;
+    place-items: center;
+    color: var(--color-charcoal);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+  }
+
+  .gallery-card__zoom-btn:hover {
+    background: var(--color-charcoal);
+    color: #ffffff;
+    transform: scale(1.1);
+  }
+
+  .gallery-card__caption {
+    padding: 1.5rem 1.4rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.85rem;
+  }
+
+  .gallery-card__header-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  .gallery-card__num {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-peach-deep);
+    letter-spacing: 0.1em;
+  }
+
+  .gallery-card__title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--color-charcoal);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .gallery-card__desc {
+    font-size: 0.94rem;
+    color: var(--color-wood);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .gallery-card__placeholder {
+    margin-top: auto;
+    padding: 0.85rem 1rem;
+    background: var(--color-soft);
+    border-left: 2px solid var(--color-peach);
+    font-size: 0.82rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .placeholder-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    margin-bottom: 0.3rem;
+  }
+
+  .gallery-card__placeholder p {
+    margin: 0;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .lightbox.is-open {
+    display: flex;
+  }
+
+  .lightbox__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 14, 11, 0.92);
+    backdrop-filter: blur(10px);
+  }
+
+  .lightbox__container {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    width: 100%;
+    max-height: 92vh;
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+  }
+
+  @media (min-width: 860px) {
+    .lightbox__container {
+      flex-direction: row;
+      max-height: 86vh;
+    }
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.85rem;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-charcoal);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+  }
+
+  .lightbox__close:hover {
+    background: var(--color-charcoal);
+    color: #fff;
+  }
+
+  .lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    font-size: 1.6rem;
+    color: var(--color-charcoal);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+  }
+
+  .lightbox__nav:hover {
+    background: var(--color-charcoal);
+    color: #fff;
+  }
+
+  .lightbox__nav--prev {
+    left: 1rem;
+  }
+
+  .lightbox__nav--next {
+    right: 1rem;
+  }
+
+  @media (min-width: 860px) {
+    .lightbox__nav--next {
+      right: 340px;
+    }
+  }
+
+  .lightbox__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  @media (min-width: 860px) {
+    .lightbox__content {
+      flex-direction: row;
+    }
+  }
+
+  .lightbox__media {
+    flex: 1;
+    background: #0f0d0b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 350px;
+    max-height: 70vh;
+  }
+
+  @media (min-width: 860px) {
+    .lightbox__media {
+      max-height: 86vh;
+    }
+  }
+
+  .lightbox__media img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .lightbox__info {
+    width: 100%;
+    padding: 2.25rem 2rem;
+    background: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    overflow-y: auto;
+  }
+
+  @media (min-width: 860px) {
+    .lightbox__info {
+      width: 360px;
+      flex-shrink: 0;
+    }
+  }
+
+  .lightbox__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+  }
+
+  .lightbox__tag {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    font-weight: 600;
+  }
+
+  .lightbox__counter {
+    color: var(--color-muted);
+  }
+
+  .lightbox__title {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--color-charcoal);
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .lightbox__desc {
+    font-size: 0.98rem;
+    color: var(--color-ink);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .lightbox__notes-wrap {
+    margin-top: 1rem;
+    background: var(--color-soft);
+    border-left: 3px solid var(--color-peach);
+    padding: 1rem 1.15rem;
+  }
+
+  .lightbox__notes {
+    font-size: 0.88rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Footer Navigation */
+  .case-footer {
+    padding: 4.5rem 0 6rem;
+  }
+
+  .case-footer__box {
+    background: var(--color-soft);
+    border: 1px solid var(--color-line);
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .case-footer__box h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--color-charcoal);
+    margin: 0.35rem 0 0.6rem;
+  }
+
+  .case-footer__box p {
+    font-size: 1.05rem;
+    color: var(--color-muted);
+    max-width: 580px;
+    margin: 0;
+  }
+
+  .case-footer__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .btn--outline {
+    background: transparent;
+    border: 1px solid var(--color-charcoal);
+    color: var(--color-charcoal);
+  }
+
+  .btn--outline:hover {
+    background: var(--color-charcoal);
+    color: #fff;
+  }
+</style>
+
+<script>
+  // Client-side Lightbox Script
+  const galleryData = [
+    {
+      title: 'Memorial Portrait & Candlelight Altar',
+      tag: 'Altar & Memorial Shrine',
+      src: '/images/portfolio/william-dowridge-adu-asare/01-memorial-portrait-registry.jpg',
+      description:
+        'The commemorative portrait of the late William Dowridge Adu-Asare Snr presented on a red-draped ceremonial table with warm candle illumination and the official condolence register.',
+      notes:
+        'Intimate memorial table staging, ambient pillar candles, and guestbook placement for arriving family, colleagues, and church brethren.',
+    },
+    {
+      title: 'Official Funeral Announcement & Schedule of Rites',
+      tag: 'Literature & Announcements',
+      src: '/images/portfolio/william-dowridge-adu-asare/02-funeral-invitation-arrangements.jpg',
+      description:
+        'The official commemorative funeral invitation outlining the schedule of rites from the laying in state and burial service at The Church in Accra, Achimota to the final funeral rites at Dreamz & Memoriez Events Garden.',
+      notes:
+        'Graphic design typography, gold-accented layout, event coordination itinerary, and dress code guidance for Saturday and Sunday rites.',
+    },
+    {
+      title: 'Garden Reception & Dignitary Greetings',
+      tag: 'Venue & Protocol',
+      src: '/images/portfolio/william-dowridge-adu-asare/03-garden-reception-arrival.jpg',
+      description:
+        'Family heads, dignitaries, and sympathizers arriving under the shaded canopy at Dreamz and Memoriez Events Garden, greeted by family elders.',
+      notes:
+        'Canopy drapery, lush garden venue staging, guest arrival reception, and protocol flow.',
+    },
+    {
+      title: 'Condolence Register & Protocol Desk',
+      tag: 'Secretariat & Protocol',
+      src: '/images/portfolio/william-dowridge-adu-asare/04-donation-registry-protocol.jpg',
+      description:
+        'The memorial coordination desk receiving sympathizers, managing formal donation recordings (Nsawa), and logging heartfelt tribute messages.',
+      notes:
+        'Traditional Ghanaian funeral donation administration, receipting protocol, and secure cashbox management.',
+    },
+    {
+      title: 'Family Announcements & Word of Appreciation',
+      tag: 'Family Leadership',
+      src: '/images/portfolio/william-dowridge-adu-asare/05-family-spokesperson-announcements.jpg',
+      description:
+        'The family elder and spokesperson addressing the gathered mourners from the microphone, flanked by the family matriarch and elders.',
+      notes:
+        'Family acknowledgments, announcement of committal arrangements, and formal vote of thanks to guests and well-wishers.',
+    },
+    {
+      title: 'Mourners Gathered in Solemn Remembrance',
+      tag: 'Memorial Gathering',
+      src: '/images/portfolio/william-dowridge-adu-asare/06-memorial-canopy-congregation.jpg',
+      description:
+        'A solemn assembly of extended family, friends, and sympathizers seated under the red and black canopy drapery during the remembrance rites.',
+      notes:
+        'Seating capacity arrangement, natural shade integration, and dignified ambiance for reflection and prayer.',
+    },
+    {
+      title: 'Eulogy & Farewell Tribute Delivery',
+      tag: 'Tributes & Reflections',
+      src: '/images/portfolio/william-dowridge-adu-asare/07-eulogy-tribute-delivery.jpg',
+      description:
+        'A poignant personal tribute and eulogy delivered at the microphone honoring the life, virtues, and lasting legacy of William Dowridge Adu-Asare Snr.',
+      notes:
+        'Microphone audio coordination, spoken tribute facilitation, and emotional family support during readings.',
+    },
+    {
+      title: 'Chief Mourners & Widow in Reflection',
+      tag: 'Family Protocol',
+      src: '/images/portfolio/william-dowridge-adu-asare/08-chief-mourners-vigil.jpg',
+      description:
+        'The bereaved widow, matriarchs, and chief mourners standing in traditional black memorial mourning cloths during prayers and songs.',
+      notes:
+        'Chief mourners designated seating area, cultural mourning attire etiquette, and pastoral comfort.',
+    },
+    {
+      title: 'Family Secretariat Beneath Red & Black Canopies',
+      tag: 'Venue Coordination',
+      src: '/images/portfolio/william-dowridge-adu-asare/09-family-protocol-drapery.jpg',
+      description:
+        'Family members gathered in unity behind the central coordination table framed by traditional red and black canopy drapery.',
+      notes:
+        'Canopy ceiling draping with red and black Ghanaian funeral colors, coordinating staff, and hospitality support.',
+    },
+    {
+      title: 'Secretariat Attendants & Tributes Logging',
+      tag: 'Secretariat & Records',
+      src: '/images/portfolio/william-dowridge-adu-asare/10-condolence-desk-recording.jpg',
+      description:
+        'Protocol attendants in commemorative memorial t-shirts diligently recording attendee sympathy messages and condolence tokens.',
+      notes:
+        'Branded memorial attire, structured registry ledger, and attendee assistance during the funeral rites.',
+    },
+  ];
+
+  let currentIndex = 0;
+
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const overlay = document.getElementById('lightboxOverlay') as HTMLElement;
+  const closeBtn = document.getElementById('lightboxClose') as HTMLElement;
+  const prevBtn = document.getElementById('lightboxPrev') as HTMLElement;
+  const nextBtn = document.getElementById('lightboxNext') as HTMLElement;
+
+  const imgEl = document.getElementById('lightboxImg') as HTMLImageElement;
+  const titleEl = document.getElementById('lightboxTitle') as HTMLElement;
+  const tagEl = document.getElementById('lightboxTag') as HTMLElement;
+  const counterEl = document.getElementById('lightboxCounter') as HTMLElement;
+  const descEl = document.getElementById('lightboxDesc') as HTMLElement;
+  const notesEl = document.getElementById('lightboxNotes') as HTMLElement;
+
+  function updateLightbox(idx: number) {
+    if (idx < 0) idx = galleryData.length - 1;
+    if (idx >= galleryData.length) idx = 0;
+    currentIndex = idx;
+
+    const data = galleryData[currentIndex];
+    imgEl.src = data.src;
+    imgEl.alt = data.title;
+    titleEl.textContent = data.title;
+    tagEl.textContent = data.tag;
+    counterEl.textContent = `${currentIndex + 1} of ${galleryData.length}`;
+    descEl.textContent = data.description;
+    notesEl.textContent = data.notes;
+  }
+
+  function openLightbox(idx: number) {
+    updateLightbox(idx);
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Bind clicks
+  document.querySelectorAll<HTMLElement>('.gallery-card__image-container').forEach((el) => {
+    el.addEventListener('click', () => {
+      const parent = el.closest('.gallery-card') as HTMLElement;
+      if (parent && parent.dataset.index) {
+        openLightbox(parseInt(parent.dataset.index, 10));
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.gallery-card__zoom-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = btn.dataset.zoomIdx;
+      if (idx !== undefined) {
+        openLightbox(parseInt(idx, 10));
+      }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  overlay?.addEventListener('click', closeLightbox);
+
+  prevBtn?.addEventListener('click', () => {
+    updateLightbox(currentIndex - 1);
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    updateLightbox(currentIndex + 1);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') updateLightbox(currentIndex - 1);
+    if (e.key === 'ArrowRight') updateLightbox(currentIndex + 1);
+  });
+</script>
