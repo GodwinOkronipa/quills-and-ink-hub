@@ -1,0 +1,467 @@
+---
+// Download confirmation modal for all PDF and keepsake downloads across Quills and Ink Hub
+---
+
+<div
+  id="download-confirm-modal"
+  class="download-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="download-modal-title"
+  aria-hidden="true"
+>
+  <div class="download-modal__backdrop" data-modal-close aria-hidden="true"></div>
+
+  <div class="download-modal__dialog" role="document">
+    <div class="download-modal__card">
+      <!-- Close button -->
+      <button
+        type="button"
+        class="download-modal__close"
+        data-modal-close
+        aria-label="Cancel and close dialog"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="download-modal__header">
+        <div class="download-modal__icon-wrap" aria-hidden="true">
+          <svg class="download-modal__doc-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M12 18v-6"></path>
+            <path d="M9 15l3 3 3-3"></path>
+          </svg>
+        </div>
+        <div class="download-modal__header-text">
+          <span class="eyebrow" style="color: var(--color-peach-deep);">Resource Download</span>
+          <h3 id="download-modal-title" class="download-modal__title">Confirm Download</h3>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="download-modal__body">
+        <div class="download-modal__resource-box">
+          <div class="download-modal__file-badge" id="download-modal-format">PDF</div>
+          <div class="download-modal__resource-info">
+            <h4 class="download-modal__file-name" id="download-modal-filename">
+              Resource Title
+            </h4>
+            <div class="download-modal__meta-tags">
+              <span class="download-modal__size-pill" id="download-modal-filesize">Document File</span>
+              <span class="download-modal__sep" aria-hidden="true">&middot;</span>
+              <span class="download-modal__attribution-pill" id="download-modal-attribution">Quills &amp; Ink Hub Archive</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="download-modal__description">
+          Would you like to download this PDF keepsake to your device? This document is formatted for offline family reading and high-resolution printing.
+        </p>
+      </div>
+
+      <!-- Modal Actions -->
+      <div class="download-modal__actions">
+        <button
+          type="button"
+          class="btn btn--outline download-modal__cancel-btn"
+          data-modal-close
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn--peach download-modal__confirm-btn"
+          id="download-modal-confirm"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Download Now</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .download-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: grid;
+    place-items: center;
+    padding: 1.25rem;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease), visibility 0.3s;
+  }
+
+  .download-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .download-modal__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(18, 14, 11, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1;
+  }
+
+  .download-modal__dialog {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 520px;
+    margin: auto;
+    animation: modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes modal-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.94) translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .download-modal__card {
+    position: relative;
+    background: var(--color-ivory, #faf8f5);
+    border: 1px solid var(--color-line, #e6e0d8);
+    border-radius: 16px;
+    padding: 2rem 2.25rem 2.25rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.38);
+    display: grid;
+    gap: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 540px) {
+    .download-modal__card {
+      padding: 1.5rem 1.35rem 1.75rem;
+      gap: 1.25rem;
+    }
+  }
+
+  .download-modal__close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: transparent;
+    border: none;
+    color: var(--color-muted);
+    cursor: pointer;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s var(--ease);
+  }
+
+  .download-modal__close:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--color-charcoal);
+  }
+
+  .download-modal__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 2rem;
+  }
+
+  .download-modal__icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-peach) 20%, white);
+    color: var(--color-peach-deep);
+    border: 1px solid color-mix(in srgb, var(--color-peach) 40%, transparent);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .download-modal__header-text {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .download-modal__title {
+    font-size: 1.65rem;
+    color: var(--color-charcoal);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .download-modal__body {
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  .download-modal__resource-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    background: #ffffff;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(44, 36, 22, 0.04);
+  }
+
+  .download-modal__file-badge {
+    background: #b85c18;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.4rem 0.65rem;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .download-modal__resource-info {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .download-modal__file-name {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--color-charcoal);
+    margin: 0;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .download-modal__meta-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .download-modal__size-pill {
+    font-weight: 500;
+    color: var(--color-wood-mid);
+  }
+
+  .download-modal__sep {
+    opacity: 0.5;
+  }
+
+  .download-modal__attribution-pill {
+    font-style: italic;
+  }
+
+  .download-modal__description {
+    font-size: 0.95rem;
+    color: var(--color-wood);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .download-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  @media (max-width: 480px) {
+    .download-modal__actions {
+      flex-direction: column-reverse;
+      width: 100%;
+    }
+    .download-modal__actions .btn {
+      width: 100%;
+    }
+  }
+
+  .download-modal__confirm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const modal = document.getElementById('download-confirm-modal');
+    if (!modal) return;
+
+    const filenameEl = document.getElementById('download-modal-filename');
+    const filesizeEl = document.getElementById('download-modal-filesize');
+    const formatEl = document.getElementById('download-modal-format');
+    const attributionEl = document.getElementById('download-modal-attribution');
+    const confirmBtn = document.getElementById('download-modal-confirm');
+    const closeBtns = modal.querySelectorAll('[data-modal-close]');
+
+    let pendingDownload = null;
+
+    function openModal(data) {
+      pendingDownload = data;
+
+      if (filenameEl) filenameEl.textContent = data.name || 'Keepsake Document';
+      if (filesizeEl) filesizeEl.textContent = data.size || 'PDF Document';
+      if (formatEl) formatEl.textContent = data.format || 'PDF';
+      if (attributionEl) attributionEl.textContent = data.attribution || 'Quills & Ink Hub Archive';
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      setTimeout(() => {
+        confirmBtn?.focus();
+      }, 50);
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      pendingDownload = null;
+    }
+
+    closeBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeModal();
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+
+    // Confirm download action
+    confirmBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!pendingDownload) {
+        closeModal();
+        return;
+      }
+
+      const { url, name, format, attribution } = pendingDownload;
+
+      // Close modal first
+      closeModal();
+
+      // Trigger programmatic download
+      const tempLink = document.createElement('a');
+      tempLink.href = url;
+      const downloadFilename = url.split('/').pop() || 'document.pdf';
+      tempLink.setAttribute('download', downloadFilename);
+      tempLink.setAttribute('data-skip-modal', 'true');
+      tempLink.style.display = 'none';
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      setTimeout(() => tempLink.remove(), 150);
+
+      // Trigger analytics & toast
+      if (window.quillsAnalytics && typeof window.quillsAnalytics.track === 'function') {
+        window.quillsAnalytics.track('file_download', {
+          file_name: name,
+          file_url: url,
+          file_format: format,
+          attribution: attribution,
+          source_page: window.location.pathname,
+        });
+      }
+
+      // Notify toast listeners
+      window.dispatchEvent(
+        new CustomEvent('quills:download-toast', {
+          detail: {
+            name: name,
+            attribution: attribution,
+          },
+        })
+      );
+    });
+
+    // Global listener for downloads
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link) return;
+
+      // Ignore links explicitly skipping modal
+      if (link.getAttribute('data-skip-modal') === 'true') return;
+
+      // Ignore clicks originating inside the modal
+      if (modal.contains(link)) return;
+
+      const href = link.getAttribute('href') || '';
+
+      // Skip in-page hash links (e.g., /literary#toolkit-eulogy or #toolkit-brochure)
+      if (href.startsWith('#') || (href.includes('#') && !href.includes('.pdf'))) {
+        return;
+      }
+
+      const isDownloadAttr = link.hasAttribute('download');
+      const isPdfLink = /\.pdf(\?.*)?$/i.test(href);
+      const isTrackedDownload = link.getAttribute('data-track-download') === 'true';
+
+      if (isDownloadAttr || isPdfLink || isTrackedDownload) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const downloadName =
+          link.getAttribute('data-download-name') ||
+          link.getAttribute('title') ||
+          link.textContent.trim() ||
+          href.split('/').pop() ||
+          'Quills & Ink Document';
+
+        const downloadSize =
+          link.getAttribute('data-download-size') ||
+          (link.querySelector('.file-tag')?.textContent.trim()) ||
+          (link.querySelector('.btn-size-tag')?.textContent.trim()) ||
+          'PDF Document';
+
+        const downloadFormat =
+          link.getAttribute('data-download-format') ||
+          (href.toLowerCase().endsWith('.pdf') ? 'PDF' : 'Resource');
+
+        const attribution =
+          link.getAttribute('data-attribution') ||
+          'Quills & Ink Hub Editorial Archive';
+
+        openModal({
+          url: href,
+          name: downloadName,
+          size: downloadSize,
+          format: downloadFormat,
+          attribution: attribution,
+        });
+      }
+    }, true); // Capture phase to prevent immediate native download
+  })();
+</script>

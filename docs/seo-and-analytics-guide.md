@@ -15,7 +15,7 @@ To eliminate slow runtime PDF generation and serverless execution latency, all d
 | **`tribute-reading-excerpt.pdf`** | `/downloads/tribute-reading-excerpt.pdf` | 145 KB | Curated ceremonial readings for children, grandchildren, and diaspora relatives. |
 | **`quills-and-ink-family-memorial-guide.pdf`** | `/downloads/quills-and-ink-family-memorial-guide.pdf` | 358 KB | Master combined edition compiling all essential family planning resources into one keepsake. |
 
-*Fallback Note: Plain text files (`.txt`) remain accessible in `/samples/` for users on low-bandwidth connections or basic devices.*
+*Note: All downloads are provided as official, high-resolution PDF keepsakes with a pre-download confirmation modal.*
 
 ### Attribution & Provenance
 Each document and card includes:
@@ -27,9 +27,9 @@ Each document and card includes:
 
 ## 2. Download Attribution & Event Tracking
 
-All download links are automatically instrumented via `src/components/Analytics.astro`:
-- Listens for clicks on any link ending with `.pdf`, `.txt`, or containing `data-track-download="true"`.
-- Dispatches event to `window.quillsAnalytics.track('file_download', payload)`.
+All download actions are protected with a confirmation modal and automatically instrumented via `src/components/DownloadModal.astro` & `src/components/Analytics.astro`:
+- Prompts user with a confirmation modal detailing the document title, format, file size, and provenance before downloading.
+- On user confirmation, initiates file download and dispatches event to `window.quillsAnalytics.track('file_download', payload)`.
 - Displays a feedback toast:
   > **Downloading Resource**
   > *The Art of Remembrance: Eulogy Writing Guide (PDF)*

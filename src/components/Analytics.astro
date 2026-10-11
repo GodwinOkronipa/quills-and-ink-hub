@@ -176,34 +176,27 @@ const {
       }, 4500);
     }
 
-    // 3. Automated Document Download Listener with Attribution
+    // 3. Automated Document Download Toast Listener & Direct Download Fallback
+    window.addEventListener('quills:download-toast', (e) => {
+      const detail = e.detail || {};
+      showDownloadToast(detail.name || 'Keepsake Guide', detail.attribution || 'Quills & Ink Hub Archive');
+    });
+
     document.addEventListener('click', (e) => {
       const link = e.target.closest('a');
       if (!link) return;
 
       const href = link.getAttribute('href') || '';
-      const isDownloadAttr = link.hasAttribute('download');
-      const isPdfOrTxt = /\.(pdf|txt|docx?|zip)(\?.*)?$/i.test(href);
-      const isTrackedDownload = link.hasAttribute('data-track-download');
+      const isSkipModal = link.getAttribute('data-skip-modal') === 'true';
 
-      if (isDownloadAttr || isPdfOrTxt || isTrackedDownload) {
+      // Fallback only if modal was bypassed or directly confirmed
+      if (isSkipModal) {
         const downloadName =
           link.getAttribute('data-download-name') ||
           link.getAttribute('aria-label') ||
           link.textContent.trim() ||
           href.split('/').pop();
-
-        const format = href.endsWith('.pdf') ? 'PDF' : href.endsWith('.txt') ? 'TXT' : 'Resource';
         const attribution = link.getAttribute('data-attribution') || 'Quills & Ink Hub Editorial Archive';
-
-        window.quillsAnalytics.track('file_download', {
-          file_name: downloadName,
-          file_url: href,
-          file_format: format,
-          attribution: attribution,
-          source_page: window.location.pathname,
-        });
-
         showDownloadToast(downloadName, attribution);
       }
 

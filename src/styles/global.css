@@ -109,7 +109,7 @@ ul {
 
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -155,7 +155,7 @@ ul {
   border: 1px solid transparent;
   border-radius: 999px;
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -221,7 +221,7 @@ ul {
 
 .text-link {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;

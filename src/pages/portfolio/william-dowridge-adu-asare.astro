@@ -290,12 +290,21 @@ const galleryImages = [
               <p>Download the official memorial tribute booklet and order of service:</p>
               <a
                 href="/downloads/william-dowridge-adu-asare-brochure.pdf"
+                download
                 class="btn btn--outline btn--full"
-                target="_blank"
-                rel="noopener noreferrer"
-                style="margin-bottom: 0.75rem;"
+                data-track-download="true"
+                data-download-name="William Dowridge Adu-Asare Memorial Brochure (PDF)"
+                data-download-size="20.2 MB"
+                data-download-format="PDF"
+                data-attribution="Quills & Ink Hub Print Archive"
+                style="margin-bottom: 0.75rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;"
               >
-                📄 Download Memorial Brochure (PDF)
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download Memorial Brochure (PDF)</span>
               </a>
               <p style="margin-top: 1rem;">Need dedicated guidance arranging a memorial service in Ghana?</p>
               <a href="/book" class="btn btn--peach btn--full">Book Consultation</a>
@@ -805,7 +814,7 @@ const galleryImages = [
     background: rgba(26, 22, 18, 0.75);
     backdrop-filter: blur(6px);
     color: #fff;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     padding: 0.3rem 0.65rem;
@@ -884,7 +893,7 @@ const galleryImages = [
 
   .placeholder-badge {
     display: inline-block;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
