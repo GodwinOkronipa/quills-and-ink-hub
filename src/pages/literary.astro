@@ -38,7 +38,7 @@ const samples = [
       'Today we gather not to finish this story, but to place it reverently in our collective keeping — so that love may continue to speak in the warm language of home.',
     ],
     file: '/downloads/tribute-reading-excerpt.pdf',
-    downloadLabel: 'Download Tribute Keepsake (PDF)',
+    downloadLabel: 'Download Tribute Keepsake',
     fileSize: '145 KB',
     attribution: 'Quills & Ink Hub Ceremonial Spoken Archive',
     image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=800&q=80',
@@ -55,7 +55,7 @@ const samples = [
       'We stand here today as trees planted by his rivers of sacrifice. Though his physical voice is still, the soil of our lives remains forever enriched by his living.',
     ],
     file: '/downloads/eulogy-writing-guide.pdf',
-    downloadLabel: 'Download Eulogy Guide (PDF)',
+    downloadLabel: 'Download Eulogy Guide',
     fileSize: '358 KB',
     attribution: 'Quills & Ink Hub Editorial Archive · Ghanaian Remembrance Series',
     image: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=800&q=80',
@@ -71,7 +71,7 @@ const samples = [
       'This memorial brochure is compiled with heartfelt gratitude by the family across Accra, London, Washington, and Toronto. As you hold these pages, may the memories within comfort your spirit and remind you of the grace that walked among us.',
     ],
     file: '/downloads/memorial-brochure-checklist.pdf',
-    downloadLabel: 'Download Brochure Checklist (PDF)',
+    downloadLabel: 'Download Brochure Checklist',
     fileSize: '224 KB',
     attribution: 'Quills & Ink Hub Print & Editorial Division',
     image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
@@ -88,7 +88,7 @@ const samples = [
       'Explore the official brochure as a live example of how Quills and Ink Hub transforms cherished family history and personal tributes into an enduring heirloom.',
     ],
     file: '/downloads/william-dowridge-adu-asare-brochure.pdf',
-    downloadLabel: 'Download Adu-Asare Brochure (PDF)',
+    downloadLabel: 'Download Adu-Asare Brochure',
     fileSize: '20.2 MB',
     attribution: 'Quills & Ink Hub Memorial Print Archive · William Dowridge Adu-Asare Keepsake',
     image: '/images/portfolio/nicholas-nii-adamma/06-congregation-memorial-brochure.jpg',
@@ -153,8 +153,8 @@ const samples = [
           </div>
 
           <div class="speech-card__actions">
-            <a href="/book" class="btn btn--peach">Commission Spoken Eulogy</a>
-            <a href="#reading-samples" class="btn btn--outline">Browse Reading Samples &darr;</a>
+            <a href="/book" class="btn btn--peach speech-btn">Commission Spoken Eulogy</a>
+            <a href="#reading-samples" class="btn btn--outline speech-btn">Browse Recent Examples &darr;</a>
           </div>
         </div>
 
@@ -224,21 +224,21 @@ const samples = [
                       href={s.file}
                       download
                       data-track-download="true"
-                      data-download-name={s.downloadLabel}
+                      data-download-name={`${s.downloadLabel} (PDF)`}
                       data-download-size={s.fileSize}
                       data-download-format="PDF"
                       data-attribution={s.attribution}
                     >
-                      <svg class="dl-symbol" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <svg class="dl-symbol" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
                       </svg>
                       <span class="btn-pdf-badge">PDF</span>
-                      <span>{s.downloadLabel}</span>
+                      <span class="btn-dl-text">{s.downloadLabel}</span>
                       <span class="btn-size-tag">({s.fileSize})</span>
                     </a>
-                    <a class="btn btn--peach" href="/book">
+                    <a class="btn btn--peach btn--commission" href="/book">
                       Commission This Service
                     </a>
                   </div>
@@ -684,8 +684,34 @@ const samples = [
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-top: 0.25rem;
+  }
+
+  .speech-btn {
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    padding: 0.52rem 1.25rem;
+    min-height: 2.3rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 540px) {
+    .speech-card__actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.6rem;
+    }
+
+    .speech-btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      padding: 0.52rem 1rem;
+      min-height: 2.3rem;
+      letter-spacing: 0.05em;
+    }
   }
 
   .speech-card__media {
@@ -905,29 +931,72 @@ const samples = [
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.65rem;
     margin-top: 0.5rem;
+  }
+
+  .sample-actions .btn {
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1.15rem;
+    min-height: 2.25rem;
+    font-weight: 600;
   }
 
   .btn--pdf-download {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
+    white-space: nowrap;
   }
 
   .btn-pdf-badge {
     background: #b85c18;
     color: white;
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    padding: 2px 6px;
+    padding: 1px 5px;
     border-radius: 3px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+
+  .btn-dl-text {
+    white-space: nowrap;
   }
 
   .btn-size-tag {
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     color: var(--color-muted);
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+
+  .btn--commission {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 580px) {
+    .sample-actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.55rem;
+    }
+
+    .sample-actions .btn {
+      width: 100%;
+      justify-content: center;
+      font-size: 0.71rem;
+      padding: 0.5rem 0.85rem;
+      min-height: 2.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-dl-text {
+      white-space: normal;
+      text-align: center;
+    }
   }
 
   .sample-attribution-line {
@@ -1128,12 +1197,13 @@ const samples = [
   .toolkit-download-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.55rem 1.25rem;
-    min-height: 2.35rem;
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
+    gap: 0.45rem;
+    padding: 0.48rem 1.15rem;
+    min-height: 2.25rem;
+    font-size: 0.73rem;
+    letter-spacing: 0.06em;
     border-radius: 999px;
+    font-weight: 600;
   }
 
   .toolkit-download-btn .dl-symbol {
@@ -1142,8 +1212,18 @@ const samples = [
 
   .toolkit-btn-size {
     opacity: 0.82;
-    font-size: 0.74rem;
+    font-size: 0.71rem;
     font-weight: 400;
+  }
+
+  @media (max-width: 580px) {
+    .toolkit-download-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 0.48rem 0.85rem;
+      font-size: 0.71rem;
+      letter-spacing: 0.05em;
+    }
   }
 
   .toolkit-meta-row {
@@ -1244,11 +1324,13 @@ const samples = [
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     flex-shrink: 0;
-    padding: 0.75rem 1.35rem;
-    letter-spacing: 0.08em;
-    font-size: 0.8rem;
+    padding: 0.52rem 1.25rem;
+    letter-spacing: 0.06em;
+    font-size: 0.74rem;
+    font-weight: 600;
+    min-height: 2.25rem;
     max-width: 100%;
     box-sizing: border-box;
     white-space: nowrap;
@@ -1265,7 +1347,7 @@ const samples = [
 
   .master-size-pill {
     background: rgba(0, 0, 0, 0.16);
-    font-size: 0.75rem;
+    font-size: 0.71rem;
     padding: 2px 6px;
     border-radius: 999px;
     flex-shrink: 0;
@@ -1274,7 +1356,10 @@ const samples = [
   @media (max-width: 739px) {
     .master-guide-btn {
       width: 100%;
-      min-height: 2.75rem;
+      min-height: 2.3rem;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.71rem;
+      letter-spacing: 0.05em;
     }
   }
 

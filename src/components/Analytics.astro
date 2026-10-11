@@ -115,7 +115,39 @@ const {
     }
 
     // 2. Download Attribution Toast Notification Helper
+    let lastToastTime = 0;
+
+    function formatNotificationTitle(title) {
+      if (!title) return 'Keepsake Guide (PDF)';
+      let cleaned = title.trim();
+      // If raw hyphenated filename (e.g., "eulogy-writing-guide.pdf"), convert to readable title
+      if (cleaned.toLowerCase().endsWith('.pdf') && cleaned.includes('-')) {
+        cleaned = cleaned
+          .replace(/\.pdf$/i, '')
+          .split('-')
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ') + ' (PDF)';
+      }
+      // If in ALL CAPS (e.g. "DOWNLOAD PDF" or "EULOGY WRITING GUIDE"), convert to proper Title Case
+      if (cleaned === cleaned.toUpperCase() && cleaned.length > 3) {
+        cleaned = cleaned
+          .toLowerCase()
+          .replace(/(^|\s|\()([a-z])/g, (_, p1, p2) => p1 + p2.toUpperCase())
+          .replace(/\(pdf\)/i, '(PDF)');
+      }
+      return cleaned;
+    }
+
     function showDownloadToast(fileName, attribution = 'Quills & Ink Editorial Archive') {
+      const formattedTitle = formatNotificationTitle(fileName);
+      const now = Date.now();
+
+      // Debounce: prevent duplicate notifications within 2 seconds
+      if (now - lastToastTime < 2000) {
+        return;
+      }
+      lastToastTime = now;
+
       let toastContainer = document.getElementById('quills-toast-container');
       if (!toastContainer) {
         toastContainer = document.createElement('div');
@@ -135,6 +167,9 @@ const {
         document.body.appendChild(toastContainer);
       }
 
+      // Clear any prior toasts so only one appears at a time
+      toastContainer.innerHTML = '';
+
       const toast = document.createElement('div');
       toast.style.cssText = `
         background: #2c2416;
@@ -150,15 +185,16 @@ const {
         transform: translateY(16px);
         transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
         pointer-events: auto;
+        text-transform: none !important;
       `;
 
       toast.innerHTML = `
-        <div style="display: flex; align-items: flex-start; gap: 10px;">
+        <div style="display: flex; align-items: flex-start; gap: 10px; text-transform: none;">
           <span style="font-size: 18px; line-height: 1;">📥</span>
-          <div>
-            <div style="font-weight: 600; color: #e8d5c4;">Downloading Resource</div>
-            <div style="font-size: 12px; margin-top: 2px; color: #faf8f5;">${fileName}</div>
-            <div style="font-size: 10.5px; margin-top: 4px; color: #c9a892; letter-spacing: 0.02em;">Attribution: ${attribution}</div>
+          <div style="text-transform: none;">
+            <div style="font-weight: 600; color: #e8d5c4; text-transform: none;">Downloading Resource</div>
+            <div style="font-size: 12px; margin-top: 2px; color: #faf8f5; text-transform: none;">${formattedTitle}</div>
+            <div style="font-size: 10.5px; margin-top: 4px; color: #c9a892; letter-spacing: 0.02em; text-transform: none;">Attribution: ${attribution}</div>
           </div>
         </div>
       `;
@@ -176,7 +212,7 @@ const {
       }, 4500);
     }
 
-    // 3. Automated Document Download Toast Listener & Direct Download Fallback
+    // 3. Automated Document Download Toast Listener
     window.addEventListener('quills:download-toast', (e) => {
       const detail = e.detail || {};
       showDownloadToast(detail.name || 'Keepsake Guide', detail.attribution || 'Quills & Ink Hub Archive');
@@ -187,18 +223,6 @@ const {
       if (!link) return;
 
       const href = link.getAttribute('href') || '';
-      const isSkipModal = link.getAttribute('data-skip-modal') === 'true';
-
-      // Fallback only if modal was bypassed or directly confirmed
-      if (isSkipModal) {
-        const downloadName =
-          link.getAttribute('data-download-name') ||
-          link.getAttribute('aria-label') ||
-          link.textContent.trim() ||
-          href.split('/').pop();
-        const attribution = link.getAttribute('data-attribution') || 'Quills & Ink Hub Editorial Archive';
-        showDownloadToast(downloadName, attribution);
-      }
 
       // WhatsApp tracking
       if (href.includes('wa.me') || href.includes('whatsapp.com')) {

@@ -381,6 +381,9 @@
       tempLink.setAttribute('download', downloadFilename);
       tempLink.setAttribute('data-skip-modal', 'true');
       tempLink.style.display = 'none';
+      tempLink.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
       document.body.appendChild(tempLink);
       tempLink.click();
       setTimeout(() => tempLink.remove(), 150);
