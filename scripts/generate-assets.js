@@ -877,7 +877,7 @@ const brochurePdfHtml = `<!DOCTYPE html>
       <div class="specs-list">
         <div><strong>Paper Stock:</strong> 250gsm Silk Cover with Soft-Touch Matte Velvet Laminate; 130gsm Silk Inner Text.</div>
         <div><strong>Binding:</strong> A5 Saddle Stitched (or Square Back Book binding for 28+ pages).</div>
-        <div><strong>Editorial Turnaround:</strong> 7 days for text proofing; 4 days for press run in Accra or London.</div>
+        <div><strong>Design &amp; Printing Turnaround:</strong> Approximately 3 weeks after all content is secured (including proofing, design layout, and press run in Accra or London).</div>
       </div>
     </div>
 
