@@ -20,3 +20,6 @@ Thumbs.db
 # wrangler
 .wrangler/
 .dev.vars
+
+# generator temp files
+scripts/temp/
