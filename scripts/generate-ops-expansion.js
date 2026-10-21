@@ -448,7 +448,7 @@ Quills & Ink Hub serves as the family's trusted literary and event concierge on 
 
 ## 3. Dedicated Diaspora Communication Protocol
 - **Guaranteed Response Window:** Under 2 hours during GMT / BST / EST waking hours.
-- **Emergency WhatsApp Concierge:** +233 53 922 3757 (Available 24/7 during ceremony week).
+- **Emergency WhatsApp Concierge:** +233 53 995 5615 (Available 24/7 during ceremony week).
 `;
 
 fs.writeFileSync(path.join(opsDir, 'Transatlantic_Diaspora_Coordination_SOP.md'), diasporaSopMarkdown);
@@ -498,7 +498,7 @@ const calendarMarkdown = `# Quills & Ink Hub · 30-Day Social Media Editorial Ca
 1. **Never Sell in Comments:** If someone asks about price or availability, respond publicly with condolences and invite them to a private conversation:
    > *"Our deepest sympathies for your loss. We have sent you a quiet direct message with our brochure and WhatsApp concierge link. May peace be with your family."*
 2. **Reverent Imagery Only:** Never post unfiltered graphic scenes or casket distress. Only post dignified portraits, architectural beauty, floral sanctuaries, and fine print art.
-3. **Diaspora Pacing:** Ensure direct WhatsApp link (\`https://wa.me/233539223757\`) is in the bio link at all times.
+3. **Diaspora Pacing:** Ensure direct WhatsApp link (\`https://wa.me/233539955615\`) is in the bio link at all times.
 `;
 
 fs.writeFileSync(path.join(desktopPackDir, '06_Social_Media_Launch_Pack', '30_Day_Social_Media_Content_Calendar.md'), calendarMarkdown);
@@ -682,7 +682,7 @@ const updatedRootReadme = `# Quills & Ink Hub · Official Client Master Delivera
 - **Transatlantic_Diaspora_Coordination_SOP.md**: 7-stage standard operating procedure for guiding diaspora families in London, New York, Atlanta, Toronto, and Washington DC.
 
 ---
-**Desk Contact:** Telephone & WhatsApp: +233 53 922 3757 · Email: hello@quillsandinkhub.com · Web: quillsandinkhub.com
+**Desk Contact:** Telephone & WhatsApp: +233 53 995 5615 · Email: hello@quillsandinkhub.com · Web: quillsandinkhub.com
 `;
 
 fs.writeFileSync(path.join(desktopPackDir, 'README_CLIENT_DELIVERY.md'), updatedRootReadme);

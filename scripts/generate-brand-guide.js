@@ -1150,7 +1150,7 @@ const brandGuideHtml = `<!DOCTYPE html>
           <div class="caption-sample">
             “Care that listens before it plans.”<br><br>
             To our diaspora families joining this weekend’s consultation calls from London and the US: our editorial desk has prepared your draft tribute synthesis and liturgical order of service.<br><br>
-            We remain reachable daily on WhatsApp: +233 53 922 3757.
+            We remain reachable daily on WhatsApp: +233 53 995 5615.
           </div>
           <div class="caption-formula">
             <strong>WhatsApp Tone:</strong> Concise, deeply personal, service-oriented, providing active contact numbers and time-zone flexibility.
@@ -1220,7 +1220,7 @@ const brandGuideHtml = `<!DOCTYPE html>
               <img src="${logoPrimary}" alt="Profile avatar">
             </div>
             <div class="insta-meta">
-              <h5>quillsandinkhub</h5>
+              <h5>quillsninkhub</h5>
               <p>Quills &amp; Ink Hub · Funeral Coordination &amp; Literary Care · Accra &amp; Diaspora</p>
             </div>
           </div>
@@ -1337,7 +1337,7 @@ const brandGuideHtml = `<!DOCTYPE html>
             <div><span>Inner Text Stock:</span> <strong>130gsm Archival Silk Paper</strong></div>
             <div><span>Embellishments:</span> <strong>Metallic Gold Foil Embossing</strong></div>
             <div><span>Collateral Items:</span> <strong>Registers, Hymns, Easel Signs</strong></div>
-            <div><span>Secretariat Phone:</span> <strong>+233 53 922 3757 (WhatsApp)</strong></div>
+            <div><span>Secretariat Phone:</span> <strong>+233 53 995 5615 (WhatsApp)</strong></div>
           </div>
 
           <div class="turnaround-pill">

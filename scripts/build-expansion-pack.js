@@ -318,7 +318,7 @@ const newPosts = [
 
       <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(201,168,146,0.3); padding-top: 25px; z-index: 10;">
         <span style="font-size: 10pt; color: #8a7e72;">Slide 05 of 05 · Full Case Study Archive</span>
-        <span style="font-size: 10pt; color: #c9a892;">WhatsApp: +233 53 922 3757</span>
+        <span style="font-size: 10pt; color: #c9a892;">WhatsApp: +233 53 995 5615</span>
       </div>
     `
   },
@@ -467,7 +467,7 @@ const newPosts = [
 
       <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(201,168,146,0.3); padding-top: 25px; z-index: 10;">
         <span style="font-size: 10pt; color: #8a7e72;">The Transatlantic Estate Suite</span>
-        <span style="font-size: 10pt; color: #c9a892;">WhatsApp: +233 53 922 3757</span>
+        <span style="font-size: 10pt; color: #c9a892;">WhatsApp: +233 53 995 5615</span>
       </div>
     `
   }

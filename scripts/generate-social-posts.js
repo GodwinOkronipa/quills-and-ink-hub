@@ -214,7 +214,7 @@ const posts = [
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e6e0d8; padding-top: 25px; z-index: 10;">
-        <span style="font-size: 10pt; color: #8a7e72;">WhatsApp Consultation: <strong>+233 53 922 3757</strong></span>
+        <span style="font-size: 10pt; color: #8a7e72;">WhatsApp Consultation: <strong>+233 53 995 5615</strong></span>
         <span class="serif" style="font-size: 13pt; font-weight: 600; letter-spacing: 0.1em; color: #1a1612;">Quills &amp; Ink Hub</span>
       </div>
     `
@@ -828,7 +828,7 @@ const copyDeckMarkdown = `# Quills & Ink Hub · Social Media Copy Deck & Editori
   >
   > Quills and Ink Hub brings both worlds together under one seamless coordination team. One phone call, one listening ear, and complete peace of mind.
   >
-  > 📞 Reach our desk daily on WhatsApp: +233 53 922 3757.
+  > 📞 Reach our desk daily on WhatsApp: +233 53 995 5615.
 - **Hashtags:** \`#TwoWorldsOneHub #FuneralPlanningAccra #EventCoordination #EulogyWriting #QuillsAndInkHub\`
 
 ---
@@ -1017,7 +1017,7 @@ const copyDeckMarkdown = `# Quills & Ink Hub · Social Media Copy Deck & Editori
 ## Client Deliverable Checklist & Next Steps
 1. Share graphics and copy deck with client social media manager.
 2. Schedule launch teasers 2 weeks prior to public marketing campaign.
-3. Ensure WhatsApp direct link (\`https://wa.me/233539223757\`) is placed in social media bio link.
+3. Ensure WhatsApp direct link (\`https://wa.me/233539955615\`) is placed in social media bio link.
 `;
 
 fs.writeFileSync(path.join(desktopPackDir, '06_Social_Media_Launch_Pack', 'Social_Media_Copy_Deck_and_Captions.md'), copyDeckMarkdown);
@@ -1067,7 +1067,7 @@ const rootReadme = `# Quills & Ink Hub · Official Client Master Deliverable Pac
 - **Social_Media_Copy_Deck_and_Captions.md**: Ready-to-copy captions, headlines, hashtags, and posting schedule for all 19 posts.
 
 ---
-**Desk Contact:** Telephone & WhatsApp: +233 53 922 3757 · Email: hello@quillsandinkhub.com · Web: quillsandinkhub.com
+**Desk Contact:** Telephone & WhatsApp: +233 53 995 5615 · Email: hello@quillsandinkhub.com · Web: quillsandinkhub.com
 `;
 
 fs.writeFileSync(path.join(desktopPackDir, 'README_CLIENT_DELIVERY.md'), rootReadme);

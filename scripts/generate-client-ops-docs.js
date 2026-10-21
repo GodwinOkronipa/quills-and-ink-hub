@@ -226,7 +226,7 @@ const rateCardHtml = `<!DOCTYPE html>
     </div>
     <div class="contact-meta">
       <strong>Secretariat &amp; Client Desk</strong><br>
-      WhatsApp: +233 53 922 3757 · Accra &amp; London<br>
+      WhatsApp: +233 53 995 5615 · Accra &amp; London<br>
       Email: hello@quillsandinkhub.com
     </div>
   </div>
@@ -337,7 +337,7 @@ const rateCardHtml = `<!DOCTYPE html>
 
   <div class="footer-strip">
     <div><strong>Quills and Ink Hub</strong> · Where Every Story Finds Its Space · quillsandinkhub.com</div>
-    <div>Accra Desk: +233 53 922 3757 · London Concierge Desk</div>
+    <div>Accra Desk: +233 53 995 5615 · London Concierge Desk</div>
   </div>
 </body>
 </html>`;
@@ -550,7 +550,7 @@ const intakeFormHtml = `<!DOCTYPE html>
   </div>
 
   <div class="footer-note">
-    Please return completed form via WhatsApp to <strong>+233 53 922 3757</strong> or email to <strong>hello@quillsandinkhub.com</strong>.<br>
+    Please return completed form via WhatsApp to <strong>+233 53 995 5615</strong> or email to <strong>hello@quillsandinkhub.com</strong>.<br>
     Quills and Ink Hub · East Legon, Accra &amp; London, UK · quillsandinkhub.com
   </div>
 </body>
@@ -576,7 +576,7 @@ console.log('Saved Intake Form PDF:', intakeFormPdfDest);
 // 3. WhatsApp Scripts & Client SOPs
 const whatsappScriptsMd = `# Quills & Ink Hub · WhatsApp Business Client Care Scripts & SOPs
 **Designed For:** Secretariat, Client Care Coordinators & Lead Planners  
-**Primary Channel:** WhatsApp Business (+233 53 922 3757)  
+**Primary Channel:** WhatsApp Business (+233 53 995 5615)  
 
 ---
 
