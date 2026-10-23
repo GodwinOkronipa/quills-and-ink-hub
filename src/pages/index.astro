@@ -9,16 +9,25 @@ import Process from '../components/Process.astro';
 
 const offerings = [
   {
+    num: '01',
     title: 'Event Planning',
     text: 'Venue liaison, programme flow, and day-of coordination handled with quiet precision.',
+    link: '/packages',
+    linkText: 'Explore packages',
   },
   {
+    num: '02',
     title: 'Family Consultation',
     text: 'A listening first conversation — local or remote — to map needs, budget, and culture.',
+    link: '/book',
+    linkText: 'Book consultation',
   },
   {
+    num: '03',
     title: 'Literary Services',
     text: 'Eulogies, tributes, and memorial brochures written with warmth and clarity.',
+    link: '/literary',
+    linkText: 'View literary works',
   },
 ];
 ---
@@ -30,30 +39,49 @@ const offerings = [
     <Welcome />
     <ServicesStrip />
 
-    <section class="offerings">
-      <div class="container offerings__grid">
-        {
-          offerings.map((item) => (
-            <article>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </article>
-          ))
-        }
+    <section class="offerings" aria-labelledby="offerings-title">
+      <div class="container">
+        <div class="offerings__header" data-reveal="fade-up">
+          <span class="eyebrow">Our Core Focus</span>
+          <h2 id="offerings-title" class="section-title">Designed for Calm, Cultivated with Dignity</h2>
+        </div>
+
+        <div class="offerings__grid">
+          {
+            offerings.map((item, index) => (
+              <article class="offering-card" data-reveal="fade-up" data-delay={index * 140}>
+                <div class="offering-card__top">
+                  <span class="offering-card__num">{item.num}</span>
+                  <div class="offering-card__line" aria-hidden="true"></div>
+                </div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <a class="offering-card__link" href={item.link}>
+                  <span>{item.linkText}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </article>
+            ))
+          }
+        </div>
       </div>
     </section>
 
     <Process />
 
     <section class="cta-band">
-      <div class="container cta-band__inner">
-        <div>
+      <div class="cta-band__bg" aria-hidden="true"></div>
+      <div class="container cta-band__inner" data-reveal="fade-up">
+        <div class="cta-band__text">
           <p class="script">Begin gently</p>
           <h2>Ready when you are — a consultation that respects your time and heart.</h2>
         </div>
         <div class="cta-band__actions">
-          <a class="btn btn--peach" href="/book">Book a Consultation</a>
-          <a class="btn btn--brown" href="/contact">WhatsApp / Contact</a>
+          <a class="btn btn--peach cta-band__btn" href="/book">Book a Consultation</a>
+          <a class="btn btn--brown cta-band__btn" href="/contact">WhatsApp / Contact</a>
         </div>
       </div>
     </section>
@@ -64,7 +92,19 @@ const offerings = [
 <style>
   .offerings {
     background: var(--color-ivory);
-    padding: 4.5rem 0;
+    padding: 6rem 0;
+  }
+
+  .offerings__header {
+    text-align: center;
+    max-width: 36rem;
+    margin: 0 auto 3.5rem;
+  }
+
+  .offerings__header .eyebrow {
+    color: var(--color-peach-deep);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
   }
 
   .offerings__grid {
@@ -72,61 +112,230 @@ const offerings = [
     gap: 2rem;
   }
 
-  article {
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--color-line);
+  .offering-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-top: 3px solid var(--color-peach);
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgba(26, 22, 18, 0.04);
+    transition:
+      transform 0.35s var(--ease),
+      box-shadow 0.35s var(--ease),
+      border-top-color 0.35s var(--ease);
   }
 
-  h3 {
+  .offering-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 42px rgba(26, 22, 18, 0.1), 0 4px 12px rgba(0, 0, 0, 0.03);
+    border-top-color: var(--color-peach-deep);
+  }
+
+  .offering-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .offering-card__num {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    color: var(--color-peach);
+    line-height: 1;
+    font-weight: 500;
+  }
+
+  .offering-card__line {
+    width: 2.5rem;
+    height: 1px;
+    background: var(--color-line);
+    transition: width 0.35s var(--ease), background 0.35s var(--ease);
+  }
+
+  .offering-card:hover .offering-card__line {
+    width: 3.5rem;
+    background: var(--color-peach);
+  }
+
+  .offering-card h3 {
     font-size: 1.6rem;
-    margin-bottom: 0.65rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.85rem;
   }
 
-  p {
+  .offering-card p {
     font-family: var(--font-serif);
     color: var(--color-muted);
     font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
   }
 
+  .offering-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-charcoal);
+    transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+
+  .offering-card__link svg {
+    transition: transform 0.25s var(--ease);
+  }
+
+  .offering-card:hover .offering-card__link {
+    color: var(--color-peach-deep);
+  }
+
+  .offering-card:hover .offering-card__link svg {
+    transform: translateX(4px);
+  }
+
+  /* CTA Band */
   .cta-band {
+    position: relative;
+    color: white;
+    padding: 6.5rem 0;
+    overflow: hidden;
+  }
+
+  .cta-band__bg {
+    position: absolute;
+    inset: 0;
     background:
-      linear-gradient(180deg, rgba(26, 22, 18, 0.78), rgba(26, 22, 18, 0.84)),
+      linear-gradient(180deg, rgba(26, 22, 18, 0.78), rgba(26, 22, 18, 0.86)),
       url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1800&q=75')
         center / cover;
-    color: white;
-    padding: 5rem 0;
+    transform: scale(1.02);
+    transition: transform 10s ease-out;
+  }
+
+  .cta-band:hover .cta-band__bg {
+    transform: scale(1.06);
   }
 
   .cta-band__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     gap: 2rem;
   }
 
   .cta-band .script {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 0.5rem;
+    color: var(--color-peach-light, #ffd5b5);
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
   .cta-band h2 {
     font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    max-width: 18ch;
+    max-width: 20ch;
+    line-height: 1.25;
   }
 
   .cta-band__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.85rem;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .cta-band__btn {
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+
+  .cta-band__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Scroll-triggered reveal animations */
+  :global([data-reveal]) {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  :global([data-reveal="fade-in"]) {
+    transform: none;
+  }
+
+  :global([data-reveal].is-revealed) {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   @media (min-width: 800px) {
     .offerings__grid {
       grid-template-columns: repeat(3, 1fr);
-      gap: 2.5rem;
+      gap: 2.25rem;
     }
 
     .cta-band__inner {
-      grid-template-columns: 1.3fr 1fr;
+      grid-template-columns: 1.35fr 1fr;
       align-items: end;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global([data-reveal]) {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .offering-card:hover,
+    .cta-band__btn:hover,
+    .cta-band:hover .cta-band__bg {
+      transform: none !important;
+    }
+  }
 </style>
+
+<script>
+  // High-performance IntersectionObserver for smooth scroll reveals
+  (() => {
+    const revealElements = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    if (!revealElements.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      revealElements.forEach((el) => el.classList.add('is-revealed'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLElement;
+            const delay = target.getAttribute('data-delay');
+            if (delay) {
+              window.setTimeout(() => {
+                target.classList.add('is-revealed');
+              }, parseInt(delay, 10));
+            } else {
+              target.classList.add('is-revealed');
+            }
+            observer.unobserve(target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    );
+
+    revealElements.forEach((el) => observer.observe(el));
+  })();
+</script>
