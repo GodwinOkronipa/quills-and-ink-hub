@@ -17,19 +17,23 @@ const projects = [
   },
   {
     category: 'Gatherings',
-    title: 'Memorial Service of the Late Nicholas Nii Adamma Ammah (Opanin Kwame Darko)',
-    text: 'Solemn thanksgiving and memorial service held on 30-03-2019 at All Souls\' Chapel, Lashibi Funeral Home. Ceremonial Kente casket styling, bespoke floral artistry, order of service coordination, and keepsake print literature.',
-    image: '/images/portfolio/nicholas-nii-adamma/01-casket-kente-tribute.jpg',
-    tag: 'Lashibi Funeral Home · 30-03-2019',
-    href: '/portfolio/nicholas-nii-adamma',
-  },
-  {
-    category: 'Gatherings',
     title: 'Diaspora-Supported Service · Cantonments',
     text: 'Seamless synchronization between Accra organizers and diaspora family in London and Calgary, featuring synchronized livestream and hybrid eulogy readings.',
     image:
       'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=70',
     tag: 'Hybrid Coordination',
+  },
+  {
+    category: 'Gatherings',
+    title: 'Memorial Service of the Late Nicholas Nii Adamma Ammah (Opanin Kwame Darko)',
+    text: 'Solemn thanksgiving and memorial service held on 30-03-2019 at All Souls\' Chapel, Lashibi Funeral Home. Ceremonial Kente casket styling, bespoke floral artistry, order of service coordination, and keepsake print literature.',
+    image: '/images/portfolio/nicholas-nii-adamma/01-casket-kente-tribute.jpg',
+    tag: 'Lashibi Funeral Home · 30-03-2019',
+    href: '/literary#panel-nicholas-adamma',
+    ctaText: 'View Memorial Keepsake in Literary Section',
+    actionBadge: 'Memorial Doc',
+    secondaryHref: '/portfolio/nicholas-nii-adamma',
+    secondaryLabel: 'View Memorial Photo Gallery',
   },
   {
     category: 'Décor & Floral',
@@ -41,11 +45,13 @@ const projects = [
   },
   {
     category: 'Brochures & Print',
-    title: '36-Page Memorial Keepsake Brochure',
-    text: 'Matte gold foil stamped cover, family photo chronology, biography synthesis, and hymn lyrics printed on premium recycled stock in Accra.',
-    image:
-      'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=70',
-    tag: 'Stationery & Print',
+    title: 'Memorial Keepsake Brochure · Late Nathaniel Owusu-Acheaw (Agya Owusu)',
+    text: 'A dignified 20-page commemorative keepsake brochure honoring Opanin Nathaniel Owusu-Acheaw (July 24, 1948 – March 29, 2026). Tracing his journey from Asamankama in Offinso through STC and newspaper distribution at the Accra General Post Office to his devoted faith in the Church in Accra, this publication compiles his complete order of service, biographical narrative, heartfelt family tributes, hymns, and photo retrospectives.',
+    image: '/images/portfolio/nathaniel-owusu-acheaw-portrait.jpg',
+    tag: 'Keepsake Publication · 7.4 MB PDF',
+    downloadHref: '/downloads/nathaniel-owusu-acheaw-brochure.pdf',
+    downloadLabel: 'Download Keepsake Brochure (PDF)',
+    readMoreHref: '/literary#panel-owusu-acheaw',
   },
 ];
 
@@ -114,10 +120,15 @@ const testimonials = [
                   <span class="gallery-item__tag">{item.tag}</span>
                   {isLink && (
                     <span class="gallery-item__action-badge">
-                      <span>View Gallery</span>
+                      <span>{item.actionBadge || 'View Gallery'}</span>
                       <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13" aria-hidden="true">
                         <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
                       </svg>
+                    </span>
+                  )}
+                  {item.downloadHref && !isLink && (
+                    <span class="gallery-item__action-badge">
+                      <span>Keepsake PDF</span>
                     </span>
                   )}
                 </div>
@@ -126,8 +137,32 @@ const testimonials = [
                   <p>{item.text}</p>
                   {isLink && (
                     <span class="gallery-item__cta-link">
-                      Open Memorial Gallery &amp; Retrospective &rarr;
+                      {item.ctaText || 'Open Memorial Gallery & Retrospective'} &rarr;
                     </span>
+                  )}
+                  {item.downloadHref && (
+                    <div class="gallery-item__actions">
+                      <a
+                        href={item.downloadHref}
+                        download
+                        class="gallery-item__dl-btn"
+                        data-track-download="true"
+                        data-download-name={`${item.title} (PDF)`}
+                        data-download-format="PDF"
+                      >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                          <polyline points="7 10 12 15 17 10"></polyline>
+                          <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span>{item.downloadLabel || 'Download Brochure (PDF)'}</span>
+                      </a>
+                      {item.readMoreHref && (
+                        <a href={item.readMoreHref} class="gallery-item__read-link">
+                          Read Excerpts &rarr;
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
               </CardTag>
@@ -329,6 +364,60 @@ const testimonials = [
   .gallery-item:hover .gallery-item__cta-link {
     color: var(--color-charcoal);
     transform: translateX(4px);
+  }
+
+  .gallery-item__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 0.95rem;
+    padding-top: 0.4rem;
+  }
+
+  .gallery-item__dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.05rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    background: var(--color-charcoal);
+    color: #ffffff;
+    border: 1px solid var(--color-charcoal);
+    box-shadow: 0 4px 12px rgba(26, 22, 18, 0.12);
+    transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .gallery-item__dl-btn:hover {
+    background: var(--color-peach-deep);
+    border-color: var(--color-peach-deep);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  .gallery-item__read-link {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-peach-deep);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+
+  .gallery-item__read-link:hover {
+    color: var(--color-charcoal);
+    transform: translateX(3px);
   }
 
   .testimonials {
