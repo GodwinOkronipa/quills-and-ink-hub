@@ -15,7 +15,9 @@ import Footer from '../components/Footer.astro';
   <Header variant="solid" />
 
   <main class="admin-main">
-    <!-- 1. Encrypted Gate / Login View -->
+    <!-- =====================================================================
+         1. Encrypted Gate / Login View
+         ===================================================================== -->
     <section id="admin-login-view" class="admin-gate container">
       <div class="gate-card">
         <div class="gate-monogram">
@@ -70,526 +72,650 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <!-- 2. Authenticated Admin Dashboard View -->
-    <section id="admin-dashboard-view" class="admin-dashboard container-wide" style="display: none;">
-      <!-- Dashboard Top Header -->
-      <div class="dash-top-bar">
-        <div class="dash-branding">
-          <span class="eyebrow" style="color: var(--color-peach-deep);">Editorial Administration</span>
-          <h1>Quills &amp; Ink Hub Analytics Desk</h1>
-          <p class="dash-sub">
-            Real-time download attribution, diaspora visitor patterns, and resource management.
-          </p>
-        </div>
+    <!-- =====================================================================
+         2. Authenticated Admin Dashboard Workspace (with Dedicated Sidebar)
+         ===================================================================== -->
+    <section id="admin-dashboard-view" class="admin-app-shell" style="display: none;">
+      <!-- Mobile Backdrop -->
+      <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
 
-        <div class="dash-controls">
-          <div class="live-sync-pill" title="Real-time live edge sync directly from Cloudflare D1">
-            <span class="pulse-dot"></span>
-            <span>Real-Time Active</span>
+      <!-- -------------------------------------------------------------------
+           LEFT SIDEBAR NAVIGATION
+           ------------------------------------------------------------------- -->
+      <aside id="admin-sidebar" class="admin-sidebar">
+        <!-- Sidebar Brand Header -->
+        <div class="sidebar-brand">
+          <div class="sidebar-brand__meta">
+            <span class="script sidebar-brand__logo">Quills &amp; Ink</span>
+            <span class="sidebar-brand__tag">Editorial Desk</span>
           </div>
-
-          <div class="storage-status-pill" id="storage-status-pill" title="Privacy-first edge analytics without cookies">
-            <span class="storage-dot"></span>
-            <span id="dash-storage-badge">Cloudflare D1 (Edge SQLite)</span>
-            <span class="info-dot" tabindex="0" role="tooltip">
-              i
-              <span class="info-tooltip">Runs directly at the Cloudflare network edge. Collects real stats with zero third-party tracking cookies and zero ad-blocker loss.</span>
-            </span>
-          </div>
-
-          <button type="button" id="btn-refresh-data" class="btn-refresh" title="Fetch fresh statistics from Edge database">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M23 4v6h-6"></path>
-              <path d="M1 20v-6h6"></path>
-              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-            </svg>
-            <span>Sync</span>
-          </button>
-
-          <button type="button" id="btn-admin-logout" class="btn-logout" title="Sign out of admin session">
-            <span>Sign Out</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-              <polyline points="16 17 21 12 16 7"></polyline>
-              <line x1="21" y1="12" x2="9" y2="12"></line>
-            </svg>
+          <button type="button" id="btn-close-sidebar" class="btn-sidebar-close" aria-label="Close sidebar">
+            ✕
           </button>
         </div>
-      </div>
 
-      <!-- Dashboard Navigation Tabs -->
-      <div class="dash-tabs" role="tablist">
-        <button type="button" class="dash-tab is-active" data-dash-tab="analytics">
-          <span class="tab-icon">📊</span>
-          <span>Analytics &amp; Downloads</span>
-        </button>
-        <button type="button" class="dash-tab" data-dash-tab="content">
-          <span class="tab-icon">📁</span>
-          <span>Content &amp; Resource Management</span>
-          <span class="tab-pill-badge">6 Slots Limit</span>
-        </button>
-        <button type="button" class="dash-tab" data-dash-tab="diaspora">
-          <span class="tab-icon">🌍</span>
-          <span>Diaspora Reach &amp; Search Queries</span>
-        </button>
-      </div>
-
-      <!-- TAB 1: Analytics & Download Attribution -->
-      <div id="panel-analytics" class="dash-panel is-visible">
-        <!-- High Level Metrics Grid -->
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <div class="metric-header">
-              <span class="metric-title">
-                Total Page Views
-                <span class="info-dot" tabindex="0" role="tooltip">
-                  i
-                  <span class="info-tooltip">The total number of times your website pages were opened by visitors across Ghana and worldwide.</span>
-                </span>
-              </span>
-              <span class="metric-trend trend-up">● Edge D1</span>
-            </div>
-            <div class="metric-value" id="val-page-views">0</div>
-            <div class="metric-sub">
-              <span id="val-unique-visitors">0</span> Unique Visitors (Hashed)
-              <span class="info-dot" tabindex="0" role="tooltip">
-                i
-                <span class="info-tooltip">The number of distinct, separate individuals who viewed your services. Calculated via privacy-first daily session hashing.</span>
-              </span>
-            </div>
-          </div>
-
-          <div class="metric-card metric-card--highlight">
-            <div class="metric-header">
-              <span class="metric-title">
-                Keepsake PDF Downloads
-                <span class="info-dot" tabindex="0" role="tooltip">
-                  i
-                  <span class="info-tooltip">How many times families downloaded your official eulogy guides, brochure blueprints, and planning checklists.</span>
-                </span>
-              </span>
-              <span class="metric-trend trend-up">● Real Clicks</span>
-            </div>
-            <div class="metric-value" id="val-pdf-downloads">0</div>
-            <div class="metric-sub">
-              100% Attribution Tracked
-              <span class="info-dot" tabindex="0" role="tooltip">
-                i
-                <span class="info-tooltip">Every downloaded guide includes your contact details and website, so families always know how to reach back to book your care.</span>
-              </span>
-            </div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-header">
-              <span class="metric-title">
-                Site Searches Conducted
-                <span class="info-dot" tabindex="0" role="tooltip">
-                  i
-                  <span class="info-tooltip">What families type into your search bar. Highlights their most urgent funeral planning questions.</span>
-                </span>
-              </span>
-              <span class="metric-trend trend-up">● Search Log</span>
-            </div>
-            <div class="metric-value" id="val-search-queries">0</div>
-            <div class="metric-sub">Live search intentions</div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-header">
-              <span class="metric-title">
-                Consultation Inquiries
-                <span class="info-dot" tabindex="0" role="tooltip">
-                  i
-                  <span class="info-tooltip">Bereaved families who clicked the online booking consultation actions to schedule a formal listening session.</span>
-                </span>
-              </span>
-              <span class="metric-trend trend-up">● Booking CTA</span>
-            </div>
-            <div class="metric-value" id="val-consultations">0</div>
-            <div class="metric-sub">Listening session requests</div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-header">
-              <span class="metric-title">
-                WhatsApp Chats
-                <span class="info-dot" tabindex="0" role="tooltip">
-                  i
-                  <span class="info-tooltip">Families who tapped the brown WhatsApp button to message your team directly for instant support.</span>
-                </span>
-              </span>
-              <span class="metric-trend trend-up">● Instant Desk</span>
-            </div>
-            <div class="metric-value" id="val-whatsapp">0</div>
-            <div class="metric-sub">Direct family conversations</div>
-          </div>
-        </div>
-
-        <!-- Download Attribution & Distribution Section -->
-        <div class="dash-split-grid">
-          <div class="dash-box">
-            <div class="dash-box__header">
-              <div>
-                <h3>
-                  Download Attribution Breakdown
-                  <span class="info-dot" tabindex="0" role="tooltip">
-                    i
-                    <span class="info-tooltip">Shows which memorial guide is most requested by families, helping you see what resources they find most comforting.</span>
-                  </span>
-                </h3>
-                <p class="dash-box__sub">Performance metrics for each formatted static PDF keepsake</p>
-              </div>
-              <span class="dash-badge">Real-Time Count</span>
-            </div>
-
-            <div class="download-breakdown-list" id="download-breakdown-list">
-              <!-- Rendered via JavaScript from live analytics API -->
-              <div class="empty-stream-notice">
-                <div class="empty-icon">📥</div>
-                <p><strong>Connecting to D1 Download Logs...</strong></p>
-                <span class="empty-sub">Counting verified PDF downloads from memorial resource slots.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Real-Time Activity Feed -->
-          <div class="dash-box">
-            <div class="dash-box__header">
-              <div>
-                <h3>
-                  Live Visitor &amp; Attribution Feed
-                  <span class="info-dot" tabindex="0" role="tooltip">
-                    i
-                    <span class="info-tooltip">Real-time actions happening on your website right now as visitors download PDFs, search, or tap WhatsApp.</span>
-                  </span>
-                </h3>
-                <p class="dash-box__sub">Live listener stream capturing user touchpoints</p>
-              </div>
-              <span class="dash-badge badge-pulse">Stream Active</span>
-            </div>
-
-            <div class="live-events-stream" id="live-events-container">
-              <!-- Rendered dynamically via JavaScript from live D1 event table -->
-              <div class="empty-stream-notice">
-                <div class="empty-icon">📡</div>
-                <p><strong>Awaiting Live Visitor Touchpoints</strong></p>
-                <span class="empty-sub">Real-time edge listener is active. As soon as visitors read pages, download guides, or click WhatsApp, events will appear here automatically.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 2: Content & Resource Management (R2 Uploads with 6-Slot Limits) -->
-      <div id="panel-content" class="dash-panel" style="display: none;">
-        <div class="dash-box">
-          <div class="dash-box__header">
-            <div>
-              <h3>
-                Curated Memorial Resources
-                <span class="info-dot" tabindex="0" role="tooltip">
-                  i
-                  <span class="info-tooltip">To prevent the website from becoming cluttered or overwhelming for grieving families, the hub is capped at 6 essential document slots.</span>
-                </span>
-              </h3>
-              <p class="dash-box__sub">
-                Publish and update official PDF guides stored securely on Cloudflare R2 object storage.
-              </p>
-            </div>
-            <div class="slot-counter-badge">
-              <span class="slot-count-num">6 of 6 Slots Assigned</span>
-            </div>
-          </div>
-
-          <!-- Non-Technical Client Notice Banner -->
-          <div class="notice-banner notice-banner--friendly">
-            <div class="notice-icon">🛡️</div>
-            <div class="notice-content">
-              <h4>Clean, High-Speed Document Management</h4>
-              <p>
-                To keep your website dignified, uncluttered, and fast across mobile devices in Ghana and the diaspora, three simple rules are enforced:
-              </p>
-              <div class="client-rules-grid">
-                <div class="rule-chip">
-                  <span class="rule-chip__icon">📁</span>
-                  <div>
-                    <strong>Max 6 Document Slots</strong>
-                    <span class="rule-chip__sub">Keeps choices clear and peaceful for families</span>
-                  </div>
-                </div>
-                <div class="rule-chip">
-                  <span class="rule-chip__icon">⚡</span>
-                  <div>
-                    <strong>Max 10 MB per PDF</strong>
-                    <span class="rule-chip__sub">Ensures fast mobile downloads on any connection</span>
-                  </div>
-                </div>
-                <div class="rule-chip">
-                  <span class="rule-chip__icon">📄</span>
-                  <div>
-                    <strong>PDF Format Only</strong>
-                    <span class="rule-chip__sub">Guarantees layout and typography look identical</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Active Upload Card (Cloudflare R2) -->
-          <div class="upload-workflow-card">
-            <div class="upload-workflow-header">
-              <h4>
-                Update or Replace a Resource
-                <span class="info-dot" tabindex="0" role="tooltip">
-                  i
-                  <span class="info-tooltip">Select which of the 6 guides you wish to update. When you upload a new PDF, it replaces the previous file seamlessly without breaking any links.</span>
-                </span>
-              </h4>
-              <p class="upload-sub">Choose a target slot, attach your formatted PDF, and publish live to Cloudflare R2.</p>
-            </div>
-
-            <form id="resource-upload-form" class="upload-form" autocomplete="off">
-              <div class="upload-form-grid">
-                <div class="form-group">
-                  <label for="upload-slot-select">
-                    Target Document Slot
-                    <span class="info-dot" tabindex="0" role="tooltip">
-                      i
-                      <span class="info-tooltip">Choose the specific guide slot being updated.</span>
-                    </span>
-                  </label>
-                  <select id="upload-slot-select" class="gate-input" required>
-                    <option value="eulogy-writing-guide">Slot 1: Eulogy Reflection &amp; Writing Guide (PDF)</option>
-                    <option value="memorial-brochure-checklist">Slot 2: Memorial Keepsake Brochure Checklist (PDF)</option>
-                    <option value="tribute-reading-excerpt">Slot 3: Selected Memorial Readings &amp; Poems (PDF)</option>
-                    <option value="quills-and-ink-family-memorial-guide">Slot 4: Master Family Memorial Planning Guide (PDF)</option>
-                    <option value="diaspora-liaison-handbook">Slot 5: Diaspora Funeral Coordination Handbook (PDF)</option>
-                    <option value="order-of-service-blueprint">Slot 6: Ceremonial Order of Service Blueprint (PDF)</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="upload-file-input">
-                    Select New PDF Document
-                    <span class="info-dot" tabindex="0" role="tooltip">
-                      i
-                      <span class="info-tooltip">Must be a .pdf file under 10 MB. Word documents should be saved as PDF first.</span>
-                    </span>
-                  </label>
-                  <div class="file-drop-zone" id="file-drop-zone">
-                    <input type="file" id="upload-file-input" accept="application/pdf" class="file-hidden-input" required />
-                    <div class="drop-zone-content">
-                      <span class="drop-icon">📤</span>
-                      <span class="drop-prompt" id="drop-prompt-text">Click or drag a PDF here to upload</span>
-                      <span class="drop-sub">PDF only · Max 10 MB limit</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="upload-status-alert" class="upload-alert" style="display: none;"></div>
-
-              <div class="upload-actions">
-                <button type="submit" id="btn-submit-upload" class="btn btn--peach">
-                  <span class="btn-spinner" id="upload-spinner" style="display: none;">⏳</span>
-                  <span>Publish Updated Guide</span>
+        <!-- Sidebar Navigation Groups -->
+        <nav class="sidebar-nav" aria-label="Admin Navigation">
+          <div class="sidebar-nav__group">
+            <span class="sidebar-nav__heading">Core Workspace</span>
+            <ul class="sidebar-nav__list">
+              <li>
+                <button type="button" class="sidebar-nav__item is-active dash-tab" data-dash-tab="analytics">
+                  <span class="nav-icon">📊</span>
+                  <span class="nav-label">Analytics &amp; Performance</span>
                 </button>
-                <span class="upload-security-note">🔒 Powered by Cloudflare R2 object storage with automated MIME &amp; size verification.</span>
-              </div>
-            </form>
+              </li>
+              <li>
+                <button type="button" class="sidebar-nav__item dash-tab" data-dash-tab="content">
+                  <span class="nav-icon">📁</span>
+                  <span class="nav-label">Keepsake Resources</span>
+                  <span class="nav-badge">6 Slots</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="sidebar-nav__item dash-tab" data-dash-tab="diaspora">
+                  <span class="nav-icon">🌍</span>
+                  <span class="nav-label">Diaspora &amp; Searches</span>
+                </button>
+              </li>
+            </ul>
           </div>
 
-          <!-- Current 6 Assets Table -->
-          <div class="resources-table-wrap">
-            <table class="resources-table">
-              <thead>
-                <tr>
-                  <th>
-                    Resource Title
-                    <span class="info-dot" tabindex="0" role="tooltip">
-                      i
-                      <span class="info-tooltip">The official title shown to bereaved families across the website and search modal.</span>
-                    </span>
-                  </th>
-                  <th>Category</th>
-                  <th>Current File</th>
-                  <th>File Size</th>
-                  <th>Total Downloads</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="resource-slots-tbody">
-                <tr>
-                  <td>
-                    <strong>Eulogy Reflection &amp; Writing Guide</strong>
-                    <div class="tbl-sub">Framework for drafting spoken tributes</div>
-                  </td>
-                  <td><span class="category-badge">Spoken Tributes</span></td>
-                  <td><code class="inline-code">eulogy-writing-guide.pdf</code></td>
-                  <td>358 KB</td>
-                  <td><strong>312</strong></td>
-                  <td>
-                    <div class="table-actions">
-                      <a href="/downloads/eulogy-writing-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="eulogy-writing-guide">Update</button>
-                    </div>
-                  </td>
-                </tr>
+          <div class="sidebar-nav__group">
+            <span class="sidebar-nav__heading">Quick Actions</span>
+            <ul class="sidebar-nav__list">
+              <li>
+                <button type="button" id="btn-sidebar-upload-quick" class="sidebar-nav__item">
+                  <span class="nav-icon">📤</span>
+                  <span class="nav-label">Upload New PDF</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" id="btn-sidebar-stream-jump" class="sidebar-nav__item">
+                  <span class="nav-icon">📡</span>
+                  <span class="nav-label">Live Visitor Stream</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
 
-                <tr>
-                  <td>
-                    <strong>Memorial Keepsake Brochure Checklist</strong>
-                    <div class="tbl-sub">Order of service &amp; photo specifications</div>
-                  </td>
-                  <td><span class="category-badge">Print &amp; Keepsakes</span></td>
-                  <td><code class="inline-code">memorial-brochure-checklist.pdf</code></td>
-                  <td>224 KB</td>
-                  <td><strong>218</strong></td>
-                  <td>
-                    <div class="table-actions">
-                      <a href="/downloads/memorial-brochure-checklist.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="memorial-brochure-checklist">Update</button>
-                    </div>
-                  </td>
-                </tr>
+        <!-- Sidebar Profile & Edge Status Footer -->
+        <div class="sidebar-footer">
+          <div class="sidebar-status-box">
+            <div class="status-indicator">
+              <span class="pulse-dot"></span>
+              <span class="status-text">Cloudflare D1 Edge Active</span>
+            </div>
+            <div class="status-sub">Zero-Cookie Edge Analytics</div>
+          </div>
 
-                <tr>
-                  <td>
-                    <strong>Selected Memorial Readings &amp; Poems</strong>
-                    <div class="tbl-sub">Ceremonial family and church readings</div>
-                  </td>
-                  <td><span class="category-badge">Spoken Tributes</span></td>
-                  <td><code class="inline-code">tribute-reading-excerpt.pdf</code></td>
-                  <td>145 KB</td>
-                  <td><strong>98</strong></td>
-                  <td>
-                    <div class="table-actions">
-                      <a href="/downloads/tribute-reading-excerpt.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="tribute-reading-excerpt">Update</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <strong>Master Family Memorial Planning Guide</strong>
-                    <div class="tbl-sub">All-in-one planning and timeline handbook</div>
-                  </td>
-                  <td><span class="category-badge">Master Guides</span></td>
-                  <td><code class="inline-code">quills-and-ink-family-memorial-guide.pdf</code></td>
-                  <td>358 KB</td>
-                  <td><strong>56</strong></td>
-                  <td>
-                    <div class="table-actions">
-                      <a href="/downloads/quills-and-ink-family-memorial-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="quills-and-ink-family-memorial-guide">Update</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <strong>Diaspora Funeral Coordination Handbook</strong>
-                    <div class="tbl-sub">Liaison guide for families arranging from abroad</div>
-                  </td>
-                  <td><span class="category-badge">Diaspora Guidance</span></td>
-                  <td><code class="inline-code">diaspora-liaison-handbook.pdf</code></td>
-                  <td>190 KB</td>
-                  <td><strong>41</strong></td>
-                  <td>
-                    <div class="table-actions">
-                      <a href="/downloads/quills-and-ink-family-memorial-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="diaspora-liaison-handbook">Update</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <strong>Ceremonial Order of Service Blueprint</strong>
-                    <div class="tbl-sub">Church and graveside sequence outline</div>
-                  </td>
-                  <td><span class="category-badge">Print &amp; Keepsakes</span></td>
-                  <td><code class="inline-code">order-of-service-blueprint.pdf</code></td>
-                  <td>174 KB</td>
-                  <td><strong>29</strong></td>
-                  <td>
-                    <div class="table-actions">
-                      <a href="/downloads/memorial-brochure-checklist.pdf" download class="btn-table-action" title="Download current file">Download</a>
-                      <button type="button" class="btn-table-action btn-replace-trigger" data-slot="order-of-service-blueprint">Update</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="sidebar-user">
+            <div class="user-avatar">EA</div>
+            <div class="user-meta">
+              <span class="user-name">Editorial Admin</span>
+              <span class="user-role">quills-and-ink-hub</span>
+            </div>
+            <button type="button" id="btn-sidebar-logout" class="btn-sidebar-logout" title="Sign out of admin session">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
           </div>
         </div>
-      </div>
+      </aside>
 
-      <!-- TAB 3: Diaspora Reach & Search Queries -->
-      <div id="panel-diaspora" class="dash-panel" style="display: none;">
-        <div class="dash-split-grid">
-          <!-- Diaspora Geography -->
-          <div class="dash-box">
-            <div class="dash-box__header">
-              <div>
-                <h3>
-                  Diaspora Family Geographic Footprint
-                  <span class="info-dot" tabindex="0" role="tooltip">
-                    i
-                    <span class="info-tooltip">Shows where families are visiting your website from. This helps you schedule calls during their local daytime hours (GMT, BST, EST, PST).</span>
-                  </span>
-                </h3>
-                <p class="dash-box__sub">Inquiries &amp; downloads originating across diaspora centers</p>
-              </div>
-              <span class="dash-badge">Top Inquiries</span>
+      <!-- -------------------------------------------------------------------
+           RIGHT MAIN WORKSPACE
+           ------------------------------------------------------------------- -->
+      <div class="admin-workspace">
+        <!-- Top Workspace Bar -->
+        <header class="workspace-top-bar">
+          <div class="top-bar-left">
+            <button type="button" id="btn-open-sidebar" class="btn-hamburger" aria-label="Open navigation sidebar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <div class="top-bar-breadcrumbs">
+              <span class="breadcrumb-root">Editorial Desk</span>
+              <span class="breadcrumb-separator">/</span>
+              <span id="active-breadcrumb-title" class="breadcrumb-current">Analytics &amp; Performance</span>
+            </div>
+          </div>
+
+          <div class="top-bar-right">
+            <div class="live-sync-pill" title="Real-time live edge sync directly from Cloudflare D1">
+              <span class="pulse-dot"></span>
+              <span>Live Edge Sync</span>
             </div>
 
-            <div class="diaspora-list" id="diaspora-list-container">
-              <!-- Rendered dynamically via JavaScript from live D1 geolocation records -->
-              <div class="empty-stream-notice">
-                <div class="empty-icon">🌍</div>
-                <p><strong>Tracking Visitor Geolocation...</strong></p>
-                <span class="empty-sub">Cloudflare Edge will chart diaspora family visits (Ghana, UK, US, Canada, etc.) as live traffic enters.</span>
+            <div class="storage-status-pill" id="storage-status-pill" title="Privacy-first edge analytics without cookies">
+              <span class="storage-dot"></span>
+              <span id="dash-storage-badge">Cloudflare D1 (Edge SQLite)</span>
+              <span class="info-dot" tabindex="0" role="tooltip">
+                i
+                <span class="info-tooltip">Runs directly at the Cloudflare network edge. Collects real stats with zero third-party tracking cookies and zero ad-blocker loss.</span>
+              </span>
+            </div>
+
+            <button type="button" id="btn-refresh-data" class="btn-refresh" title="Fetch fresh statistics from Edge database">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"></path>
+                <path d="M1 20v-6h6"></path>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              <span>Sync</span>
+            </button>
+
+            <button type="button" id="btn-admin-logout" class="btn-logout" title="Sign out of admin session">
+              <span>Sign Out</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- Main Workspace Body -->
+        <div class="workspace-body">
+          <!-- ===============================================================
+               TAB PANEL 1: Analytics & Download Attribution
+               =============================================================== -->
+          <div id="panel-analytics" class="dash-panel is-visible">
+            <div class="panel-header">
+              <div>
+                <h2>Overview &amp; Attribution Metrics</h2>
+                <p class="panel-sub">
+                  Live visitor inquiries, keepsake guide requests, and diaspora touchpoints captured at the Cloudflare Edge.
+                </p>
+              </div>
+              <div class="panel-header-actions">
+                <span class="date-badge">Real-Time Continuous Edge Ingestion</span>
+              </div>
+            </div>
+
+            <!-- High Level Metrics Grid -->
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-header">
+                  <span class="metric-title">
+                    Total Page Views
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">The total number of times your website pages were opened by visitors across Ghana and worldwide.</span>
+                    </span>
+                  </span>
+                  <span class="metric-trend trend-up">● Edge D1</span>
+                </div>
+                <div class="metric-value" id="val-page-views">0</div>
+                <div class="metric-sub">
+                  <span id="val-unique-visitors">0</span> Unique Visitors (Hashed)
+                  <span class="info-dot" tabindex="0" role="tooltip">
+                    i
+                    <span class="info-tooltip">The number of distinct, separate individuals who viewed your services. Calculated via privacy-first daily session hashing.</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="metric-card metric-card--highlight">
+                <div class="metric-header">
+                  <span class="metric-title">
+                    Keepsake PDF Downloads
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">How many times families downloaded your official eulogy guides, brochure blueprints, and planning checklists.</span>
+                    </span>
+                  </span>
+                  <span class="metric-trend trend-up">● Real Clicks</span>
+                </div>
+                <div class="metric-value" id="val-pdf-downloads">0</div>
+                <div class="metric-sub">
+                  100% Attribution Tracked
+                  <span class="info-dot" tabindex="0" role="tooltip">
+                    i
+                    <span class="info-tooltip">Every downloaded guide includes your contact details and website, so families always know how to reach back to book your care.</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header">
+                  <span class="metric-title">
+                    Site Searches Conducted
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">What families type into your search bar. Highlights their most urgent funeral planning questions.</span>
+                    </span>
+                  </span>
+                  <span class="metric-trend trend-up">● Search Log</span>
+                </div>
+                <div class="metric-value" id="val-search-queries">0</div>
+                <div class="metric-sub">Live search intentions</div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header">
+                  <span class="metric-title">
+                    Consultation Inquiries
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">Bereaved families who clicked the online booking consultation actions to schedule a formal listening session.</span>
+                    </span>
+                  </span>
+                  <span class="metric-trend trend-up">● Booking CTA</span>
+                </div>
+                <div class="metric-value" id="val-consultations">0</div>
+                <div class="metric-sub">Listening session requests</div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header">
+                  <span class="metric-title">
+                    WhatsApp Chats
+                    <span class="info-dot" tabindex="0" role="tooltip">
+                      i
+                      <span class="info-tooltip">Families who tapped the brown WhatsApp button to message your team directly for instant support.</span>
+                    </span>
+                  </span>
+                  <span class="metric-trend trend-up">● Instant Desk</span>
+                </div>
+                <div class="metric-value" id="val-whatsapp">0</div>
+                <div class="metric-sub">Direct family conversations</div>
+              </div>
+            </div>
+
+            <!-- Download Attribution & Real-time Stream Grid -->
+            <div class="dash-split-grid">
+              <!-- Download Breakdown -->
+              <div class="dash-box">
+                <div class="dash-box__header">
+                  <div>
+                    <h3>
+                      Download Attribution Breakdown
+                      <span class="info-dot" tabindex="0" role="tooltip">
+                        i
+                        <span class="info-tooltip">Shows which memorial guide is most requested by families, helping you see what resources they find most comforting.</span>
+                      </span>
+                    </h3>
+                    <p class="dash-box__sub">Performance metrics for each formatted static PDF keepsake</p>
+                  </div>
+                  <span class="dash-badge">Real-Time Count</span>
+                </div>
+
+                <div class="download-breakdown-list" id="download-breakdown-list">
+                  <!-- Rendered via JavaScript from live analytics API -->
+                  <div class="empty-stream-notice">
+                    <div class="empty-icon">📥</div>
+                    <p><strong>Connecting to D1 Download Logs...</strong></p>
+                    <span class="empty-sub">Counting verified PDF downloads from memorial resource slots.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Real-Time Activity Feed -->
+              <div class="dash-box" id="section-live-feed">
+                <div class="dash-box__header">
+                  <div>
+                    <h3>
+                      Live Visitor &amp; Attribution Feed
+                      <span class="info-dot" tabindex="0" role="tooltip">
+                        i
+                        <span class="info-tooltip">Real-time actions happening on your website right now as visitors download PDFs, search, or tap WhatsApp.</span>
+                      </span>
+                    </h3>
+                    <p class="dash-box__sub">Live listener stream capturing user touchpoints</p>
+                  </div>
+                  <span class="dash-badge badge-pulse">Stream Active</span>
+                </div>
+
+                <div class="live-events-stream" id="live-events-container">
+                  <!-- Rendered dynamically via JavaScript from live D1 event table -->
+                  <div class="empty-stream-notice">
+                    <div class="empty-icon">📡</div>
+                    <p><strong>Awaiting Live Visitor Touchpoints</strong></p>
+                    <span class="empty-sub">Real-time edge listener is active. As soon as visitors read pages, download guides, or click WhatsApp, events will appear here automatically.</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Top Search Queries -->
-          <div class="dash-box">
-            <div class="dash-box__header">
+          <!-- ===============================================================
+               TAB PANEL 2: Content & Resource Management (R2 6-Slot Manager)
+               =============================================================== -->
+          <div id="panel-content" class="dash-panel" style="display: none;">
+            <div class="panel-header">
               <div>
-                <h3>
-                  Top Site Search Queries
-                  <span class="info-dot" tabindex="0" role="tooltip">
-                    i
-                    <span class="info-tooltip">Real terms typed into the search bar. Use these insights to craft new eulogy resources or clarify pricing packages.</span>
-                  </span>
-                </h3>
-                <p class="dash-box__sub">Search intentions captured via the site search modal</p>
+                <h2>Curated Memorial Resources (R2 Storage)</h2>
+                <p class="panel-sub">
+                  Publish and update official PDF guides stored securely on Cloudflare R2 object storage with strict anti-clutter slot limits.
+                </p>
               </div>
-              <span class="dash-badge">Search Queries</span>
+              <div class="slot-counter-badge">
+                <span class="slot-count-num">6 of 6 Slots Assigned</span>
+              </div>
             </div>
 
-            <div class="search-queries-table-wrap">
-              <table class="search-queries-table">
-                <thead>
-                  <tr>
-                    <th>Search Term</th>
-                    <th>Volume</th>
-                    <th>Matched Section</th>
-                  </tr>
-                </thead>
-                <tbody id="top-search-tbody">
-                  <!-- Rendered dynamically via JavaScript from live D1 search table -->
-                  <tr>
-                    <td colspan="3" style="text-align: center; color: var(--color-muted); padding: 1.75rem;">
-                      Connecting to search logs. When visitors search for eulogies or brochures, their queries will rank here.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <!-- Non-Technical Client Notice Banner -->
+            <div class="notice-banner notice-banner--friendly">
+              <div class="notice-icon">🛡️</div>
+              <div class="notice-content">
+                <h4>Clean, High-Speed Document Management</h4>
+                <p>
+                  To keep your website dignified, uncluttered, and fast across mobile devices in Ghana and the diaspora, three simple rules are enforced:
+                </p>
+                <div class="client-rules-grid">
+                  <div class="rule-chip">
+                    <span class="rule-chip__icon">📁</span>
+                    <div>
+                      <strong>Max 6 Document Slots</strong>
+                      <span class="rule-chip__sub">Keeps choices clear and peaceful for families</span>
+                    </div>
+                  </div>
+                  <div class="rule-chip">
+                    <span class="rule-chip__icon">⚡</span>
+                    <div>
+                      <strong>Max 10 MB per PDF</strong>
+                      <span class="rule-chip__sub">Ensures fast mobile downloads on any connection</span>
+                    </div>
+                  </div>
+                  <div class="rule-chip">
+                    <span class="rule-chip__icon">📄</span>
+                    <div>
+                      <strong>PDF Format Only</strong>
+                      <span class="rule-chip__sub">Guarantees layout and typography look identical</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Upload Card (Cloudflare R2) -->
+            <div class="upload-workflow-card">
+              <div class="upload-workflow-header">
+                <h4>
+                  Update or Replace a Resource
+                  <span class="info-dot" tabindex="0" role="tooltip">
+                    i
+                    <span class="info-tooltip">Select which of the 6 guides you wish to update. When you upload a new PDF, it replaces the previous file seamlessly without breaking any links.</span>
+                  </span>
+                </h4>
+                <p class="upload-sub">Choose a target slot, attach your formatted PDF, and publish live to Cloudflare R2.</p>
+              </div>
+
+              <form id="resource-upload-form" class="upload-form" autocomplete="off">
+                <div class="upload-form-grid">
+                  <div class="form-group">
+                    <label for="upload-slot-select">
+                      Target Document Slot
+                      <span class="info-dot" tabindex="0" role="tooltip">
+                        i
+                        <span class="info-tooltip">Choose the specific guide slot being updated.</span>
+                      </span>
+                    </label>
+                    <select id="upload-slot-select" class="gate-input" required>
+                      <option value="eulogy-writing-guide">Slot 1: Eulogy Reflection &amp; Writing Guide (PDF)</option>
+                      <option value="memorial-brochure-checklist">Slot 2: Memorial Keepsake Brochure Checklist (PDF)</option>
+                      <option value="tribute-reading-excerpt">Slot 3: Selected Memorial Readings &amp; Poems (PDF)</option>
+                      <option value="quills-and-ink-family-memorial-guide">Slot 4: Master Family Memorial Planning Guide (PDF)</option>
+                      <option value="diaspora-liaison-handbook">Slot 5: Diaspora Funeral Coordination Handbook (PDF)</option>
+                      <option value="order-of-service-blueprint">Slot 6: Ceremonial Order of Service Blueprint (PDF)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="upload-file-input">
+                      Select New PDF Document
+                      <span class="info-dot" tabindex="0" role="tooltip">
+                        i
+                        <span class="info-tooltip">Must be a .pdf file under 10 MB. Word documents should be saved as PDF first.</span>
+                      </span>
+                    </label>
+                    <div class="file-drop-zone" id="file-drop-zone">
+                      <input type="file" id="upload-file-input" accept="application/pdf" class="file-hidden-input" required />
+                      <div class="drop-zone-content">
+                        <span class="drop-icon">📤</span>
+                        <span class="drop-prompt" id="drop-prompt-text">Click or drag a PDF here to upload</span>
+                        <span class="drop-sub">PDF only · Max 10 MB limit</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="upload-status-alert" class="upload-alert" style="display: none;"></div>
+
+                <div class="upload-actions">
+                  <button type="submit" id="btn-submit-upload" class="btn btn--peach">
+                    <span class="btn-spinner" id="upload-spinner" style="display: none;">⏳</span>
+                    <span>Publish Updated Guide</span>
+                  </button>
+                  <span class="upload-security-note">🔒 Powered by Cloudflare R2 object storage with automated MIME &amp; size verification.</span>
+                </div>
+              </form>
+            </div>
+
+            <!-- Current 6 Assets Table -->
+            <div class="dash-box">
+              <div class="dash-box__header">
+                <div>
+                  <h3>Active Document Slots Inventory</h3>
+                  <p class="dash-box__sub">The official 6 download slots mapped across all download buttons on the live site</p>
+                </div>
+                <span class="dash-badge">Strict 6-Slot Registry</span>
+              </div>
+
+              <div class="resources-table-wrap">
+                <table class="resources-table">
+                  <thead>
+                    <tr>
+                      <th>
+                        Resource Title
+                        <span class="info-dot" tabindex="0" role="tooltip">
+                          i
+                          <span class="info-tooltip">The official title shown to bereaved families across the website and search modal.</span>
+                        </span>
+                      </th>
+                      <th>Category</th>
+                      <th>Current File</th>
+                      <th>File Size</th>
+                      <th>Total Downloads</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="resource-slots-tbody">
+                    <tr>
+                      <td>
+                        <strong>Eulogy Reflection &amp; Writing Guide</strong>
+                        <div class="tbl-sub">Framework for drafting spoken tributes</div>
+                      </td>
+                      <td><span class="category-badge">Spoken Tributes</span></td>
+                      <td><code class="inline-code">eulogy-writing-guide.pdf</code></td>
+                      <td>358 KB</td>
+                      <td><strong>312</strong></td>
+                      <td>
+                        <div class="table-actions">
+                          <a href="/downloads/eulogy-writing-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                          <button type="button" class="btn-table-action btn-replace-trigger" data-slot="eulogy-writing-guide">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <strong>Memorial Keepsake Brochure Checklist</strong>
+                        <div class="tbl-sub">Order of service &amp; photo specifications</div>
+                      </td>
+                      <td><span class="category-badge">Print &amp; Keepsakes</span></td>
+                      <td><code class="inline-code">memorial-brochure-checklist.pdf</code></td>
+                      <td>224 KB</td>
+                      <td><strong>218</strong></td>
+                      <td>
+                        <div class="table-actions">
+                          <a href="/downloads/memorial-brochure-checklist.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                          <button type="button" class="btn-table-action btn-replace-trigger" data-slot="memorial-brochure-checklist">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <strong>Selected Memorial Readings &amp; Poems</strong>
+                        <div class="tbl-sub">Ceremonial family and church readings</div>
+                      </td>
+                      <td><span class="category-badge">Spoken Tributes</span></td>
+                      <td><code class="inline-code">tribute-reading-excerpt.pdf</code></td>
+                      <td>145 KB</td>
+                      <td><strong>98</strong></td>
+                      <td>
+                        <div class="table-actions">
+                          <a href="/downloads/tribute-reading-excerpt.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                          <button type="button" class="btn-table-action btn-replace-trigger" data-slot="tribute-reading-excerpt">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <strong>Master Family Memorial Planning Guide</strong>
+                        <div class="tbl-sub">All-in-one planning and timeline handbook</div>
+                      </td>
+                      <td><span class="category-badge">Master Guides</span></td>
+                      <td><code class="inline-code">quills-and-ink-family-memorial-guide.pdf</code></td>
+                      <td>358 KB</td>
+                      <td><strong>56</strong></td>
+                      <td>
+                        <div class="table-actions">
+                          <a href="/downloads/quills-and-ink-family-memorial-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                          <button type="button" class="btn-table-action btn-replace-trigger" data-slot="quills-and-ink-family-memorial-guide">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <strong>Diaspora Funeral Coordination Handbook</strong>
+                        <div class="tbl-sub">Liaison guide for families arranging from abroad</div>
+                      </td>
+                      <td><span class="category-badge">Diaspora Guidance</span></td>
+                      <td><code class="inline-code">diaspora-liaison-handbook.pdf</code></td>
+                      <td>190 KB</td>
+                      <td><strong>41</strong></td>
+                      <td>
+                        <div class="table-actions">
+                          <a href="/downloads/quills-and-ink-family-memorial-guide.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                          <button type="button" class="btn-table-action btn-replace-trigger" data-slot="diaspora-liaison-handbook">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <strong>Ceremonial Order of Service Blueprint</strong>
+                        <div class="tbl-sub">Church and graveside sequence outline</div>
+                      </td>
+                      <td><span class="category-badge">Print &amp; Keepsakes</span></td>
+                      <td><code class="inline-code">order-of-service-blueprint.pdf</code></td>
+                      <td>174 KB</td>
+                      <td><strong>29</strong></td>
+                      <td>
+                        <div class="table-actions">
+                          <a href="/downloads/memorial-brochure-checklist.pdf" download class="btn-table-action" title="Download current file">Download</a>
+                          <button type="button" class="btn-table-action btn-replace-trigger" data-slot="order-of-service-blueprint">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===============================================================
+               TAB PANEL 3: Diaspora Reach & Search Queries
+               =============================================================== -->
+          <div id="panel-diaspora" class="dash-panel" style="display: none;">
+            <div class="panel-header">
+              <div>
+                <h2>Diaspora Reach &amp; Search Queries</h2>
+                <p class="panel-sub">
+                  Geographic distribution of bereaved families across diaspora hubs and their real-time search queries.
+                </p>
+              </div>
+              <div class="panel-header-actions">
+                <span class="date-badge">Edge Geolocation Intelligence</span>
+              </div>
+            </div>
+
+            <div class="dash-split-grid">
+              <!-- Diaspora Geography -->
+              <div class="dash-box">
+                <div class="dash-box__header">
+                  <div>
+                    <h3>
+                      Diaspora Family Geographic Footprint
+                      <span class="info-dot" tabindex="0" role="tooltip">
+                        i
+                        <span class="info-tooltip">Shows where families are visiting your website from. This helps you schedule calls during their local daytime hours (GMT, BST, EST, PST).</span>
+                      </span>
+                    </h3>
+                    <p class="dash-box__sub">Inquiries &amp; downloads originating across diaspora centers</p>
+                  </div>
+                  <span class="dash-badge">Top Inquiries</span>
+                </div>
+
+                <div class="diaspora-list" id="diaspora-list-container">
+                  <!-- Rendered dynamically via JavaScript from live D1 geolocation records -->
+                  <div class="empty-stream-notice">
+                    <div class="empty-icon">🌍</div>
+                    <p><strong>Tracking Visitor Geolocation...</strong></p>
+                    <span class="empty-sub">Cloudflare Edge will chart diaspora family visits (Ghana, UK, US, Canada, etc.) as live traffic enters.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Top Search Queries -->
+              <div class="dash-box">
+                <div class="dash-box__header">
+                  <div>
+                    <h3>
+                      Top Site Search Queries
+                      <span class="info-dot" tabindex="0" role="tooltip">
+                        i
+                        <span class="info-tooltip">Real terms typed into the search bar. Use these insights to craft new eulogy resources or clarify pricing packages.</span>
+                      </span>
+                    </h3>
+                    <p class="dash-box__sub">Search intentions captured via the site search modal</p>
+                  </div>
+                  <span class="dash-badge">Search Queries</span>
+                </div>
+
+                <div class="search-queries-table-wrap">
+                  <table class="search-queries-table">
+                    <thead>
+                      <tr>
+                        <th>Search Term</th>
+                        <th>Volume</th>
+                        <th>Matched Section</th>
+                      </tr>
+                    </thead>
+                    <tbody id="top-search-tbody">
+                      <!-- Rendered dynamically via JavaScript from live D1 search table -->
+                      <tr>
+                        <td colspan="3" style="text-align: center; color: var(--color-muted); padding: 1.75rem;">
+                          Connecting to search logs. When visitors search for eulogies or brochures, their queries will rank here.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -617,7 +743,31 @@ import Footer from '../components/Footer.astro';
     const errorMsg = document.getElementById('login-error-msg');
     const toggleEyeBtn = document.getElementById('toggle-passkey-visibility');
     const logoutBtn = document.getElementById('btn-admin-logout');
+    const sidebarLogoutBtn = document.getElementById('btn-sidebar-logout');
     const refreshBtn = document.getElementById('btn-refresh-data');
+    const sidebarUploadQuickBtn = document.getElementById('btn-sidebar-upload-quick');
+    const sidebarStreamJumpBtn = document.getElementById('btn-sidebar-stream-jump');
+    const breadcrumbTitle = document.getElementById('active-breadcrumb-title');
+
+    // Sidebar Mobile Controls
+    const sidebar = document.getElementById('admin-sidebar');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+    const openSidebarBtn = document.getElementById('btn-open-sidebar');
+    const closeSidebarBtn = document.getElementById('btn-close-sidebar');
+
+    function openSidebar() {
+      if (sidebar) sidebar.classList.add('is-open');
+      if (sidebarBackdrop) sidebarBackdrop.classList.add('is-open');
+    }
+
+    function closeSidebar() {
+      if (sidebar) sidebar.classList.remove('is-open');
+      if (sidebarBackdrop) sidebarBackdrop.classList.remove('is-open');
+    }
+
+    openSidebarBtn?.addEventListener('click', openSidebar);
+    closeSidebarBtn?.addEventListener('click', closeSidebar);
+    sidebarBackdrop?.addEventListener('click', closeSidebar);
 
     // SHA-256 calculation via Web Crypto API
     async function sha256(text) {
@@ -628,23 +778,26 @@ import Footer from '../components/Footer.astro';
       return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // Check existing session
     function checkSession() {
-      const session = sessionStorage.getItem(SESSION_KEY);
-      if (session) {
-        try {
-          const parsed = JSON.parse(session);
-          if (parsed && parsed.authenticated && parsed.expiresAt > Date.now()) {
+      try {
+        const stored = sessionStorage.getItem(SESSION_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && parsed.authenticated) {
+            if (parsed.expiresAt && Date.now() > parsed.expiresAt) {
+              sessionStorage.removeItem(SESSION_KEY);
+              showLogin();
+              return;
+            }
             showDashboard();
             loadLiveAnalytics();
-            return true;
+            return;
           }
-        } catch (e) {
-          sessionStorage.removeItem(SESSION_KEY);
         }
+      } catch (err) {
+        sessionStorage.removeItem(SESSION_KEY);
       }
       showLogin();
-      return false;
     }
 
     let realtimePollInterval = null;
@@ -669,14 +822,16 @@ import Footer from '../components/Footer.astro';
     function showDashboard() {
       if (loginView) loginView.style.display = 'none';
       if (dashboardView) {
-        dashboardView.style.display = 'block';
-        dashboardView.scrollIntoView({ behavior: 'smooth' });
+        dashboardView.style.display = 'flex';
       }
+      document.body.classList.add('admin-authenticated');
       startRealtimeSync();
     }
 
     function showLogin() {
       stopRealtimeSync();
+      document.body.classList.remove('admin-authenticated');
+      closeSidebar();
       if (loginView) loginView.style.display = 'flex';
       if (dashboardView) dashboardView.style.display = 'none';
     }
@@ -736,15 +891,18 @@ import Footer from '../components/Footer.astro';
     });
 
     // Logout
-    logoutBtn?.addEventListener('click', () => {
+    const handleLogout = () => {
       sessionStorage.removeItem(SESSION_KEY);
       showLogin();
-    });
+    };
+    logoutBtn?.addEventListener('click', handleLogout);
+    sidebarLogoutBtn?.addEventListener('click', handleLogout);
 
     // Refresh / Sync button
-    refreshBtn?.addEventListener('click', () => {
+    const handleSync = () => {
       loadLiveAnalytics(true);
-    });
+    };
+    refreshBtn?.addEventListener('click', handleSync);
 
     // Country flags dictionary
     const COUNTRY_FLAG_MAP = {
@@ -898,6 +1056,7 @@ import Footer from '../components/Footer.astro';
           resourceTbody.querySelectorAll('.btn-replace-trigger').forEach((btn) => {
             btn.addEventListener('click', (e) => {
               const slot = e.currentTarget.getAttribute('data-slot');
+              switchTab('content');
               if (slot && uploadSlotSelect) {
                 uploadSlotSelect.value = slot;
                 document.querySelector('.upload-workflow-card')?.scrollIntoView({ behavior: 'smooth' });
@@ -1035,42 +1194,72 @@ import Footer from '../components/Footer.astro';
     const uploadFileInput = document.getElementById('upload-file-input');
     const uploadSlotSelect = document.getElementById('upload-slot-select');
     const uploadAlert = document.getElementById('upload-status-alert');
+    const dropZone = document.getElementById('file-drop-zone');
     const dropPromptText = document.getElementById('drop-prompt-text');
     const uploadSpinner = document.getElementById('upload-spinner');
     const btnSubmitUpload = document.getElementById('btn-submit-upload');
+
+    // Drag and Drop styling
+    ['dragenter', 'dragover'].forEach((eventName) => {
+      dropZone?.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('is-dragging');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach((eventName) => {
+      dropZone?.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('is-dragging');
+      });
+    });
+
+    dropZone?.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files && files.length > 0) {
+        uploadFileInput.files = files;
+        handleFileSelection(files[0]);
+      }
+    });
+
+    function handleFileSelection(file) {
+      if (!file) return;
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        uploadAlert.className = 'upload-alert upload-alert--error';
+        uploadAlert.textContent = 'Please choose a valid .pdf file. Other document formats are not permitted to ensure formatting integrity.';
+        uploadAlert.style.display = 'block';
+        uploadFileInput.value = '';
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        uploadAlert.className = 'upload-alert upload-alert--error';
+        uploadAlert.textContent = `File size is ${(file.size / 1024 / 1024).toFixed(1)} MB, which exceeds the 10 MB limit. Please compress your PDF before uploading.`;
+        uploadAlert.style.display = 'block';
+        uploadFileInput.value = '';
+        return;
+      }
+      uploadAlert.style.display = 'none';
+      dropPromptText.innerHTML = `<strong>Selected:</strong> ${escapeHtml(file.name)} (${(file.size / 1024).toFixed(0)} KB)`;
+    }
+
+    uploadFileInput?.addEventListener('change', (e) => {
+      handleFileSelection(e.target.files[0]);
+    });
 
     // Quick replace buttons in table
     document.querySelectorAll('.btn-replace-trigger').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         const slot = e.currentTarget.getAttribute('data-slot');
+        switchTab('content');
         if (slot && uploadSlotSelect) {
           uploadSlotSelect.value = slot;
           document.querySelector('.upload-workflow-card')?.scrollIntoView({ behavior: 'smooth' });
           uploadFileInput?.focus();
         }
       });
-    });
-
-    uploadFileInput?.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        if (!file.name.toLowerCase().endsWith('.pdf')) {
-          uploadAlert.className = 'upload-alert upload-alert--error';
-          uploadAlert.textContent = 'Please choose a valid .pdf file. Other document formats are not permitted to ensure formatting integrity.';
-          uploadAlert.style.display = 'block';
-          uploadFileInput.value = '';
-          return;
-        }
-        if (file.size > 10 * 1024 * 1024) {
-          uploadAlert.className = 'upload-alert upload-alert--error';
-          uploadAlert.textContent = `File size is ${(file.size / 1024 / 1024).toFixed(1)} MB, which exceeds the 10 MB limit. Please compress your PDF before uploading.`;
-          uploadAlert.style.display = 'block';
-          uploadFileInput.value = '';
-          return;
-        }
-        uploadAlert.style.display = 'none';
-        dropPromptText.innerHTML = `<strong>Selected:</strong> ${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
-      }
     });
 
     uploadForm?.addEventListener('submit', async (e) => {
@@ -1123,7 +1312,7 @@ import Footer from '../components/Footer.astro';
     });
 
     // -------------------------------------------------------------------------
-    // Dashboard Tabs Navigation
+    // Dashboard Tabs Navigation & Sidebar Integration
     // -------------------------------------------------------------------------
     const tabs = document.querySelectorAll('.dash-tab');
     const panels = {
@@ -1132,18 +1321,57 @@ import Footer from '../components/Footer.astro';
       diaspora: document.getElementById('panel-diaspora'),
     };
 
+    const breadcrumbTitles = {
+      analytics: 'Analytics & Performance',
+      content: 'Keepsake Resources (R2)',
+      diaspora: 'Diaspora Reach & Searches',
+    };
+
+    function switchTab(targetKey) {
+      if (!panels[targetKey]) return;
+
+      // Update active states on tab buttons (in sidebar and any other tabs)
+      tabs.forEach((tab) => {
+        if (tab.getAttribute('data-dash-tab') === targetKey) {
+          tab.classList.add('is-active');
+        } else {
+          tab.classList.remove('is-active');
+        }
+      });
+
+      // Update active panel display
+      Object.keys(panels).forEach((key) => {
+        if (panels[key]) {
+          panels[key].style.display = key === targetKey ? 'block' : 'none';
+        }
+      });
+
+      // Update top bar breadcrumb
+      if (breadcrumbTitle && breadcrumbTitles[targetKey]) {
+        breadcrumbTitle.textContent = breadcrumbTitles[targetKey];
+      }
+
+      // Auto-close sidebar on mobile
+      closeSidebar();
+    }
+
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
-        tabs.forEach((t) => t.classList.remove('is-active'));
-        tab.classList.add('is-active');
-
         const target = tab.getAttribute('data-dash-tab');
-        Object.keys(panels).forEach((key) => {
-          if (panels[key]) {
-            panels[key].style.display = key === target ? 'block' : 'none';
-          }
-        });
+        if (target) switchTab(target);
       });
+    });
+
+    // Sidebar Quick Action Buttons
+    sidebarUploadQuickBtn?.addEventListener('click', () => {
+      switchTab('content');
+      document.querySelector('.upload-workflow-card')?.scrollIntoView({ behavior: 'smooth' });
+      uploadFileInput?.focus();
+    });
+
+    sidebarStreamJumpBtn?.addEventListener('click', () => {
+      switchTab('analytics');
+      document.getElementById('section-live-feed')?.scrollIntoView({ behavior: 'smooth' });
     });
 
     // Check session on page load
@@ -1152,30 +1380,51 @@ import Footer from '../components/Footer.astro';
 </script>
 
 <style>
+  /* ==========================================================================
+     GLOBAL PAGE & GATE STYLES
+     ========================================================================== */
   .admin-main {
     min-height: calc(100vh - 220px);
-    padding: 3rem 0 5rem;
     background: var(--color-ivory);
   }
 
+  /* When authenticated, the page transforms into a full application shell */
+  :global(body.admin-authenticated) {
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  :global(body.admin-authenticated header),
+  :global(body.admin-authenticated footer) {
+    display: none !important;
+  }
+
+  :global(body.admin-authenticated .admin-main) {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+
   /* --------------------------------------------------------------------------
-     1. Encrypted Gate Styles
+     1. Encrypted Gate Styles (Login View)
      -------------------------------------------------------------------------- */
   .admin-gate {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 60vh;
+    min-height: 70vh;
+    padding: 3rem 1.5rem;
   }
 
   .gate-card {
     background: var(--color-white);
     border: 1px solid var(--color-line);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 2.75rem 2.5rem;
     max-width: 520px;
     width: 100%;
-    box-shadow: 0 20px 48px rgba(44, 36, 22, 0.08);
+    box-shadow: 0 24px 60px rgba(44, 36, 22, 0.08);
   }
 
   .gate-monogram {
@@ -1197,7 +1446,7 @@ import Footer from '../components/Footer.astro';
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-peach-deep);
-    margin-top: 0.35rem;
+    margin-top: 0.4rem;
     display: block;
   }
 
@@ -1227,7 +1476,7 @@ import Footer from '../components/Footer.astro';
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--color-charcoal);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.45rem;
     display: flex;
     align-items: center;
   }
@@ -1240,9 +1489,9 @@ import Footer from '../components/Footer.astro';
 
   .gate-input {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1.1rem;
     border: 1px solid var(--color-line);
-    border-radius: 6px;
+    border-radius: 7px;
     font-family: inherit;
     font-size: 0.95rem;
     background: var(--color-ivory);
@@ -1258,7 +1507,7 @@ import Footer from '../components/Footer.astro';
 
   .btn-toggle-eye {
     position: absolute;
-    right: 10px;
+    right: 12px;
     background: none;
     border: none;
     cursor: pointer;
@@ -1270,22 +1519,39 @@ import Footer from '../components/Footer.astro';
     background: #fef2f2;
     border: 1px solid #fecaca;
     color: #b91c1c;
-    padding: 0.65rem 0.85rem;
+    padding: 0.7rem 0.9rem;
     border-radius: 6px;
     font-size: 0.82rem;
   }
 
   .btn--gate {
     width: 100%;
-    padding: 0.9rem;
+    padding: 0.95rem;
     gap: 0.5rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-charcoal);
+    color: var(--color-white);
+    border: 1px solid var(--color-charcoal);
+    border-radius: 6px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn--gate:hover {
+    background: var(--color-wood-mid);
+    border-color: var(--color-wood-mid);
   }
 
   .gate-crypto-note {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.68rem;
+    gap: 7px;
+    font-size: 0.7rem;
     color: var(--color-muted);
     line-height: 1.4;
     margin-top: 0.5rem;
@@ -1365,37 +1631,396 @@ import Footer from '../components/Footer.astro';
     transform: translateX(-50%) translateY(0);
   }
 
+  /* ==========================================================================
+     3. AUTHENTICATED WORKSPACE APP SHELL & SIDEBAR
+     ========================================================================== */
+  .admin-app-shell {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background: var(--color-ivory);
+    overflow: hidden;
+  }
+
   /* --------------------------------------------------------------------------
-     3. Authenticated Dashboard Styles
+     Sidebar Architecture
      -------------------------------------------------------------------------- */
-  .dash-top-bar {
+  .admin-sidebar {
+    width: 275px;
+    min-width: 275px;
+    height: 100vh;
+    background: #1c1813;
+    color: #f7f5f2;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    z-index: 50;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sidebar-brand {
+    padding: 1.6rem 1.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--color-line);
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    align-items: center;
   }
 
-  .dash-branding h1 {
-    font-size: 2.2rem;
-    color: var(--color-charcoal);
-    margin: 0.25rem 0;
+  .sidebar-brand__logo {
+    font-size: 2.1rem;
+    color: #ffffff;
+    display: block;
+    line-height: 1;
   }
 
-  .dash-sub {
-    font-family: var(--font-serif);
+  .sidebar-brand__tag {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-peach);
+    display: block;
+    margin-top: 0.3rem;
+    font-weight: 600;
+  }
+
+  .btn-sidebar-close {
+    display: none;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* Navigation Links */
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .sidebar-nav__heading {
+    display: block;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 0 0.8rem 0.6rem;
+    font-weight: 600;
+  }
+
+  .sidebar-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .sidebar-nav__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.75rem 0.85rem;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.75);
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 400;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .sidebar-nav__item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+  }
+
+  .sidebar-nav__item.is-active {
+    background: rgba(201, 168, 146, 0.16);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--color-peach);
+  }
+
+  .sidebar-nav__item.is-refreshing .nav-icon {
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+  }
+
+  .nav-icon {
     font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .nav-label {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-badge {
+    background: var(--color-peach-deep);
+    color: #ffffff;
+    font-size: 0.64rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+  }
+
+  .nav-subtag {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* Sidebar Footer */
+  .sidebar-footer {
+    padding: 1.25rem 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #16120e;
+  }
+
+  .sidebar-status-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 7px;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #a7f3d0;
+  }
+
+  .status-sub {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 2px;
+    margin-left: 14px;
+  }
+
+  .sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--color-peach);
+    color: #1a1612;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+  }
+
+  .user-meta {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .user-name {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-role {
+    display: block;
+    font-size: 0.67rem;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .btn-sidebar-logout {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .btn-sidebar-logout:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+  }
+
+  /* --------------------------------------------------------------------------
+     Main Workspace Layout
+     -------------------------------------------------------------------------- */
+  .admin-workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--color-ivory);
+  }
+
+  /* Top Workspace Bar */
+  .workspace-top-bar {
+    height: 64px;
+    min-height: 64px;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-line);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 20;
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .btn-hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    padding: 6px;
+    color: var(--color-charcoal);
+    cursor: pointer;
+  }
+
+  .top-bar-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .breadcrumb-root {
     color: var(--color-muted);
   }
 
-  .dash-controls {
+  .breadcrumb-separator {
+    color: var(--color-line);
+  }
+
+  .breadcrumb-current {
+    font-weight: 600;
+    color: var(--color-charcoal);
+  }
+
+  .top-bar-right {
     display: flex;
     align-items: center;
     gap: 0.85rem;
     flex-wrap: wrap;
+  }
+
+  .workspace-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2.25rem 2.25rem 4rem;
+  }
+
+  /* Panel Headers */
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .panel-header h2 {
+    font-size: 2rem;
+    color: var(--color-charcoal);
+    margin: 0 0 0.3rem 0;
+  }
+
+  .panel-sub {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-muted);
+    max-width: 680px;
+    line-height: 1.5;
+  }
+
+  .date-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-wood-mid);
+    background: var(--color-soft);
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+  }
+
+  /* --------------------------------------------------------------------------
+     Common Status Pills & Action Buttons
+     -------------------------------------------------------------------------- */
+  .live-sync-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #065f46;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+  }
+
+  .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: livePulse 1.8s infinite;
+  }
+
+  @keyframes livePulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
   }
 
   .storage-status-pill {
@@ -1448,33 +2073,6 @@ import Footer from '../components/Footer.astro';
     to { transform: rotate(360deg); }
   }
 
-  .live-sync-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #065f46;
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
-  }
-
-  .pulse-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #10b981;
-    animation: livePulse 1.8s infinite;
-  }
-
-  @keyframes livePulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-    70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-  }
-
   .btn-logout {
     display: inline-flex;
     align-items: center;
@@ -1496,56 +2094,12 @@ import Footer from '../components/Footer.astro';
     color: #b91c1c;
   }
 
-  /* Tabs */
-  .dash-tabs {
-    display: flex;
-    gap: 0.5rem;
-    border-bottom: 2px solid var(--color-line);
-    margin-bottom: 2rem;
-    overflow-x: auto;
-  }
-
-  .dash-tab {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0.85rem 1.4rem;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--color-muted);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
-
-  .dash-tab:hover {
-    color: var(--color-charcoal);
-  }
-
-  .dash-tab.is-active {
-    color: var(--color-charcoal);
-    font-weight: 600;
-    border-bottom-color: var(--color-peach-deep);
-  }
-
-  .tab-pill-badge {
-    background: var(--color-peach);
-    color: white;
-    font-size: 0.65rem;
-    padding: 2px 7px;
-    border-radius: 999px;
-    font-weight: 600;
-  }
-
-  /* Metrics Grid */
+  /* --------------------------------------------------------------------------
+     Metrics Cards Grid
+     -------------------------------------------------------------------------- */
   .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
     gap: 1.25rem;
     margin-bottom: 2rem;
   }
@@ -1553,21 +2107,28 @@ import Footer from '../components/Footer.astro';
   .metric-card {
     background: var(--color-white);
     border: 1px solid var(--color-line);
-    border-radius: 10px;
-    padding: 1.4rem;
-    box-shadow: 0 4px 16px rgba(44, 36, 22, 0.03);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 18px rgba(44, 36, 22, 0.03);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(44, 36, 22, 0.06);
   }
 
   .metric-card--highlight {
     background: #fdfbf7;
     border-color: var(--color-peach);
+    border-width: 1.5px;
   }
 
   .metric-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
 
   .metric-title {
@@ -1591,7 +2152,7 @@ import Footer from '../components/Footer.astro';
 
   .metric-value {
     font-family: var(--font-serif);
-    font-size: 2.25rem;
+    font-size: 2.35rem;
     font-weight: 500;
     color: var(--color-charcoal);
     line-height: 1.1;
@@ -1600,30 +2161,32 @@ import Footer from '../components/Footer.astro';
   .metric-sub {
     font-size: 0.76rem;
     color: var(--color-muted);
-    margin-top: 0.35rem;
+    margin-top: 0.4rem;
     display: flex;
     align-items: center;
   }
 
-  /* Split Grids */
+  /* --------------------------------------------------------------------------
+     Split Grids & Dashboard Boxes
+     -------------------------------------------------------------------------- */
   .dash-split-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: 1100px) {
     .dash-split-grid {
-      grid-template-columns: 1.25fr 0.95fr;
+      grid-template-columns: 1.2fr 0.95fr;
     }
   }
 
   .dash-box {
     background: var(--color-white);
     border: 1px solid var(--color-line);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 1.75rem;
-    box-shadow: 0 4px 16px rgba(44, 36, 22, 0.03);
+    box-shadow: 0 4px 18px rgba(44, 36, 22, 0.03);
   }
 
   .dash-box__header {
@@ -1632,11 +2195,12 @@ import Footer from '../components/Footer.astro';
     align-items: flex-start;
     padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--color-line);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.35rem;
+    gap: 1rem;
   }
 
   .dash-box__header h3 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--color-charcoal);
     margin: 0;
     display: flex;
@@ -1644,9 +2208,9 @@ import Footer from '../components/Footer.astro';
   }
 
   .dash-box__sub {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--color-muted);
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
   }
 
   .dash-badge {
@@ -1654,8 +2218,9 @@ import Footer from '../components/Footer.astro';
     color: var(--color-charcoal);
     font-size: 0.7rem;
     font-weight: 600;
-    padding: 3px 8px;
+    padding: 3px 9px;
     border-radius: 999px;
+    white-space: nowrap;
   }
 
   .badge-pulse {
@@ -1664,15 +2229,24 @@ import Footer from '../components/Footer.astro';
     border: 1px solid #a7f3d0;
   }
 
-  /* Download Breakdown */
+  /* --------------------------------------------------------------------------
+     Download Breakdown Styles
+     -------------------------------------------------------------------------- */
   .download-breakdown-list {
     display: grid;
-    gap: 1.25rem;
+    gap: 1.35rem;
   }
 
   .dl-row {
     display: grid;
-    gap: 0.4rem;
+    gap: 0.45rem;
+    padding: 0.6rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+
+  .dl-row:hover {
+    background: var(--color-ivory);
   }
 
   .dl-row__info {
@@ -1686,8 +2260,8 @@ import Footer from '../components/Footer.astro';
     color: #92400e;
     font-size: 0.65rem;
     font-weight: 700;
-    padding: 2px 5px;
-    border-radius: 3px;
+    padding: 2px 6px;
+    border-radius: 4px;
     margin-right: 6px;
   }
 
@@ -1699,13 +2273,13 @@ import Footer from '../components/Footer.astro';
   .dl-row__stats {
     display: flex;
     justify-content: space-between;
-    font-size: 0.75rem;
+    font-size: 0.76rem;
     font-weight: 600;
     color: var(--color-charcoal);
   }
 
   .progress-bar-wrap {
-    height: 6px;
+    height: 7px;
     background: var(--color-soft);
     border-radius: 999px;
     overflow: hidden;
@@ -1718,24 +2292,32 @@ import Footer from '../components/Footer.astro';
     transition: width 0.4s var(--ease);
   }
 
-  /* Live Events Feed */
+  /* --------------------------------------------------------------------------
+     Live Visitor Stream Feed
+     -------------------------------------------------------------------------- */
   .live-events-stream {
     display: grid;
     gap: 0.85rem;
-    max-height: 480px;
+    max-height: 520px;
     overflow-y: auto;
+    padding-right: 4px;
   }
 
   .event-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 0.75rem 0.85rem;
+    padding: 0.85rem 1rem;
     background: var(--color-ivory);
     border: 1px solid var(--color-line);
-    border-radius: 8px;
+    border-radius: 9px;
     font-size: 0.82rem;
-    transition: all 0.3s;
+    transition: all 0.2s;
+  }
+
+  .event-item:hover {
+    background: #ffffff;
+    border-color: var(--color-peach);
   }
 
   .event-item--fresh {
@@ -1750,7 +2332,7 @@ import Footer from '../components/Footer.astro';
   .event-badge {
     font-size: 0.65rem;
     font-weight: 700;
-    padding: 3px 6px;
+    padding: 3px 7px;
     border-radius: 4px;
     letter-spacing: 0.04em;
     flex-shrink: 0;
@@ -1761,36 +2343,6 @@ import Footer from '../components/Footer.astro';
   .badge-search { background: #fef3c7; color: #92400e; }
   .badge-book { background: #f3e8ff; color: #6b21a8; }
   .badge-pv { background: #e0f2fe; color: #0369a1; }
-
-  .empty-stream-notice {
-    padding: 2.25rem 1.5rem;
-    text-align: center;
-    background: var(--color-white);
-    border: 1px dashed var(--color-line);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-  }
-
-  .empty-stream-notice .empty-icon {
-    font-size: 1.8rem;
-    line-height: 1;
-  }
-
-  .empty-stream-notice strong {
-    color: var(--color-charcoal);
-    font-size: 0.88rem;
-  }
-
-  .empty-stream-notice .empty-sub {
-    font-size: 0.76rem;
-    color: var(--color-muted);
-    max-width: 320px;
-    line-height: 1.45;
-  }
 
   .event-details {
     flex-grow: 1;
@@ -1816,16 +2368,46 @@ import Footer from '../components/Footer.astro';
     flex-shrink: 0;
   }
 
+  .empty-stream-notice {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    background: var(--color-white);
+    border: 1px dashed var(--color-line);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .empty-stream-notice .empty-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .empty-stream-notice strong {
+    color: var(--color-charcoal);
+    font-size: 0.88rem;
+  }
+
+  .empty-stream-notice .empty-sub {
+    font-size: 0.76rem;
+    color: var(--color-muted);
+    max-width: 320px;
+    line-height: 1.45;
+  }
+
   /* --------------------------------------------------------------------------
-     4. Tab 2 Content & Upload Styles (Strict 6 Slots & Anti-Clutter)
+     Tab 2: Keepsake Resources & Upload Manager
      -------------------------------------------------------------------------- */
   .slot-counter-badge {
     background: #fef3c7;
     border: 1px solid #fde68a;
     color: #92400e;
-    font-size: 0.75rem;
+    font-size: 0.76rem;
     font-weight: 600;
-    padding: 0.35rem 0.75rem;
+    padding: 0.4rem 0.85rem;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
@@ -1835,38 +2417,38 @@ import Footer from '../components/Footer.astro';
   .notice-banner--friendly {
     background: #fdfaf6;
     border: 1px solid var(--color-line);
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: flex-start;
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
   }
 
   .client-rules-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    margin-top: 0.85rem;
+    margin-top: 0.95rem;
   }
 
   .rule-chip {
     background: var(--color-white);
     border: 1px solid var(--color-line);
-    border-radius: 6px;
-    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
 
   .rule-chip__icon {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
   }
 
   .rule-chip strong {
     display: block;
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     color: var(--color-charcoal);
   }
 
@@ -1878,14 +2460,14 @@ import Footer from '../components/Footer.astro';
   .upload-workflow-card {
     background: #ffffff;
     border: 1px solid var(--color-peach);
-    border-radius: 10px;
-    padding: 1.5rem;
+    border-radius: 12px;
+    padding: 1.75rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 18px rgba(201, 168, 146, 0.12);
+    box-shadow: 0 6px 20px rgba(201, 168, 146, 0.12);
   }
 
   .upload-workflow-header h4 {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     color: var(--color-charcoal);
     margin: 0;
     display: flex;
@@ -1893,10 +2475,10 @@ import Footer from '../components/Footer.astro';
   }
 
   .upload-sub {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     color: var(--color-muted);
-    margin-top: 0.2rem;
-    margin-bottom: 1.25rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1.35rem;
   }
 
   .upload-form-grid {
@@ -1914,15 +2496,16 @@ import Footer from '../components/Footer.astro';
   .file-drop-zone {
     position: relative;
     border: 2px dashed var(--color-peach);
-    border-radius: 8px;
-    padding: 1.25rem;
+    border-radius: 9px;
+    padding: 1.4rem;
     text-align: center;
     background: var(--color-ivory);
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
   }
 
-  .file-drop-zone:hover {
+  .file-drop-zone:hover,
+  .file-drop-zone.is-dragging {
     background: var(--color-soft);
     border-color: var(--color-peach-deep);
   }
@@ -1940,16 +2523,16 @@ import Footer from '../components/Footer.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.35rem;
     pointer-events: none;
   }
 
   .drop-icon {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .drop-prompt {
-    font-size: 0.85rem;
+    font-size: 0.86rem;
     color: var(--color-charcoal);
   }
 
@@ -1962,9 +2545,27 @@ import Footer from '../components/Footer.astro';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1.25rem;
+    margin-top: 1.35rem;
     flex-wrap: wrap;
     gap: 1rem;
+  }
+
+  .btn--peach {
+    background: var(--color-peach);
+    color: #ffffff;
+    border: 1px solid var(--color-peach-deep);
+    border-radius: 6px;
+    padding: 0.75rem 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn--peach:hover {
+    background: var(--color-peach-deep);
   }
 
   .upload-security-note {
@@ -1994,6 +2595,7 @@ import Footer from '../components/Footer.astro';
   /* Resources Table */
   .resources-table-wrap {
     overflow-x: auto;
+    margin-top: 0.5rem;
   }
 
   .resources-table {
@@ -2004,7 +2606,7 @@ import Footer from '../components/Footer.astro';
   }
 
   .resources-table th {
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     border-bottom: 2px solid var(--color-line);
     font-size: 0.72rem;
     text-transform: uppercase;
@@ -2013,14 +2615,14 @@ import Footer from '../components/Footer.astro';
   }
 
   .resources-table td {
-    padding: 0.95rem 1rem;
+    padding: 1rem;
     border-bottom: 1px solid var(--color-line);
   }
 
   .category-badge {
     background: var(--color-soft);
-    padding: 3px 7px;
-    border-radius: 4px;
+    padding: 4px 8px;
+    border-radius: 5px;
     font-size: 0.72rem;
     color: var(--color-wood);
   }
@@ -2029,13 +2631,13 @@ import Footer from '../components/Footer.astro';
     font-family: monospace;
     font-size: 0.76rem;
     background: var(--color-soft);
-    padding: 2px 5px;
-    border-radius: 3px;
+    padding: 2px 6px;
+    border-radius: 4px;
   }
 
   .table-actions {
     display: flex;
-    gap: 6px;
+    gap: 8px;
   }
 
   .btn-table-action {
@@ -2043,8 +2645,8 @@ import Footer from '../components/Footer.astro';
     border: 1px solid var(--color-line);
     color: var(--color-wood);
     font-size: 0.75rem;
-    padding: 5px 10px;
-    border-radius: 4px;
+    padding: 5px 11px;
+    border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s;
@@ -2055,15 +2657,17 @@ import Footer from '../components/Footer.astro';
     color: white;
   }
 
-  /* Diaspora & Search Queries Tab */
+  /* --------------------------------------------------------------------------
+     Tab 3: Diaspora & Search Queries
+     -------------------------------------------------------------------------- */
   .diaspora-list {
     display: grid;
-    gap: 1.15rem;
+    gap: 1.25rem;
   }
 
   .diaspora-item {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
   .diaspora-item__header {
@@ -2093,7 +2697,7 @@ import Footer from '../components/Footer.astro';
   }
 
   .search-queries-table th {
-    padding: 0.65rem 0.85rem;
+    padding: 0.75rem 0.95rem;
     border-bottom: 2px solid var(--color-line);
     font-size: 0.72rem;
     text-transform: uppercase;
@@ -2102,7 +2706,7 @@ import Footer from '../components/Footer.astro';
   }
 
   .search-queries-table td {
-    padding: 0.75rem 0.85rem;
+    padding: 0.85rem 0.95rem;
     border-bottom: 1px solid var(--color-line);
   }
 
@@ -2112,5 +2716,70 @@ import Footer from '../components/Footer.astro';
     border-radius: 4px;
     font-size: 0.75rem;
     color: var(--color-wood);
+  }
+
+  /* --------------------------------------------------------------------------
+     Responsive Drawer & Mobile Breakpoints
+     -------------------------------------------------------------------------- */
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 45;
+  }
+
+  @media (max-width: 1024px) {
+    .admin-sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-100%);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .admin-sidebar.is-open {
+      transform: translateX(0);
+    }
+
+    .sidebar-backdrop.is-open {
+      display: block;
+    }
+
+    .btn-sidebar-close {
+      display: block;
+    }
+
+    .btn-hamburger {
+      display: inline-flex;
+    }
+
+    .workspace-top-bar {
+      padding: 0 1.25rem;
+    }
+
+    .workspace-body {
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    .storage-status-pill {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .live-sync-pill {
+      display: none;
+    }
+
+    .panel-header h2 {
+      font-size: 1.6rem;
+    }
   }
 </style>

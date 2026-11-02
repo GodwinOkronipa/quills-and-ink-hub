@@ -20,7 +20,17 @@ import PageHero from '../components/PageHero.astro';
 
     <section class="book container">
       <div class="book__main">
-        <form class="book__form" data-booking-form novalidate>
+        <form
+          class="book__form"
+          data-booking-form
+          action="https://formsubmit.co/quillsninkhub@gmail.com"
+          method="POST"
+          novalidate
+        >
+          <input type="hidden" name="_subject" value="[Quills &amp; Ink] Consultation Booking Request" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+
           <div class="form-section-title">
             <p class="eyebrow">Step 1 of 2</p>
             <h3>Family &amp; Contact Information</h3>
@@ -120,7 +130,10 @@ import PageHero from '../components/PageHero.astro';
 
           <p class="book__note" data-form-status role="status" aria-live="polite"></p>
 
-          <button class="btn btn--ink" type="submit">Submit Consultation Request</button>
+          <button class="btn btn--ink" type="submit" data-btn-submit>
+            <span class="btn-text">Submit Consultation Request</span>
+            <span class="btn-spinner" style="display: none;">⏳ Scheduling consultation...</span>
+          </button>
         </form>
 
         <div class="book__success is-hidden" data-booking-success>
@@ -359,8 +372,21 @@ import PageHero from '../components/PageHero.astro';
   const statusNote = document.querySelector<HTMLElement>('[data-form-status]');
   const detailsBox = document.querySelector<HTMLElement>('[data-success-details]');
   const resetBtn = document.querySelector<HTMLButtonElement>('[data-reset-form]');
+  const submitBtn = form?.querySelector<HTMLButtonElement>('[data-btn-submit]');
+  const btnText = submitBtn?.querySelector<HTMLElement>('.btn-text');
+  const btnSpinner = submitBtn?.querySelector<HTMLElement>('.btn-spinner');
 
-  form?.addEventListener('submit', (event) => {
+  function escapeHtml(str: string) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form) return;
 
@@ -370,29 +396,76 @@ import PageHero from '../components/PageHero.astro';
       return;
     }
 
+    if (submitBtn) submitBtn.disabled = true;
+    if (btnText) btnText.style.display = 'none';
+    if (btnSpinner) btnSpinner.style.display = 'inline-flex';
+    if (statusNote) statusNote.textContent = '';
+
     const formData = new FormData(form);
-    const name = formData.get('name') as string;
-    const date = formData.get('date') as string;
-    const time = formData.get('time') as string;
-    const timezone = formData.get('timezone') as string;
-    const mode = formData.get('meetingMode') as string;
-    const service = formData.get('interest') as string;
+    const dataObj: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      dataObj[key] = value;
+    });
 
-    if (detailsBox) {
-      detailsBox.innerHTML = `
-        <strong>Appointment Details:</strong><br />
-        • Client: <em>${name}</em><br />
-        • Date &amp; Time: <em>${date} at ${time} (${timezone})</em><br />
-        • Channel: <em>${mode}</em><br />
-        • Focus: <em>${service}</em>
-      `;
-    }
+    const name = dataObj.name || '';
+    const date = dataObj.date || '';
+    const time = dataObj.time || '';
+    const timezone = dataObj.timezone || '';
+    const mode = dataObj.meetingMode || '';
+    const service = dataObj.interest || '';
 
-    form.classList.add('is-hidden');
-    form.style.display = 'none';
-    if (successCard) {
-      successCard.classList.remove('is-hidden');
-      successCard.style.display = 'grid';
+    dataObj._subject = `[Quills & Ink Consultation] Appointment Request: ${name} (${date} at ${time})`;
+
+    try {
+      // 1. Send direct to email via FormSubmit AJAX endpoint
+      await fetch('https://formsubmit.co/ajax/quillsninkhub@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(dataObj),
+      });
+
+      // 2. Log event to Edge Analytics for real-time admin desk
+      try {
+        await fetch('/api/analytics', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'consultation_cta_click',
+            path: '/book',
+            query: `Consultation: ${service} by ${name}`,
+          }),
+        });
+      } catch (analyticsErr) {
+        // Analytics failure should never block form success
+      }
+
+      if (detailsBox) {
+        detailsBox.innerHTML = `
+          <strong>Appointment Details Sent to Coordinator:</strong><br />
+          • Client: <em>${escapeHtml(name)}</em><br />
+          • Date &amp; Time: <em>${escapeHtml(date)} at ${escapeHtml(time)} (${escapeHtml(timezone)})</em><br />
+          • Channel: <em>${escapeHtml(mode)}</em><br />
+          • Focus: <em>${escapeHtml(service)}</em>
+        `;
+      }
+
+      form.classList.add('is-hidden');
+      form.style.display = 'none';
+      if (successCard) {
+        successCard.classList.remove('is-hidden');
+        successCard.style.display = 'grid';
+        successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch (err) {
+      console.warn('FormSubmit AJAX fallback:', err);
+      form.submit();
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+      if (btnText) btnText.style.display = 'inline-block';
+      if (btnSpinner) btnSpinner.style.display = 'none';
     }
   });
 
