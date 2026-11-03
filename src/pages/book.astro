@@ -23,7 +23,7 @@ import PageHero from '../components/PageHero.astro';
         <form
           class="book__form"
           data-booking-form
-          action="https://formsubmit.co/quillsninkhub@gmail.com"
+          action="/api/contact"
           method="POST"
           novalidate
         >
@@ -417,8 +417,8 @@ import PageHero from '../components/PageHero.astro';
     dataObj._subject = `[Quills & Ink Consultation] Appointment Request: ${name} (${date} at ${time})`;
 
     try {
-      // 1. Send direct to email via FormSubmit AJAX endpoint
-      await fetch('https://formsubmit.co/ajax/quillsninkhub@gmail.com', {
+      // 1. Send directly to Cloudflare Worker Edge endpoint (/api/contact)
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -427,19 +427,8 @@ import PageHero from '../components/PageHero.astro';
         body: JSON.stringify(dataObj),
       });
 
-      // 2. Log event to Edge Analytics for real-time admin desk
-      try {
-        await fetch('/api/analytics', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            event: 'consultation_cta_click',
-            path: '/book',
-            query: `Consultation: ${service} by ${name}`,
-          }),
-        });
-      } catch (analyticsErr) {
-        // Analytics failure should never block form success
+      if (!res.ok) {
+        throw new Error(`Worker returned status ${res.status}`);
       }
 
       if (detailsBox) {
@@ -460,8 +449,35 @@ import PageHero from '../components/PageHero.astro';
         successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     } catch (err) {
-      console.warn('FormSubmit AJAX fallback:', err);
-      form.submit();
+      console.warn('Worker endpoint fallback:', err);
+      // Fallback: If running offline or in preview without worker binding, fallback to FormSubmit
+      try {
+        await fetch('https://formsubmit.co/ajax/quillsninkhub@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(dataObj),
+        });
+
+        if (detailsBox) {
+          detailsBox.innerHTML = `
+            <strong>Appointment Details Sent to Coordinator:</strong><br />
+            • Client: <em>${escapeHtml(name)}</em><br />
+            • Date &amp; Time: <em>${escapeHtml(date)} at ${escapeHtml(time)} (${escapeHtml(timezone)})</em><br />
+            • Channel: <em>${escapeHtml(mode)}</em><br />
+            • Focus: <em>${escapeHtml(service)}</em>
+          `;
+        }
+
+        form.classList.add('is-hidden');
+        form.style.display = 'none';
+        if (successCard) {
+          successCard.classList.remove('is-hidden');
+          successCard.style.display = 'grid';
+          successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (fallbackErr) {
+        form.submit();
+      }
     } finally {
       if (submitBtn) submitBtn.disabled = false;
       if (btnText) btnText.style.display = 'inline-block';

@@ -9,6 +9,11 @@
       "database_name": "quills-analytics",
       "database_id": "8ebcda89-082c-4680-8656-7655efde71b5"
     }
+  ],
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
   ]
 }
 

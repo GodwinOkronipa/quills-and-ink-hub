@@ -23,7 +23,7 @@ import PageHero from '../components/PageHero.astro';
         <form
           class="contact__form"
           data-contact-form
-          action="https://formsubmit.co/quillsninkhub@gmail.com"
+          action="/api/contact"
           method="POST"
           novalidate
         >
@@ -387,8 +387,8 @@ import PageHero from '../components/PageHero.astro';
     }
 
     try {
-      // 1. Send direct to email via FormSubmit AJAX endpoint
-      await fetch('https://formsubmit.co/ajax/quillsninkhub@gmail.com', {
+      // 1. Send directly to Cloudflare Worker Edge endpoint (/api/contact)
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -397,19 +397,8 @@ import PageHero from '../components/PageHero.astro';
         body: JSON.stringify(dataObj),
       });
 
-      // 2. Also log event to Edge Analytics for real-time admin desk
-      try {
-        await fetch('/api/analytics', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            event: 'consultation_cta_click',
-            path: '/contact',
-            query: dataObj.subject || 'Contact Inquiry',
-          }),
-        });
-      } catch (analyticsErr) {
-        // Analytics failure should never block form success
+      if (!res.ok) {
+        throw new Error(`Worker returned status ${res.status}`);
       }
 
       contactForm.style.display = 'none';
@@ -419,8 +408,23 @@ import PageHero from '../components/PageHero.astro';
         successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     } catch (err) {
-      console.warn('FormSubmit AJAX fallback:', err);
-      contactForm.submit();
+      console.warn('Worker endpoint fallback:', err);
+      // Fallback: If running offline or in preview without worker binding, fallback to FormSubmit
+      try {
+        await fetch('https://formsubmit.co/ajax/quillsninkhub@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(dataObj),
+        });
+        contactForm.style.display = 'none';
+        if (successBox) {
+          successBox.classList.remove('is-hidden');
+          successBox.style.display = 'grid';
+          successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (fallbackErr) {
+        contactForm.submit();
+      }
     } finally {
       if (submitBtn) submitBtn.disabled = false;
       if (btnText) btnText.style.display = 'inline-block';
